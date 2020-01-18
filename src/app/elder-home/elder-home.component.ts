@@ -1,0 +1,140 @@
+import { Component, OnInit } from '@angular/core';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
+import { SearchService } from '../services/search.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-elder-home',
+  templateUrl: './elder-home.component.html',
+  styleUrls: ['./elder-home.component.css']
+})
+export class ElderHomeComponent implements OnInit {
+
+  panelOpenState = false;
+  hoveredDate: NgbDate;
+
+  fromDate: NgbDate;
+  toDate: NgbDate;
+
+  startDate: Date;
+  stopDate: Date;
+  postalCode: string;
+
+  form: FormControl;
+
+  dailyCare = [
+    {
+      name: 'Bathroom Assistance',
+      checked: false
+    },
+    {
+      name: 'Dressing Assitance',
+      checked: false
+    },
+    {
+      name: 'Meals',
+      checked: false
+    },
+    {
+      name: 'Joyful Companionship',
+      checked: false
+    }
+  ];
+
+  specialCare = [
+    {
+      name: 'Rehabilitation',
+      checked: false
+    },
+    {
+      name: 'Medicine',
+      checked: false
+    }
+  ];
+
+  newDailyCare;
+  newSpecialCare;
+  services;
+
+  searchButton = false;
+
+  constructor(
+    private calendar: NgbCalendar, public formatter: NgbDateParserFormatter, public searchService: SearchService, public router: Router
+  ) {
+    this.fromDate = calendar.getToday();
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+  }
+
+  ngOnInit() {
+
+  }
+
+  openSearch() {
+    this.searchButton = true;
+  }
+
+  closeSearch() {
+    this.searchButton = false;
+  }
+
+  toggle(event){
+    console.log(event)
+  }
+
+  onDateSelection(date: NgbDate) {
+    if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
+      this.toDate = date;
+    } else {
+      this.toDate = null;
+      this.fromDate = date;
+    }
+  }
+
+  isHovered(date: NgbDate) {
+    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
+  }
+
+  isInside(date: NgbDate) {
+    return date.after(this.fromDate) && date.before(this.toDate);
+  }
+
+  isRange(date: NgbDate) {
+    return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
+  }
+
+  validateInput(currentValue: NgbDate, input: string): NgbDate {
+    const parsed = this.formatter.parse(input);
+    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  }
+
+  search(form: NgForm) {
+    this.startDate = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day);
+    this.stopDate = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day);
+    this.postalCode = form.value.postalCode;
+    this.services = {
+      dailyCare: this.newDailyCare,
+      specialCare: this.newSpecialCare
+    };
+    console.log(this.postalCode);
+    console.log('start from ' + this.startDate + ' to ' + this.stopDate);
+
+    this.router.navigate(
+      ['/result'],
+      { queryParams: { postalCode: this.postalCode, startDate: this.startDate, stopDate: this.stopDate, services: this.services } }
+    );
+    // this.searchService.searchCaregivers(this.postalCode, this.startDate, this.stopDate, this.services);
+
+  }
+
+  getCheckboxes() {
+    console.log(this.dailyCare.filter(x => x.checked === true).map(x => x.name));
+    this.newDailyCare = this.dailyCare.filter(x => x.checked === true).map(x => x.name);
+
+    console.log(this.specialCare.filter(x => x.checked === true).map(x => x.name));
+    this.newSpecialCare = this.specialCare.filter(x => x.checked === true).map(x => x.name);
+  }
+
+}

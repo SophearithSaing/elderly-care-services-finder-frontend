@@ -1,0 +1,22 @@
+<div class="container-login100" style="background-image: url('https://scontent.fbkk12-1.fna.fbcdn.net/v/t1.0-9/79437073_137989954306506_1367614730616700928_o.jpg?_nc_cat=106&_nc_ohc=6VHHY6tz60YAQktiWvNAujmqtgpALrTYI9gTBnJCgz2s1RuY54V7QykUA&_nc_ht=scontent.fbkk12-1.fna&oh=f5387b64963f85d12be660a90210f7e0&oe=5E6CD03A');">
+  <div class="wrap-login100">
+          <div class="justify-content-center">
+            <form (submit)="onLogin(loginForm)" ngForm #loginForm="ngForm" *ngIf="!isLoading">
+              <span class="login-form-title">CAREGIVER LOGIN</span>
+              <div class="form-group">
+                <input name="email" ngModel #emailInput="ngModel" required email type="email" class="form-control" placeholder="Email" id="email">
+              </div>
+              <div class="form-group">
+                <input name="password" ngModel #passwordInput="ngModel" required type="password" class="form-control" placeholder="Password">
+              </div>
+              <div class="form-group container-login100-form-btn">
+                <button type="submit" class="btn btn-success">LOGIN</button>
+              </div>
+              <div class="form-group container-login100-form-btn">
+                <button type="submit" class="btn" id="cancel" routerLink='/'>CANCEL</button>
+              </div>
+            </form>
+          </div>
+  </div>
+</div>
+

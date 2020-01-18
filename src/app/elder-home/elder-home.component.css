@@ -1,0 +1,192 @@
+/* css for datepicker */
+#hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+mat-card {
+  height: 75%;
+  width: 75%;
+}
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+.custom-day.range, .custom-day:hover {
+  /* background-color: rgb(2, 117, 216); */
+  background-color: rgb(2, 216, 66);
+  color: white;
+}
+.custom-day.faded {
+  /* background-color: rgba(2, 117, 216, 0.5); */
+  background-color: rgba(2, 216, 38, 0.5);
+}
+
+.btn-outline-success {
+  border-color: white;
+}
+/*  */
+
+#home {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  z-index: 1;
+}
+
+#home::before{
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.65);
+}
+
+h1, h3, p, h5 {
+  font-family: 'Ubuntu', sans-serif;
+  color: white;
+}
+
+mat-accordion {
+  color: white;
+}
+
+.btn-success {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  padding: 0 20px;
+  min-width: 160px;
+  height: 42px;
+  border-radius: 21px;
+  background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2);
+  position: relative;
+  z-index: 1;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.btn-success::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border-radius: 21px;
+  background-color: #555555;
+  top: 0;
+  left: 0;
+  opacity: 0;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.btn-success:hover {
+  background-color: transparent;
+}
+.btn-success:hover:before {
+  opacity: 1;
+}
+
+.new-font {
+  font-family: 'Ubuntu', sans-serif;
+  color: white;
+}
+.fa-calendar {
+  color: white;
+}
+
+.fa-calendar:hover {
+  border-color: #28a745;
+}
+
+.pt-5 {
+  padding-top: 5px;
+}
+.pt-3 {
+  padding-top: 3px;
+}
+
+.form-control {
+  /* background-color:rgba(0, 0, 0, 0); */
+  background: transparent;
+  color: #28a745;
+  height: 45px;
+  font-family: 'Ubuntu', sans-serif;
+  outline:none;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+
+}
+
+
+.form-control:focus {
+  border-color: #28a745;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(30, 255, 0, 0.6);
+}
+
+#cancel {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  background-color: #555555;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  padding: 0 20px;
+  min-width: 160px;
+  height: 42px;
+  border-radius: 21px;
+}
+#cancel:hover {
+  background-color: red;
+}

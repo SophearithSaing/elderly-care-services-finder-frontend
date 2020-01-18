@@ -1,0 +1,24 @@
+mat-card {
+  font-family: 'Ubuntu', sans-serif;
+  width: 75%;
+  height: 80%;
+}
+
+mat-checkbox {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.form-control {
+  width: 50%;
+}
+
+#center {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

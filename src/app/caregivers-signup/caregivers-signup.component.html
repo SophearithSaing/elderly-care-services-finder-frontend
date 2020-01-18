@@ -1,0 +1,79 @@
+<div class="container form-group">
+
+  <h1>Information</h1>
+
+  <form (submit)="onSaveCaregiver()" #infoForm="ngForm">
+
+    <label for="">Basic Information</label>
+
+    <div class="form-group form-row">
+      <div class="col-md-12">
+        <input type="text" class="form-control" placeholder="Name" [formControl]="name">
+      </div>
+    </div>
+    <div class="form-group form-row">
+      <div class="col-md-12">
+        <input type="text" class="form-control" placeholder="Phone Number" [formControl]="phoneNumber">
+      </div>
+    </div>
+
+
+    <div class="form-group form-row">
+      <!-- <div class="col-md-4">
+        <input type="text" class="form-control" id="age" placeholder="Birthdate" [formControl]="birthDate">
+      </div> -->
+
+      <div class="form-group col-md-4">
+        <div class="input-group">
+          <input class="form-control" placeholder="Birthdate"
+                 name="dp" ngbDatepicker #d="ngbDatepicker" [formControl]="birthDate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
+              class="fa fa-calendar" aria-hidden="true"></i></button>
+              <!-- <button type="button" (click)="show()" >btn</button> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <select id="inputState" class="form-control" [formControl]="gender">
+          <option value="Male">Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="custom-file col-md-4">
+        <input type="file" class="custom-file-input" id="validatedCustomFile">
+        <label class="custom-file-label" for="validatedCustomFile">Upload Image</label>
+        <div class="invalid-feedback">Example invalid custom file feedback</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputAddress">Address</label>
+      <input type="text" class="form-control" placeholder="House Number" [formControl]="houseNumber">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Street" [formControl]="street">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="District" [formControl]="district">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Sub-district" [formControl]="subDistrict">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" placeholder="Province" [formControl]="province">
+      </div>
+      <div class="form-group col-md-6">
+        <input type="text" class="form-control" placeholder="Postal Code" [formControl]="postalCode">
+      </div>
+    </div>
+    <div id="center">
+      <button type="submit" class="btn btn-success">Save</button>
+      <button (click)="goBack()" id="cancel" class="btn">Cancel</button>
+    </div>
+
+
+  </form>
+</div>

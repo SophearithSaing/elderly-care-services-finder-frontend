@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{name}}</mat-card-title>
+      <mat-card-subtitle>Age: {{age}}, Gender: {{gender}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="lead"><b>Address: </b>{{houseNumber}} {{street}} {{subDistrict}} {{district}} {{province}} {{postalCode}}
+      </p>
+      <p class="lead"><b>Email: </b>{{caregiverEmail}}</p>
+      <p class="lead"><b>Tel: </b>{{phoneNumber}}</p>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions> -->
+  </mat-card>
+  <!-- <h1 class="display-4">{{name}}</h1>
+  <p class="lead"><b>Age: </b> <b>Gender: </b>{{gender}}</p> -->
+
+  <button type="submit" class="btn btn-primary mt-5" (click)="edit()">EDIT</button>
+</div>

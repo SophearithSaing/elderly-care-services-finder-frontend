@@ -1,0 +1,48 @@
+<div class="container mt-5">
+  <h1 style="text-align: center;">
+    Select Services and Prices
+  </h1>
+  <mat-grid-list cols="3" rowHeight="1:1">
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Daily Care</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div *ngFor="let item of dailyCare">
+            <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Special Care</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div *ngFor="let item of specialCare">
+            <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div>
+        <input name="postalCode" [(ngModel)]="dailyPrice" required type="number" class="form-control mb-3"
+          placeholder="Daily Price" id="Daily Price">
+        <input name="postalCode" [(ngModel)]="monthlyPrice" required type="number" class="form-control"
+          placeholder="Monthly Price" id="Monthly Price">
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div id="center">
+    <button class="btn btn-success" (click)="save()">Save</button>
+  </div>
+
+</div>

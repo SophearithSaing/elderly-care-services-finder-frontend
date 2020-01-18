@@ -1,0 +1,154 @@
+<div class="mt-5">
+
+    <h1 style="text-align: center;">You have n Request</h1>
+    <div class="container mt-5" *ngFor="let item of requests">
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" (click)="getElder(item.elderEmail)">
+        <mat-expansion-panel-header>
+
+          <mat-panel-description>
+            <!-- Currently using {{panelOpenState ? 'New Services' : 'Default Services'}} -->
+
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <div class="new-font">
+            </div>
+            <div class="new-font">
+              From {{item.elderEmail}}
+
+            </div>
+            <div class="new-font">
+
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="align-center">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <div class="new-font">
+                <mat-card-title>{{name}}</mat-card-title>
+                <mat-card-subtitle>{{subDistrict}}, {{postalCode}}</mat-card-subtitle>
+              </div>
+
+            </mat-card-header>
+            <mat-card-content>
+              <p>
+                Age: {{age}}
+                <br>
+                Gender: {{gender}}
+                <br>
+                Address: {{houseNumber}}, {{street}}, {{subDistrict}}, {{district}}, {{province}}, {{postalCode}}
+                <br><br>
+                Services:
+                <br>
+                  Daily Care: None
+                <br>
+                  Special Care: Medicine(Injection)
+                <br><br>
+                Email: {{email}}
+                <br>
+                Phone Number: {{phoneNumber}}
+                <br><br>
+                <!-- Time: -->
+                <br><br>
+                Require Interview: {{panelOpenState ? 'Yes' : 'No'}}
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button class="btn btn-success" type="button" data-toggle="modal" data-target="#accept">Accept</button>
+              <button class="btn mt-3" id="cancel" type="button" data-toggle="modal" data-target="#reject">Reject</button>
+            </mat-card-actions>
+            <mat-card-actions>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+
+<div class="modal fade" id="accept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new-font" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body new-font">
+        Are You Sure You Want to Accept Elder1's Request?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed" (click)="acceptRequest(item)">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="reject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new-font" id="exampleModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body new-font">
+        Are You Sure You Want to Reject Elder1's Request?
+        <div class="alert alert-danger mt-3" role="alert" *ngIf="reason === ''">
+          Reason Cannot be Empty!
+        </div>
+        <textarea class="form-control mt-3" [(ngModel)]="reason" placeholder="Please Enter Your Reason"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed"
+          (click)="rejectRequest(item)">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" *ngIf="reason !== ''">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new-font" id="exampleModalLabel">Confirmed</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You have {{accept ? 'Accepted' : 'Rejected'}} the Request.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" routerLink='/'>Okay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<!-- <div class="container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
+  </mat-card>
+</div> -->

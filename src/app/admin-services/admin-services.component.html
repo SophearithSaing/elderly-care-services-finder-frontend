@@ -1,0 +1,58 @@
+<div class="container mt-5">
+  <h1 style="text-align: center;">
+    Services
+  </h1>
+  <mat-grid-list cols="2" rowHeight="1:1">
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Daily Care</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div *ngFor="let item of dailyCare">
+            <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+          </div>
+          <div class="mt-3">
+            <input type="text" class="form-control">
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-primary">Add New Item</button>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-danger">Remove Selected Items</button>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Special Care</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div *ngFor="let item of specialCare">
+            <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+          </div>
+          <div class="mt-3">
+            <input type="text" class="form-control">
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-primary">Add New Item</button>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-danger">Remove Selected Items</button>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <div id="center">
+    <button class="btn btn-success" (click)="save()">Save Changes</button>
+  </div>
+
+</div>

@@ -1,0 +1,218 @@
+<div id="home"
+  style="background-image: url('https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/79364600_137989457639889_2963431248447406080_o.jpg?_nc_cat=110&_nc_ohc=MtppSSgwt8QAQmBwl8iUAnexAIyCKUlSwzAQrQiJzNb9GjWTAW0qK0POg&_nc_ht=scontent-cdg2-1.xx&oh=7f5c4a0ada95b7d5a80d950d1758f9a8&oe=5E6F9E51');">
+
+  <div class="container text-center">
+    <h1 class="display-4">Welcome Back</h1>
+    <h5 class="mb-3">Enter Postal Code and Desired Date Range to Find Caregivers</h5>
+
+    <div class="pb-3">
+      <button class="btn btn-success" (click)='openSearch()' *ngIf="searchButton === false">Search</button>
+    </div>
+    <div class="pb-3">
+      <button class="btn btn-success" routerLink="/caregiver-profile" routerLinkActive="active" *ngIf="searchButton === false">See Request Status</button>
+    </div>
+    <div class="pb-3">
+      <button class="btn btn-success" routerLink="/caregiver-profile" routerLinkActive="active" *ngIf="searchButton === false">See History</button>
+    </div>
+
+
+    <div class="container" *ngIf="searchButton === true">
+
+      <form id="form" (submit)="search(searchForm)" #searchForm="ngForm">
+        <div class="form-row">
+          <!-- <div class="form-group col-md-2"> -->
+          <!-- <div class="input-group">
+                <input class="form-control" placeholder="Start Date"
+                       name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                  <button class="btn calendar" (click)="d.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="true"></i></button>
+                </div>
+              </div> -->
+          <!-- </div> -->
+          <div class="form-group col-md-4">
+            <input name="postalCode" ngModel required type="number" class="form-control" placeholder="Postal Code"
+              id="postalCode">
+          </div>
+          <!-- <div class="form-group col-md-2">
+            <input readonly placeholder="Start Date" class="form-control" [matDatepicker]="startDate">
+            <div class="input-group">
+              <input class="form-control" placeholder="Start Date" name="dp" [(ngModel)]="model" ngbDatepicker
+                #d="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn calendar" (click)="d.toggle()" type="button"><i class="fa fa-calendar"
+                    aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="form-group">
+            <mat-datepicker-toggle [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </div> -->
+          <!-- <div class="form-group col-md-2">
+            <input readonly placeholder="Start Date" class="form-control" [matDatepicker]="startDate">
+          </div>
+          <div class="form-group col-md-2">
+            <input readonly placeholder="End Date" class="form-control" [matDatepicker]="endDate">
+          </div>
+          <div class="form-group">
+            <mat-datepicker-toggle [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </div> -->
+
+
+          <div class="form-group form-inline col-md-8">
+            <div class="form-group">
+              <div class="input-group">
+                <input readonly name="datepicker" class="form-control" id="hidden" ngbDatepicker
+                  #datepicker="ngbDatepicker" [autoClose]="'outside'" (dateSelect)="onDateSelection($event)"
+                  [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden" [startDate]="fromDate">
+                <ng-template #t let-date let-focused="focused">
+                  <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                    [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                    (mouseleave)="hoveredDate = null">
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <input readonly #dpFromDate class="form-control" placeholder="Start Date" name="dpFromDate"
+                  [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success calendar" (click)="datepicker.toggle()" type="button"><i
+                      class="fa fa-calendar" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group ml-2">
+              <div class="input-group">
+                <input readonly #dpToDate class="form-control" placeholder="Stop Date" name="dpToDate"
+                  [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-success calendar" (click)="datepicker.toggle()" type="button"><i
+                      class="fa fa-calendar" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button class="btn btn-success mr-5" type="submit">SEARCH</button>
+        <button class="btn ml-5" id="cancel" (click)="closeSearch()">Cancel</button>
+
+      </form>
+
+        <div class="pt-3">
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="new-font">
+                  Services
+                </mat-panel-title>
+                <mat-panel-description class="new-font">
+                  {{panelOpenState ? 'Select Services Below' : 'Click Here to Specify Services'}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-grid-list cols="2" rowHeight="1:1">
+                <mat-grid-tile>
+                  <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>Daily Care</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                      <div *ngFor="let item of dailyCare" align="left">
+                        <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+                      </div>
+
+                    </mat-card-content>
+                  </mat-card>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                  <mat-card>
+                    <mat-card-header>
+                      <mat-card-title>
+                        Special Care
+                      </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+
+                      <div *ngFor="let item of specialCare" align="left">
+                        <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+                      </div>
+
+                    </mat-card-content>
+                  </mat-card>
+                </mat-grid-tile>
+              </mat-grid-list>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        </div>
+
+
+        <!-- <div class="pt-3">
+          <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="new-font">
+                  Services
+                </mat-panel-title>
+                <mat-panel-description class="new-font">
+                  Currently using {{panelOpenState ? 'New Services' : 'Default Services'}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="container pt-5">
+                <table class="table">
+                  <thead class="new-font">
+                    <tr>
+                      <th scope="col">Daily Care</th>
+                      <th scope="col">Special Care</th>
+                    </tr>
+                  </thead>
+                  <tbody class="new-font">
+                    <tr>
+                      <td align="left">
+                        <mat-checkbox>Bathroom Assistance</mat-checkbox>
+                      </td>
+                      <td align="left">
+                        <mat-checkbox>Rehabilitation</mat-checkbox>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left">
+                        <mat-checkbox>Dressing Assitance</mat-checkbox>
+                      </td>
+                      <td align="left">
+                        <mat-checkbox>Medicine(Injection)</mat-checkbox>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left">
+                        <mat-checkbox>Meals</mat-checkbox>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left">
+                        <mat-checkbox>Joyful Companionship</mat-checkbox>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div> -->
+
+        <button class="btn btn-success mt-5" type="submit" [routerLink]="['/history']" >History</button>
+
+      <!-- </form>  -->
+    </div>
+  </div>
+
+
+</div>

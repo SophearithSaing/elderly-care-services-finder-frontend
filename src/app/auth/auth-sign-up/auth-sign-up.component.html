@@ -1,0 +1,25 @@
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+            <form (submit)="onSignup(signupForm)" ngForm #signupForm="ngForm" *ngIf="!isLoading">
+              <h1>Signup</h1>
+              <div class="form-group">
+                <input name="email" ngModel #emailInput="ngModel" required email type="email" class="form-control" placeholder="Email">
+                <div class="alert alert-danger form-group" role="alert" [hidden]="!emailInput.invalid">
+                  Please enter a valid email address
+                </div>
+              </div>
+              <div class="form-group">
+                <input name="password" ngModel #passwordInput="ngModel" required type="password" class="form-control" placeholder="Password">
+                <div class="alert alert-danger form-group" role="alert" *ngIf="passwordInput.invalid">
+                  Please enter a valid password
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success" >Sign Up</button>
+            </form>
+          </div>
+        </div>
+  </div>
+</div>
+

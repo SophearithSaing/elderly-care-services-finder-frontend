@@ -1,0 +1,63 @@
+<div class="container-login100" style="background-image: url('https://scontent.fbkk12-1.fna.fbcdn.net/v/t1.0-9/79437073_137989954306506_1367614730616700928_o.jpg?_nc_cat=106&_nc_ohc=6VHHY6tz60YAQktiWvNAujmqtgpALrTYI9gTBnJCgz2s1RuY54V7QykUA&_nc_ht=scontent.fbkk12-1.fna&oh=f5387b64963f85d12be660a90210f7e0&oe=5E6CD03A');">
+  <div class="wrap-login100">
+      <!-- <div class="row"> -->
+        <div class="justify-content-center">
+            <form (submit)="onRegisterCaregiver(postForm)" #postForm="ngForm">
+              <span class="login-form-title">CAREGIVER REGISTER</span>
+              <div class="form-group">
+                  <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Full Name"
+                  name="name"
+                  ngModel
+                  #name="ngModel"
+                  >
+                </div>
+              <div class="form-group">
+                <input
+                type="email"
+                class="form-control"
+                aria-describedby="emailHelp"
+                placeholder="Email"
+                name="email"
+                ngModel
+                #email="ngModel"
+                >
+              </div>
+              <div class="form-group alert alert-danger" role="alert" *ngIf="confirmPassword === false">
+                Password does not match!
+              </div>
+              <div class="form-group">
+                <input
+                type="password"
+                class="form-control"
+                placeholder="Password"
+                name="password"
+                ngModel
+                #password="ngModel"
+                >
+              </div>
+              <div class="form-group">
+                <input
+                type="password"
+                class="form-control"
+                placeholder="Password Confirmation"
+                name="passwordConfirmation"
+                ngModel
+                #passwordConfirmation="ngModel"
+                >
+              </div>
+              <div class="form-group container-login100-form-btn">
+                <button type="submit" class="btn btn-success">REGISTER</button>
+              </div>
+              <div class="form-group container-login100-form-btn">
+                <button type="submit" class="btn" id="cancel" routerLink='/'>CANCEL</button>
+              </div>
+            </form>
+          </div>
+        <!-- </div> -->
+  </div>
+</div>
+
+

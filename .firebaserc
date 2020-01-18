@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "travel-app-423ae": {
+      "hosting": {
+        "first-app": [
+          "travel-app-423ae"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-251304"
+  }
+}

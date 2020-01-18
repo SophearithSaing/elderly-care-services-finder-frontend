@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <h1 style="text-align: center;">History</h1>
+  <!-- <div class="list-group"> -->
+  <div class="list-group" *ngFor="let item of requests">
+    <div href="#" class="list-group-item list-group-item-action mt-3 mb-3">
+      <div class="d-flex w-100 justify-content-between">
+        <h4 class="mb-1">{{item.caregiverEmail}}</h4>
+        <!-- <small>days ago</small> -->
+      </div>
+      <p class="mb-3">From: {{item.startDate}}</p>
+      <p class="mb-3">To: {{item.stopDate}}</p>
+      <p class="mb-3" *ngIf="item.status !== null">Status:  {{item.status ? 'Accepted' : 'Rejected'}}</p>
+      <p class="mb-3" *ngIf="item.status === null">Status:  Pending</p>
+
+
+      <div>
+      <button class="btn btn-sm" id="cancel">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

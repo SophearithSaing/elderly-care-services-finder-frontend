@@ -1,0 +1,115 @@
+.form-control {
+  /* background-color:rgba(0, 0, 0, 0); */
+  background: transparent;
+  height: 45px;
+  font-family: 'Ubuntu', sans-serif;
+  outline:none;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+
+}
+
+.btn-success {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  min-width: 160px;
+  height: 42px;
+  border-radius: 21px;
+
+  /* background: linear-gradient(left, #28a745, #389b64,  #97f7c2); */
+  /* background: #28a745; */
+  background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2);
+  /* background: -o-linear-gradient(left, #28a745, #389b64, #97f7c2);
+  background: -moz-linear-gradient(left, #28a745, #389b64, #97f7c2); */
+  /* background: linear-gradient(left, #28a745, #389b64, #97f7c2); */
+  position: relative;
+  z-index: 1;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.btn-success::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border-radius: 21px;
+  background-color: #555555;
+  top: 0;
+  left: 0;
+  opacity: 0;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.btn-success:hover {
+  background-color: transparent;
+}
+
+.btn-success:hover:before {
+  opacity: 1;
+}
+#center {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#cancel {
+  margin-left: 20px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  background-color: #555555;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  min-width: 160px;
+  height: 42px;
+  border-radius: 21px;
+}
+#cancel:hover {
+  background-color: red;
+}
+
+.image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  height: 100%;
+}

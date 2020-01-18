@@ -1,0 +1,45 @@
+<div id="home" style="background-image: url('https://scontent.fbkk12-4.fna.fbcdn.net/v/t1.0-9/80800711_137989304306571_6047940541251846144_o.jpg?_nc_cat=110&_nc_ohc=3ncI983R1g8AQloDe1wMDeuks8o16gd-f3W-7wNPyMY5Ka_dyL6uU6vkw&_nc_ht=scontent.fbkk12-4.fna&oh=fe34c56986a8cbb2e503057f84413f87&oe=5E80A205');">
+
+  <div class="container text-center">
+    <h1 class="display-4">Home care service for seniors</h1>
+    <p class="lead">See how In-home senior care is better </p>
+
+    <h3 *ngIf="user === null">Are you an Elder or Caregiver?</h3>
+
+    <div class="row pt-5">
+      <!-- buttons for caregivers -->
+      <div class="col-md-6" *ngIf="user === null || user === 'elder'">
+        <h1>.</h1>
+        <p>.</p>
+        <button class="btn btn-primary" (click)='caregiver()'>CAREGIVER</button>
+      </div>
+      <div class="col-md-6" *ngIf="user === 'caregiver'">
+        <h1>10</h1>
+        <p>Currently, 10 caregivers join us!</p>
+        <button class="btn btn-primary" type="submit" routerLink="/caregiver-register" routerLinkActive="active">JOIN US</button>
+        <br>
+        <p class="pt-5">You already have an account?</p>
+        <button class="btn btn-primary" type="submit" routerLink="/caregiver-login" routerLinkActive="active">LOGIN</button>
+      </div>
+      <!-- buttons for elders -->
+      <div class="col-md-6" *ngIf="user === null || user === 'caregiver'">
+        <h1>.</h1>
+        <p>.</p>
+        <button class="btn btn-success" (click)='elder()'>ELDER</button>
+      </div>
+      <div class="col-md-6" *ngIf="user === 'elder'">
+        <h1>100</h1>
+        <p>100 elders are getting helps from us!</p>
+        <button class="btn btn-success" type="submit" routerLink="/elder-register" routerLinkActive="active">GET STARTED</button>
+        <p class="pt-5">You already have an account?</p>
+        <button class="btn btn-success" type="submit" routerLink="/elder-login" routerLinkActive="active">LOGIN</button>
+      </div>
+
+    </div>
+    <div>
+
+    </div>
+  </div>
+
+
+</div>

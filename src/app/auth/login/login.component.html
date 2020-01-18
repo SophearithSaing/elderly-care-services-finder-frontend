@@ -1,0 +1,22 @@
+<div class="container-login100" style="background-image: url('bg.png');">
+  <div class="wrap-login100">
+          <div class="justify-content-center">
+            <form (submit)="onLogin(loginForm)" ngForm #loginForm="ngForm" *ngIf="!isLoading">
+              <span class="login-form-title">LOGIN</span>
+              <div class="form-group">
+                <input name="email" ngModel #emailInput="ngModel" required email type="email" class="form-control" placeholder="Email" id="email">
+              </div>
+              <div class="form-group">
+                <input name="password" ngModel #passwordInput="ngModel" required type="password" class="form-control" placeholder="Password">
+              </div>
+              <div class="form-group container-login100-form-btn">
+                <button type="submit" class="btn btn-success">LOGIN</button>
+              </div>
+              <div class="form-group container-login100-form-btn">
+                <button type="submit" class="btn" id="cancel" routerLink='/'>CANCEL</button>
+              </div>
+            </form>
+          </div>
+  </div>
+</div>
+
