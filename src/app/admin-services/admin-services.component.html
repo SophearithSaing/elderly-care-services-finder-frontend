@@ -14,13 +14,13 @@
             <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
           </div>
           <div class="mt-3">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="dailyCareItem">
           </div>
           <div class="mt-3">
-            <button class="btn btn-primary">Add New Item</button>
+            <button class="btn btn-primary" (click)="addDailyCareItem()">Add New Item</button>
           </div>
           <div class="mt-3">
-            <button class="btn btn-danger">Remove Selected Items</button>
+            <button class="btn btn-danger" (click)="removeDCItem()">Remove Selected Items</button>
           </div>
 
         </mat-card-content>
@@ -38,21 +38,23 @@
             <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
           </div>
           <div class="mt-3">
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" [(ngModel)]="specialCareItem">
           </div>
           <div class="mt-3">
-            <button class="btn btn-primary">Add New Item</button>
+            <button class="btn btn-primary" (click)="addSpecialCareItem()">Add New Item</button>
           </div>
           <div class="mt-3">
-            <button class="btn btn-danger">Remove Selected Items</button>
+            <button class="btn btn-danger" (click)="removeSCItem()">Remove Selected Items</button>
           </div>
-
+          <div class="mt-3" *ngIf="undo === true">
+            <button class="btn btn-warning" (click)="undoSCItem()">Remove Selected Items</button>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
   <div id="center">
-    <button class="btn btn-success" (click)="save()">Save Changes</button>
+    <button class="btn btn-success" (click)="saveChanges()">Save Changes</button>
   </div>
 
 </div>

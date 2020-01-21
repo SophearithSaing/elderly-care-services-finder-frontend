@@ -3,10 +3,16 @@ import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
 
 
 import { SearchService } from "../services/search.service";
-import { Caregiver } from '../models/caregiver.model'
+import { Caregiver } from '../models/caregiver.model';
 import { ActivatedRoute, ParamMap, Router, ROUTER_CONFIGURATION } from '@angular/router';
 import { NgbDatepickerConfig, NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { config } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
+
 @Component({
   selector: 'app-caregivers-signup',
   templateUrl: './caregivers-signup.component.html',
@@ -30,18 +36,21 @@ export class CaregiversSignupComponent implements OnInit {
   province = new FormControl('');
   postalCode = new FormControl('');
   phoneNumber = new FormControl('');
-  imagePath = new FormControl('');
+  image = new FormControl('');
 
-  query;
+  query: any;
   email: string;
+
+  imagePreview: string;
+  imageFile: any;
 
 
   constructor(
     public searchService: SearchService, public route: ActivatedRoute, private router: Router,
-    config: NgbDatepickerConfig, calendar: NgbCalendar
+    config: NgbDatepickerConfig, calendar: NgbCalendar, public http: HttpClient
   ) {
     config.minDate = { year: 1900, month: 1, day: 1 };
-    config.maxDate = { year: 2099, month: 12, day: 31 };
+    config.maxDate = { year: 2020, month: 1, day: 31 };
   }
 
   ngOnInit() {
@@ -56,6 +65,12 @@ export class CaregiversSignupComponent implements OnInit {
     this.name.setValue(this.query.params.name);
     console.log(this.query);
     console.log(this.name.value);
+
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('elderEmail')) {
+        this.email = paramMap.get('elderEmail');
+      }
+    });
 
 
 
@@ -129,6 +144,30 @@ export class CaregiversSignupComponent implements OnInit {
     this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
     console.log(this.tsDate);
   }
+
+  onImagePicked(event) {
+    // const file = (event.target as HTMLInputElement).files[0];
+    const file = event.target.files[0];
+    this.imageFile = file;
+    this.image.patchValue({ image: file });
+    this.image.updateValueAndValidity();
+    console.log(file);
+    console.log(this.image);
+
+    const Data = new FormData();
+    Data.append('email', this.email);
+    Data.append('upload', file);
+    this.http.post(BACKEND_URL + 'upload', Data).subscribe((res) => {});
+    console.log('post image ran for ' + this.email);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+    console.log(this.image.valid);
+  }
+
   goBack() {
     this.router.navigate(['/caregiver-profile']);
   }
@@ -175,11 +214,12 @@ export class CaregiversSignupComponent implements OnInit {
           null,
           null,
           null,
-          this.imagePath.value,
+          this.image.value,
           null,
           null
         );
       this.router.navigate(['/services', this.email]);
+      console.log(this.router.navigate(['/services', this.email]));
     } else {
       this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
       this.searchService.UpdateCaregiver(
@@ -196,8 +236,8 @@ export class CaregiversSignupComponent implements OnInit {
         this.province.value,
         this.postalCode.value,
         this.phoneNumber.value,
-        this.imagePath.value,
-      )
+        this.image.value,
+      );
       console.log('updated');
       this.router.navigate(['/caregiver-profile']);
     }

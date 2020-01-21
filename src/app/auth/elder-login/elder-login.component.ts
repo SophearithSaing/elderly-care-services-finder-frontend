@@ -22,7 +22,10 @@ export class ElderLoginComponent {
     }
     this.isLoading = true;
     this.authService.login(form.value.email, form.value.password);
-    this.router.navigate(['/elder-home']);
+    setTimeout(() => {
+      this.router.navigate(['/elder-home']);
+    }, 2000);
+
   }
 
 }

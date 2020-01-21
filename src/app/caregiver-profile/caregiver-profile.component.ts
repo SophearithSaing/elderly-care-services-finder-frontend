@@ -31,9 +31,11 @@ export class CaregiverProfileComponent implements OnInit {
   experience: string;
   dailyPrice: number;
   monthlyPrice: number;
+  imagePath: string;
 
   year = new Date().getFullYear();
   age;
+  id;
 
   constructor(public searchService: SearchService, public authService: AuthService, public router: Router) { }
 
@@ -59,7 +61,7 @@ export class CaregiverProfileComponent implements OnInit {
         experience: Data.experience,
         dailyPrice: Data.dailyPrice,
         monthlyPrice: Data.monthlyPrice,
-        imagePath: null,
+        imagePath: Data.imagePath,
         schedule: null,
         approval: null
       };
@@ -90,6 +92,12 @@ export class CaregiverProfileComponent implements OnInit {
       ['/caregiver-register', this.caregiverEmail],
       { queryParams: { mode: 'update', name: this.name } }
       );
+  }
+
+  editCalendar() {
+    this.id = this.authService.getUserId();
+    console.log('id is ' + this.id);
+    this.router.navigate(['/calendar/' + this.id]);
   }
 
 }

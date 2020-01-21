@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { AuthService } from '../auth/auth.service';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-admin-approval',
@@ -17,9 +18,12 @@ export class AdminApprovalComponent implements OnInit {
   elderProfile: any;
   elderEmail: string;
 
-  elder: any;
-  name: string;
   email: string;
+  id: string;
+  cgName: string;
+
+  caregiver: any;
+  name: string;
   birthDate: Date;
   gender: string;
   houseNumber: string;
@@ -35,25 +39,61 @@ export class AdminApprovalComponent implements OnInit {
 
   reason: string = null;
 
-  constructor(private search: SearchService, private auth: AuthService) { }
+  constructor(private search: SearchService, private auth: AuthService, private admin: AdminService) { }
 
   ngOnInit() {
-        // this.caregiverEmail = this.authService.getUserId();
-        this.caregiverEmail = 'sophearithsaing123@gmail.com';
+    this.caregiverEmail = this.auth.getUserId();
+    // this.caregiverEmail = 'sophearithsaing123@gmail.com';
 
-        this.search.getRequests(this.caregiverEmail).subscribe((data) => {
-          this.requests = data;
-          console.log(this.requests);
-        });
+    this.search.getRequests(this.caregiverEmail).subscribe((data) => {
+      this.requests = data;
+      console.log(this.requests);
+    });
   }
 
-  getCG(){
+  getCG(email: string) {
+    this.search.getCaregiver(email).subscribe((Data) => {
+      this.caregiver = {
+        _id: Data._id,
+        name: Data.name,
+        email: Data.email,
+        birthDate: Data.birthDate,
+        gender: Data.gender,
+        houseNumber: Data.houseNumber,
+        street: Data.street,
+        subDistrict: Data.subDistrict,
+        district: Data.district,
+        province: Data.province,
+        postalCode: Data.postalCode,
+        phoneNumber: Data.phoneNumber,
+        imagePath: null
+      };
+      this.name = this.caregiver.name;
+      this.birthDate = this.caregiver.birthDate;
+      const birthYear = new Date(this.caregiver.birthDate).getFullYear();
+      this.age = this.year - birthYear;
+      this.gender = this.caregiver.gender;
+      this.houseNumber = this.caregiver.houseNumber;
+      this.street = this.caregiver.street;
+      this.subDistrict = this.caregiver.subDistrict;
+      this.district = this.caregiver.district;
+      this.province = this.caregiver.province;
+      this.postalCode = this.caregiver.postalCode;
+      this.phoneNumber = this.caregiver.phoneNumber;
 
+      console.log(this.caregiver);
+
+    });
   }
 
-  acceptRequest(item) {
-    this.search.updateRequest(item, true, null);
-    console.log(item);
+  setValue(id, email, name) {
+    this.id = id;
+    this.email = email;
+    this.cgName = name;
+  }
+
+  acceptRequest() {
+    this.admin.UpdateCGStatus(this.id, this.email, true);
   }
 
   rejectRequest(item) {
@@ -62,7 +102,8 @@ export class AdminApprovalComponent implements OnInit {
       this.reason = '';
     }
     console.log(this.reason);
-    this.search.updateRequest(item, false, this.reason);
+    this.admin.UpdateCGStatus(this.id, this.email, true);
+    this.admin.AddReason(this.email, this.reason);
     console.log(item);
   }
 

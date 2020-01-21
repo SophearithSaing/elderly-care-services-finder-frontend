@@ -123,7 +123,7 @@ export class ElderHomeComponent implements OnInit {
 
     this.router.navigate(
       ['/result'],
-      { queryParams: { postalCode: this.postalCode, startDate: this.startDate, stopDate: this.stopDate, services: this.services } }
+      { queryParams: { postalCode: this.postalCode, startDate: this.startDate, stopDate: this.stopDate, dailyCare: this.newDailyCare, specialCare: this.newSpecialCare } }
     );
     // this.searchService.searchCaregivers(this.postalCode, this.startDate, this.stopDate, this.services);
 

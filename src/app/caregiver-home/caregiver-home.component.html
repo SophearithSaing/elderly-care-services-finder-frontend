@@ -1,3 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/caregiver-profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/requests">Requests</a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/history">History</a>
+      </li> -->
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click) = "editCalendar()">Schedule</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div id="home" style="background-image: url('https://www.visaplace.com/wp-content/uploads/2019/02/6150A2E5-C9AA-4014-B51B-CBA3D60BB39F.jpeg');">
 
   <div class="container text-center">
@@ -9,9 +30,9 @@
               <div class="pb-3">
                 <button class="btn btn-primary" routerLink="/caregiver-register" routerLinkActive="active">SEE REQUEST</button>
               </div>
-              <div class="pb-3">
-                <button class="btn btn-primary" routerLink="/caregiver-register" routerLinkActive="active">SEE HISTORY</button>
-              </div>
+              <!-- <div class="pb-3">
+                <button class="btn btn-primary" routerLink="/history" routerLinkActive="active">SEE HISTORY</button>
+              </div> -->
               <div class="pb-3">
                 <button class="btn btn-primary" routerLink="/caregiver-profile" routerLinkActive="active">Profile</button>
               </div>

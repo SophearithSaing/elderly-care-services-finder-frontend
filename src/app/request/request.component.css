@@ -18,7 +18,7 @@ p, h1 {
 }
 
 .example-header-image {
-  background-image: url('https://image1.masterfile.com/getImage/NjAwLTA2MzgyOTE5ZW4uMDAwMDAwMDA=AAhGMI/600-06382919en_Masterfile.jpg');
+  /* background-image: url('https://image1.masterfile.com/getImage/NjAwLTA2MzgyOTE5ZW4uMDAwMDAwMDA=AAhGMI/600-06382919en_Masterfile.jpg'); */
   background-size: cover;
   margin-right: 10px;
   align-self: left;

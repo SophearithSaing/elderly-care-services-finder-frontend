@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
-import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { mimeType } from "./mime-type.validator";
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { mimeType } from './mime-type.validator';
 
 import { NgbDatepickerConfig, NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,9 +9,14 @@ import { NgbDatepickerConfig, NgbCalendar, NgbDate, NgbDateStruct } from '@ng-bo
 // import { ElderInfo } from './Data/elders-info';
 // import { CaregiverInfo } from './Data/caregiver-info';
 
-import { SearchService } from "../services/search.service";
+import { SearchService } from '../services/search.service';
 import { Elder } from '../models/elder.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
+
 
 @Component({
   selector: 'app-elders-signup',
@@ -56,10 +61,10 @@ export class EldersSignupComponent implements OnInit {
 
   imagePreview: string;
 
-  query;
+  query: any;
   email: string;
 
-  imageFile;
+  imageFile: any;
 
 
   // constructor(public searchService: SearchService, public route: ActivatedRoute, private router: Router) { }
@@ -74,7 +79,6 @@ export class EldersSignupComponent implements OnInit {
 
   ngOnInit() {
 
-
     // get query params
     this.route.queryParamMap.subscribe(params => {
       this.query = { ...params.keys, ...params };
@@ -85,6 +89,13 @@ export class EldersSignupComponent implements OnInit {
     this.name.setValue(this.query.params.name);
     console.log(this.query);
     console.log(this.name.value);
+
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('elderEmail')) {
+        this.email = paramMap.get('elderEmail');
+      }
+    });
+    console.log(this.email);
 
     if (this.mode === 'update') {
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
@@ -202,10 +213,10 @@ export class EldersSignupComponent implements OnInit {
     console.log(this.image);
 
     const Data = new FormData();
-    Data.append("email", this.email);
-    Data.append("upload", file);
-    this.http.post('http://localhost:3000/api/upload', Data).subscribe((res) => {})
-    console.log('post ran')
+    Data.append('email', this.email);
+    Data.append('upload', file);
+    this.http.post(BACKEND_URL + 'upload', Data).subscribe((res) => {});
+    console.log('post image ran for ' + this.email);
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -227,7 +238,7 @@ export class EldersSignupComponent implements OnInit {
     console.log(data);
     console.log(this.imageFile);
     data.forEach((value, key) => {
-      console.log(key + ":" + value)
+      console.log(key + ':' + value)
     });
 
     const httpOptions = {
@@ -238,7 +249,7 @@ export class EldersSignupComponent implements OnInit {
 
     this.http
       .post<{ message: string }>(
-        "http://localhost:3000/api/profiles",
+        'http://localhost:3000/api/profiles',
         data,
         httpOptions
       )
@@ -268,7 +279,8 @@ export class EldersSignupComponent implements OnInit {
           // this.form.value.phoneNumber
           this.name.value,
           this.email,
-          this.birthDate.value,
+          // this.birthDate.value,
+          this.tsDate,
           this.gender.value,
           this.houseNumber.value,
           this.street.value,
@@ -281,7 +293,7 @@ export class EldersSignupComponent implements OnInit {
         );
 
       console.log('added');
-      this.router.navigate(['/elder-home']);
+      // this.router.navigate(['/elder-home']);
     } else {
       this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
       console.log('Running Update');
@@ -290,7 +302,8 @@ export class EldersSignupComponent implements OnInit {
           this.elder._id,
           this.name.value,
           this.email,
-          this.birthDate.value,
+          // this.birthDate.value,
+          this.tsDate,
           this.gender.value,
           this.houseNumber.value,
           this.street.value,

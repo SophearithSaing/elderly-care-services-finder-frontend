@@ -35,7 +35,7 @@ export class SearchService {
   private userUpdated = new Subject<User[]>();
 
   private schedule: Schedule;
-  private scheduleUpdate =   new Subject<Schedule[]>();
+  private scheduleUpdate = new Subject<Schedule[]>();
   constructor(private http: HttpClient) { }
 
   // add elder
@@ -53,8 +53,7 @@ export class SearchService {
     phoneNumber: string,
     imagePath: string,
   ) {
-    const elder =
-    {
+    const elder = {
       _id: null,
       name: name,
       email: email,
@@ -86,9 +85,8 @@ export class SearchService {
     // console.log(image);
     this.http
       // .post<{ message: string, postId: string }>('http://localhost:3000/api/elders', Data)
-      .post<{ message: string, postId: string }>( BACKEND_URL + 'elders', elder)
+      .post<{ message: string, postId: string }>(BACKEND_URL + 'elders', elder)
       .subscribe(responseData => {
-        console.log(responseData);
         // const id = responseData.postId;
         // elder._id = id;
         // this.elders.push(elder);
@@ -111,7 +109,7 @@ export class SearchService {
     phoneNumber: string,
     imagePath: string
   ) {
-    const elder= {
+    const elder = {
       _id: id,
       name: name,
       email: email,
@@ -143,7 +141,7 @@ export class SearchService {
     // Data.append("image", image);
     // console.log('running http://localhost:3000/api/elders/' + email);
     this.http
-      .patch( BACKEND_URL + "elders/" + email, elder)
+      .patch(BACKEND_URL + "elders/" + email, elder)
       .subscribe(response => {
         console.log(response);
         // const updatedUsers = [...this.elders];
@@ -155,7 +153,7 @@ export class SearchService {
   }
   // get one elder for update
   getElder(email: string) {
-    return this.http.get<{ _id: string, name: string, email: string, password: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string }>(
+    return this.http.get<{ _id: string, name: string, email: string, password: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string, imagePath: string }>(
       BACKEND_URL + "elders/" + email
     );
   }
@@ -200,7 +198,7 @@ export class SearchService {
   updateUser(id: string, name: string, email: string, password: string) {
     const user: User = { _id: id, name: name, email: email, password: password };
     this.http
-      .put( BACKEND_URL + "users/" + id, user)
+      .put(BACKEND_URL + "users/" + id, user)
       .subscribe(response => {
         const updatedUsers = [...this.users];
         const oldIndex = updatedUsers.findIndex(u => u._id === user._id);
@@ -356,55 +354,55 @@ export class SearchService {
     // };
     this.http
       .put(BACKEND_URL + "caregivers/" + id, availability)
-      .subscribe(response => {      });
+      .subscribe(response => { });
   }
 
-// add schedule
-addSchedule(
-  caregiverEmail: string,
-  availability: Array<any>
-) {
-  const schedule: Schedule =
-  {
-    _id: null,
-    caregiverEmail: caregiverEmail,
-    availability: availability
-  };
-  this.http
-    .post<{ message: string, scheduleId: string }>(BACKEND_URL + 'schedules', schedule)
-    .subscribe(responseData => {
-      const id = responseData.scheduleId;
-      schedule._id = id;
-    });
-}
-
-
-
-// get schedule
-getSchedule(email: string) {
-  return this.http.get<{ _id: string, caregiverEmail: string, availability: Array<any> }>(
-    BACKEND_URL + "schedules/" + email
-  );
-}
-
-// update schedule
-updateSchedule( id: string, email: string, availability: Array<any>) {
-  const schedule: Schedule = {
-    _id: id,
-    caregiverEmail: email,
-    availability: availability
+  // add schedule
+  addSchedule(
+    caregiverEmail: string,
+    availability: Array<any>
+  ) {
+    const schedule: Schedule =
+    {
+      _id: null,
+      caregiverEmail: caregiverEmail,
+      availability: availability
+    };
+    this.http
+      .post<{ message: string, scheduleId: string }>(BACKEND_URL + 'schedules', schedule)
+      .subscribe(responseData => {
+        const id = responseData.scheduleId;
+        schedule._id = id;
+      });
   }
-  this.http.put(BACKEND_URL + "schedules/" + email, schedule).subscribe(response => {});
-  console.log("update schedule ran")
-  console.log(availability);
-  console.log(schedule);
-}
+
+
+
+  // get schedule
+  getSchedule(email: string) {
+    return this.http.get<{ _id: string, caregiverEmail: string, availability: Array<any> }>(
+      BACKEND_URL + "schedules/" + email
+    );
+  }
+
+  // update schedule
+  updateSchedule(id: string, email: string, availability: Array<any>) {
+    const schedule: Schedule = {
+      _id: id,
+      caregiverEmail: email,
+      availability: availability
+    }
+    this.http.put(BACKEND_URL + "schedules/" + email, schedule).subscribe(response => { });
+    console.log("update schedule ran")
+    console.log(availability);
+    console.log(schedule);
+  }
 
 
 
   // get one caregiver
   getCaregiver(email: string) {
-    return this.http.get<{ _id: string, name: string, email: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string, services: string, certificate: string, experience: string, dailyPrice: number, monthlyPrice: number }>(
+    return this.http.get<{ _id: string, name: string, email: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string, services: string, certificate: string, experience: string, dailyPrice: number, monthlyPrice: number, imagePath: string }>(
       BACKEND_URL + "caregivers/" + email
     );
   }
@@ -418,10 +416,10 @@ updateSchedule( id: string, email: string, availability: Array<any>) {
       .get<{ users: any }>(
         BACKEND_URL + 'caregivers'
       );
-      // .subscribe((data) => {
-        // this.caregivers = data.users;
-        // this.caregiverUpdated.next([...this.caregivers]);
-      // });
+    // .subscribe((data) => {
+    // this.caregivers = data.users;
+    // this.caregiverUpdated.next([...this.caregivers]);
+    // });
 
   }
   getCaregiverUpdateListener() {
@@ -450,76 +448,80 @@ updateSchedule( id: string, email: string, availability: Array<any>) {
 
   searchCaregivers(postalCode: string, startDate: Date, stopDate: Date, services: Array<any>): any {
     this.http
-    .get<{ message: string; users: any }>(
-      BACKEND_URL + 'caregivers/',
-    )
-    .subscribe((data) => {
-      const postalSearch: Fuse.FuseOptions<any> = {
-        keys: ['postalCode'],
-      };
-      const fuse = new Fuse(data.users, postalSearch);
+      .get<{ message: string; users: any }>(
+        BACKEND_URL + 'caregivers/',
+      )
+      .subscribe((data) => {
+        const postalSearch: Fuse.FuseOptions<any> = {
+          keys: ['postalCode'],
+        };
+        const fuse = new Fuse(data.users, postalSearch);
 
-      this.results = fuse.search(`${postalCode}`);
-      console.log(this.results);
-      const dateSearch: Fuse.FuseOptions<any> = {
-        keys: ['schedule.startDate', 'schedule.stopDate'],
-      };
-      const newfuse = new Fuse(this.results, dateSearch);
-      this.results = newfuse.search(`${startDate}`);
-      console.log(`search for date ${startDate}`);
-      console.log(dateSearch);
-      console.log(this.results);
+        this.results = fuse.search(`${postalCode}`);
+        console.log(this.results);
+        const dateSearch: Fuse.FuseOptions<any> = {
+          keys: ['schedule.startDate', 'schedule.stopDate'],
+        };
+        const newfuse = new Fuse(this.results, dateSearch);
+        this.results = newfuse.search(`${startDate}`);
+        console.log(`search for date ${startDate}`);
+        console.log(dateSearch);
+        console.log(this.results);
 
-      return this.results;
-    });
+        return this.results;
+      });
   }
 
-  sendRequest(elderEmail: string, caregiverEmail: string, startDate: Date, stopDate: Date, requireInterview: boolean, status: boolean) {
+  sendRequest(elderEmail: string, caregiverEmail: string, elderName: string, caregiverName: string, startDate: Date, stopDate: Date, requireInterview: boolean, status: boolean) {
     const request: Request = {
       _id: null,
       elderEmail: elderEmail,
+      elderName,
       caregiverEmail: caregiverEmail,
+      caregiverName,
       startDate: startDate,
       stopDate: stopDate,
       requireInterview: requireInterview,
-      status: status,
+      status: null,
       rejectionReason: null
     };
     console.log(request);
     this.http
       .post<{ message: string, postId: string }>(BACKEND_URL + 'requests', request)
-      .subscribe(response => {});
+      .subscribe(response => { });
   }
 
   getRequests(email: string) {
-      return this.http
-        .get<{ requests: Array<any> }>(
-          BACKEND_URL + 'requests/' + email
-        );
-        // .subscribe((data) => {
-        // });
+    return this.http
+      .get<{ requests: Array<any> }>(
+        BACKEND_URL + 'requests/' + email
+      );
+    // .subscribe((data) => {
+    // });
   }
 
   getHistory(email: string) {
-      return this.http
-        .get<{ requests: Array<any> }>(
-          BACKEND_URL + 'history/' + email
-        );
-        // .subscribe((data) => {
-        // });
+    return this.http
+      .get<{ requests: Array<any> }>(
+        BACKEND_URL + 'history/' + email
+      );
+    // .subscribe((data) => {
+    // });
   }
 
   getRequest(id: string) {
-    return this.http.get<{ _id: string, elderEmail: string, caregiverEmail: string, startDate: Date,stopDate: Date, requireInterview: boolean, status: boolean }>(
+    return this.http.get<{ _id: string, elderEmail: string, caregiverEmail: string, startDate: Date, stopDate: Date, requireInterview: boolean, status: boolean }>(
       BACKEND_URL + "requests/" + id
     );
   }
 
-  updateRequest(item: Request, status: boolean, rejectionReason: string) {
+  updateRequest(item: Request, elderName: string, caregiverName: string, status: boolean, rejectionReason: string) {
     const request: Request = {
       _id: item._id,
       elderEmail: item.elderEmail,
+      elderName,
       caregiverEmail: item.caregiverEmail,
+      caregiverName,
       startDate: item.startDate,
       stopDate: item.stopDate,
       requireInterview: item.requireInterview,
@@ -530,7 +532,7 @@ updateSchedule( id: string, email: string, availability: Array<any>) {
     const url = BACKEND_URL + 'requests/' + item._id;
     this.http
       .patch<{ message: string, postId: string }>(url, request)
-      .subscribe(response => {});
+      .subscribe(response => { });
 
     const requestStartDate = new Date(request.startDate);
     const requestStopDate = new Date(request.stopDate);
@@ -541,17 +543,19 @@ updateSchedule( id: string, email: string, availability: Array<any>) {
     const history = {
       _id: null,
       elderEmail: request.elderEmail,
+      elderName,
       caregiverEmail: request.caregiverEmail,
+      caregiverName,
       startDate: request.startDate,
       stopDate: request.stopDate,
       requireInterview: request.requireInterview,
       rating: null,
       review: null
-    }
+    };
     console.log(history);
-      this.http
+    this.http
       .post<{ message: string, postId: string }>(BACKEND_URL + 'history/', history)
-      .subscribe(response => {});
+      .subscribe(response => { });
   }
 
   updateHistory(item, rating, review) {
@@ -565,10 +569,10 @@ updateSchedule( id: string, email: string, availability: Array<any>) {
       requireInterview: item.requireInterview,
       rating: rating,
       review: review
-    }
+    };
     console.log(history);
-      this.http
+    this.http
       .patch<{ message: string, postId: string }>(BACKEND_URL + 'history/' + item._id, history)
-      .subscribe(response => {});
+      .subscribe(response => { });
   }
 }

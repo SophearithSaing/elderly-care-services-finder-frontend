@@ -18,7 +18,7 @@ p {
 }
 
 .example-header-image {
-  background-image: url('https://i.pinimg.com/originals/13/bd/da/13bdda2a13d3ff3ee037d761e1419112.jpg');
+  /* background-image: url('https://i.pinimg.com/originals/13/bd/da/13bdda2a13d3ff3ee037d761e1419112.jpg'); */
   background-size: cover;
   margin-right: 10px;
   align-self: left;

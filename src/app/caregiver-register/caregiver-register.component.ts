@@ -52,18 +52,19 @@ export class CaregiverRegisterComponent implements OnInit {
       console.log(form.value.password + ' === ' + form.value.passwordConfirmation);
       this.confirmPassword = true;
       console.log(this.confirmPassword);
+      this.authService.createUser(form.value.email, form.value.password);
+      // form.resetForm();
+      // this.router.navigate(['/caregiver-login']);
+      this.router.navigate(
+        ['/caregiver-register', form.value.email],
+        { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
+      );
     } else if (form.value.password !== form.value.passwordConfirmation) {
       console.log(form.value.password + ' !== ' + form.value.passwordConfirmation);
       this.confirmPassword = false;
       console.log(this.confirmPassword);
     }
 
-    this.authService.createUser(form.value.email, form.value.password);
-    // form.resetForm();
-    // this.router.navigate(['/caregiver-login']);
-    this.router.navigate(
-      ['/caregiver-register', form.value.email],
-      { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
-    );
+
   }
 }

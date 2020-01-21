@@ -1,7 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/elder-home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#" routerLink="/elder-profile">Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/requests-status">Request Status</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLink="/history">History</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 <div class="container mt-5">
   <mat-card class="example-card">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
+      <div mat-card-avatar class="example-header-image">
+        <img src="{{imagePath}}" alt="" style="width: 100%; height: 100%;">
+      </div>
       <mat-card-title>{{name}}</mat-card-title>
       <mat-card-subtitle>Age: {{age}}, Gender: {{gender}}</mat-card-subtitle>
     </mat-card-header>

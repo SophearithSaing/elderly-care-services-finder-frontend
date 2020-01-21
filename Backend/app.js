@@ -9,13 +9,13 @@ const checkAuth = require('../Backend/middleware/check-auth');
 const multer = require("multer")
 // const upload = multer({ dest: 'images/' })
 const path = require("path");
-const { sendWelcomeEmail, sendUpdateEmail } = require('./email/email')
+const { sendWelcomeEmail, sendUpdateEmail, sendRequestEmail, sendResponseEmail } = require('./email/email')
 
 
 // connect to database
 mongoose
   .connect(
-    "mongodb+srv://admin:"+ process.env.MONGO_ATLAS_PW +"@cluster0-douoa.azure.mongodb.net/test-database?retryWrites=true&w=majority"
+    "mongodb+srv://admin:" + process.env.MONGO_ATLAS_PW + "@cluster0-douoa.azure.mongodb.net/test-database?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Connected to database!");
@@ -48,7 +48,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/", express.static(path.join(__dirname, "angular")));
 
 app.use((req, res, next) => {
@@ -97,7 +97,6 @@ const storage = multer.diskStorage({
 
 app.post('/api/upload', multer({ storage: storage }).single('upload'), (req, res) => {
   const url = req.protocol + "://" + req.get("host");
-  res.send();
   console.log('this ran')
   const path = new imagePath({
     email: req.body.email,
@@ -105,13 +104,12 @@ app.post('/api/upload', multer({ storage: storage }).single('upload'), (req, res
   });
   console.log(path);
   path
-      .save()
-      .then(response => {
-        res.status(201).json({
-          message: "user saved successfully",
-          imagePath: response
-        });
+    .save()
+    .then(response => {
+      res.status(201).json({
+        message: "image saved successfully"
       });
+    });
 })
 
 app.get("/api/upload/:email", (req, res, next) => {
@@ -127,24 +125,24 @@ app.get("/api/upload/:email", (req, res, next) => {
 
 // add rejections
 app.post("/api/rejections", (req, res, next) => {
-    const rejection = new Rejection({
-      caregiverEmail: req.body.caregiverEmail,
-      reason: req.body.reason
-    });
-    // save caregiver
-    rejection
-      .save()
-      .then(rejection => {
-        res.status(201).json({
-          message: "user saved successfully",
-          rejection: rejection
-        });
-      })
-      .catch(err => {
-        res.status(500).json({
-          error: err
-        });
+  const rejection = new Rejection({
+    caregiverEmail: req.body.caregiverEmail,
+    reason: req.body.reason
+  });
+  // save caregiver
+  rejection
+    .save()
+    .then(rejection => {
+      res.status(201).json({
+        message: "user saved successfully",
+        rejection: rejection
       });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
 });
 
 // get rejections
@@ -157,56 +155,106 @@ app.get("/api/rejections", (req, res, next) => {
 
 // get rejection
 app.get("/api/rejections/:email", (req, res, next) => {
-  Rejection.findOne({caregiverEmail: req.params.email}).then(document => {
+  Rejection.findOne({ caregiverEmail: req.params.email }).then(document => {
     res.status(200).json(document);
     console.log(document)
   });
 });
 
+// add services
+app.post("/api/services", (req, res, next) => {
+  const services = new Service({
+    dailyCare: req.body.dailyCare,
+    specialCare: req.body.specialCare
+  });
+  // save caregiver
+  services
+    .save()
+    .then(rejection => {
+      res.status(201).json({
+        message: "user saved successfully",
+        rejection: rejection
+      });
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
+});
+
+// get services
+app.get("/api/services", (req, res, next) => {
+  Service.find().then(document => {
+    res.status(200).json(document);
+    console.log(document)
+  });
+});
+
+app.get("/api/services/:id", (req, res, next) => {
+  Service.findOne({ _id: req.params.id }).then(document => {
+    res.status(200).json(document);
+    console.log(document)
+  });
+});
+
+// get rejection
+app.patch("/api/services/:id", (req, res, next) => {
+  const service = {
+    dailyCare: req.body.dailyCare,
+    specialCare: req.body.specialCare
+  }
+  Service.findOneAndUpdate({ _id: req.params.id }, { $set: { dailyCare: service.dailyCare, specialCare: service.specialCare } }).then(result => {
+    res.status(200).json({ message: "Update successful!", availability: schedule.availability });
+  });
+});
+
+
+
 // add caregivers
 app.post("/api/caregivers", (req, res, next) => {
   // encrpt the password
   // bcrypt.hash(req.body.password, 10).then(hash => {
-    // create caregiver model
-    const caregiver = new Caregiver({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      birthDate: req.body.birthDate,
-      gender: req.body.gender,
-      houseNumber: req.body.houseNumber,
-      street: req.body.street,
-      subDistrict: req.body.subDistrict,
-      district: req.body.district,
-      province: req.body.province,
-      postalCode: req.body.postalCode,
-      phoneNumber: req.body.phoneNumber,
-      services: req.body.services,
-      certificate: req.body.certificate,
-      experience: req.body.experience,
-      dailyPrice: req.body.dailyPrice,
-      monthlyPrice: req.body.monthlyPrice,
-      imagePath: req.body.imagePath,
-      schedule: req.body.schedule,
-      approval: req.body.approval
-    });
-    // save caregiver
-    caregiver
-      .save()
-      .then(createdCaregiver => {
-        res.status(201).json({
-          message: "user saved successfully",
-          caregiver: createdCaregiver
-        });
-        console.log('new caregiver created')
-        console.log(createdCaregiver)
-        sendWelcomeEmail(caregiver.email, caregiver.name);
-      })
-      .catch(err => {
-        res.status(500).json({
-          error: err
-        });
+  // create caregiver model
+  const caregiver = new Caregiver({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    birthDate: req.body.birthDate,
+    gender: req.body.gender,
+    houseNumber: req.body.houseNumber,
+    street: req.body.street,
+    subDistrict: req.body.subDistrict,
+    district: req.body.district,
+    province: req.body.province,
+    postalCode: req.body.postalCode,
+    phoneNumber: req.body.phoneNumber,
+    services: req.body.services,
+    certificate: req.body.certificate,
+    experience: req.body.experience,
+    dailyPrice: req.body.dailyPrice,
+    monthlyPrice: req.body.monthlyPrice,
+    imagePath: req.body.imagePath,
+    schedule: req.body.schedule,
+    approval: req.body.approval
+  });
+  // save caregiver
+  caregiver
+    .save()
+    .then(createdCaregiver => {
+      res.status(201).json({
+        message: "user saved successfully",
+        caregiver: createdCaregiver
       });
+      console.log('new caregiver created')
+      console.log(createdCaregiver)
+      sendWelcomeEmail(caregiver.email, caregiver.name);
+    })
+    .catch(err => {
+      res.status(500).json({
+        error: err
+      });
+    });
   // });
 });
 // get caregivers
@@ -371,15 +419,17 @@ app.post("/api/profiles", multer({ storage: storage }).single('profilepic'), (re
 
 // add elders
 // app.post("/api/elders", multer({ storage: storage }).single("image"), (req, res, next) => {
-  app.post("/api/elders", upload.single('image'), (req, res, next) => {
-  // encrpt the password
-  bcrypt.hash(req.body.password, 10).then(hash => {
-    const url = req.protocol + "://" + req.get("host");
-    // create caregiver model
+app.post("/api/elders", (req, res, next) => {
+  let path;
+  imagePath.findOne({ email: req.body.email }).then(document => {
+    console.log(document);
+    path = document.path;
+    console.log('path is ' + path);
+
+    // create elder model
     const elder = new Elder({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
       birthDate: req.body.birthDate,
       gender: req.body.gender,
       houseNumber: req.body.houseNumber,
@@ -389,18 +439,14 @@ app.post("/api/profiles", multer({ storage: storage }).single('profilepic'), (re
       province: req.body.province,
       postalCode: req.body.postalCode,
       phoneNumber: req.body.phoneNumber,
-      // imagePath: req.body.filename
-      imagePath: url + "/images/" + req.file
+      imagePath: path
     });
-    // save elder
-    console.log('file is'+req.busboy.file)
+    console.log(elder);
     elder
       .save()
       .then(createdElder => {
         res.status(201).json({
           message: "User saved successfully",
-          // elderId: createdElder._id,
-          // imagePath: createdElder.imagePath
           elder: createdElder
         })
         sendWelcomeEmail(elder.email, elder.name);
@@ -411,7 +457,6 @@ app.post("/api/profiles", multer({ storage: storage }).single('profilepic'), (re
         });
       });
   });
-
 });
 // get elders
 app.get("/api/elders/", (req, res, next) => {
@@ -477,9 +522,9 @@ app.patch("/api/elders/:email", multer({ storage: storage }).single("image"), (r
 
 app.post("/api/history", (req, res, next) => {
   const history = new History({
-    // caregiverName: req.body.CaregiverName,
+    caregiverName: req.body.CaregiverName,
     caregiverEmail: req.body.caregiverEmail,
-    // elderName: req.body.elderName,
+    elderName: req.body.elderName,
     elderEmail: req.body.elderEmail,
     startDate: req.body.startDate,
     stopDate: req.body.stopDate,
@@ -498,7 +543,7 @@ app.post("/api/history", (req, res, next) => {
 
 app.get("/api/requests/:email", (req, res, next) => {
   // Request.find({ caregiverEmail: req.params.email }).then(document => {
-    Request.find( { $or: [ { caregiverEmail: req.params.email }, { elderEmail: req.params.email } ] } ).then(document => {
+  Request.find({ $or: [{ caregiverEmail: req.params.email }, { elderEmail: req.params.email }] }).then(document => {
     // res.status(200).json({
     //   message: "Fetched successfully!",
     //   user: document
@@ -509,7 +554,7 @@ app.get("/api/requests/:email", (req, res, next) => {
 });
 
 app.get("/api/history/:email", (req, res, next) => {
-  History.find({ elderEmail: req.params.email }).then(document => {
+  History.find({ $or: [{ caregiverEmail: req.params.email }, { elderEmail: req.params.email }] }).then(document => {
     // res.status(200).json({
     //   message: "Fetched successfully!",
     //   user: document
@@ -522,13 +567,13 @@ app.get("/api/history/:email", (req, res, next) => {
 app.patch("/api/requests/:id", (req, res, next) => {
   const id = req.body._id;
   console.log(id);
-  const request = new Request ({
+  const request = new Request({
     _id: req.body._id,
     status: req.body.status,
     rejectionReason: req.body.rejectionReason
   });
-  Request.findByIdAndUpdate(id, { $set: { status: req.body.status }}).then(result => {
-  // Request.updateOne({ _id: req.body._id }, request).then(result => {
+  Request.findByIdAndUpdate(id, { $set: { status: req.body.status } }).then(result => {
+    // Request.updateOne({ _id: req.body._id }, request).then(result => {
     res.status(200).json({ message: "Update successful!" });
     console.log('updated')
     console.log(request);
@@ -538,12 +583,12 @@ app.patch("/api/requests/:id", (req, res, next) => {
 app.patch("/api/history/:id", (req, res, next) => {
   const id = req.body._id;
   console.log(id);
-  const history = new History ({
+  const history = new History({
     rating: req.body.rating,
     review: req.body.review
   });
-  History.findByIdAndUpdate(id, { $set: { rating: history.rating, review: history.review }}).then(result => {
-  // Request.updateOne({ _id: req.body._id }, request).then(result => {
+  History.findByIdAndUpdate(id, { $set: { rating: history.rating, review: history.review } }).then(result => {
+    // Request.updateOne({ _id: req.body._id }, request).then(result => {
     res.status(200).json({ message: "Update successful!" });
     console.log('updated')
     console.log(history);
@@ -663,20 +708,25 @@ app.post("/api/authusers/login", (req, res, next) => {
 });
 
 app.post("/api/requests", (req, res, next) => {
-  const request = new Request ({
+  const request = new Request({
     elderEmail: req.body.elderEmail,
+    elderName: req.body.elderName,
     caregiverEmail: req.body.caregiverEmail,
+    caregiverName: req.body.caregiverName,
     startDate: req.body.startDate,
     stopDate: req.body.stopDate,
+    status: req.body.status,
     requireInterview: req.body.requireInterview,
     rejectionReason: req.body.rejectionReason
   });
-  console.log(user);
+  console.log(request);
+  sendRequestEmail(request.caregiverEmail, request.caregiverName, request.elderEmail, request.elderName, request.startDate, request.stopDate, request.requireInterview);
   request.save().then(createdRequest => {
     res.status(201).json({
       message: "request saved successfully",
       request: createdRequest
     });
+
   });
 });
 

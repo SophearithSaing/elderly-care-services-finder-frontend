@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ElderProfileComponent implements OnInit {
 
-  elder: Elder;
+  elder;
   elderEmail: string;
   name: string;
   email: string;
@@ -28,6 +28,7 @@ export class ElderProfileComponent implements OnInit {
   province: string;
   postalCode: string;
   phoneNumber: string;
+  imagePath: string;
 
   year = new Date().getFullYear();
   age;
@@ -38,6 +39,7 @@ export class ElderProfileComponent implements OnInit {
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
     // console.log('User email is ' + this.elderEmail);
+    // this.elderEmail = 'john@gmail.com';
     this.searchService.getElder(this.elderEmail).subscribe((Data) => {
       this.elder = {
         _id: Data._id,
@@ -52,7 +54,7 @@ export class ElderProfileComponent implements OnInit {
         province: Data.province,
         postalCode: Data.postalCode,
         phoneNumber: Data.phoneNumber,
-        imagePath: null
+        imagePath: Data.imagePath
       };
       this.name = this.elder.name;
       this.birthDate = this.elder.birthDate;
@@ -66,6 +68,7 @@ export class ElderProfileComponent implements OnInit {
       this.province = this.elder.province;
       this.postalCode = this.elder.postalCode;
       this.phoneNumber = this.elder.phoneNumber;
+      this.imagePath = this.elder.imagePath;
 
       console.log(this.elder);
     });

@@ -53,19 +53,20 @@ export class ElderRegisterComponent implements OnInit {
       console.log(form.value.password + ' === ' + form.value.passwordConfirmation);
       this.confirmPassword = true;
       console.log(this.confirmPassword);
+      // create auth user
+      this.authService.createUser(form.value.email, form.value.password);
+      // navigate to fill information
+      this.router.navigate(
+        ['/elder-register', form.value.email],
+        { queryParams: { mode: 'add', name: form.value.name } }
+      );
     } else if (form.value.password !== form.value.passwordConfirmation) {
       console.log(form.value.password + ' !== ' + form.value.passwordConfirmation);
       this.confirmPassword = false;
       console.log(this.confirmPassword);
     }
 
-    // create auth user
-    this.authService.createUser(form.value.email, form.value.password);
-    // navigate to fill information
-    this.router.navigate(
-      ['/elder-register', form.value.email],
-      { queryParams: { mode: 'add', name: form.value.name } }
-    );
+
   }
 
 

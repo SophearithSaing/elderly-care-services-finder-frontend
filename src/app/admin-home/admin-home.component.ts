@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdmminService } from '../services/admin.service';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -15,11 +15,12 @@ export class AdminHomeComponent implements OnInit {
   reason: string = null;
 
   accept = true;
-  name: string;
+  id: string;
   email: string;
+  name: string;
   show = false;
 
-  constructor(private admin: AdmminService) { }
+  constructor(private admin: AdminService) { }
 
   ngOnInit() {
     this.admin.GetCaregivers().subscribe((data) => {
@@ -47,18 +48,19 @@ export class AdminHomeComponent implements OnInit {
   }
 
   acceptRequest(email: string) {
-    this.admin.UpdateCGStatus(email, true);
+    this.admin.UpdateCGStatus(this.id, email, true);
     this.accept = true;
   }
 
   rejectRequest(email: string) {
     this.accept = false;
-    this.admin.UpdateCGStatus(email, false);
+    this.admin.UpdateCGStatus(this.id, email, false);
     this.admin.AddReason(email, this.reason);
     console.log(this.reason);
   }
 
-  setValue(name: string, email: string) {
+  setValue(id: string, name: string, email: string) {
+    this.id = id;
     this.name = name;
     this.email = email;
   }
