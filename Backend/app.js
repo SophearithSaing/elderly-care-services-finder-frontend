@@ -123,6 +123,18 @@ app.get("/api/upload/:email", (req, res, next) => {
   });
 });
 
+app.patch("/api/upload/:email", multer({ storage: storage }).single('upload'), (req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
+  const path = url + '/images/' + req.file.filename
+  // const path = new imagePath({
+  //   email: req.body.email,
+  //   path: url + '/images/' + req.file.filename
+  // });
+  Service.findOneAndUpdate({ email: req.params.email }, { $set: { path: path } }).then(result => {
+    res.status(200).json({ message: "Update successful!", availability: schedule.availability });
+  });
+});
+
 // add rejections
 app.post("/api/rejections", (req, res, next) => {
   const rejection = new Rejection({
@@ -213,8 +225,11 @@ app.patch("/api/services/:id", (req, res, next) => {
 
 // add caregivers
 app.post("/api/caregivers", (req, res, next) => {
-  // encrpt the password
-  // bcrypt.hash(req.body.password, 10).then(hash => {
+  let path;
+  imagePath.findOne({ email: req.body.email }).then(document => {
+    console.log(document);
+    path = document.path;
+    console.log('path is ' + path);
   // create caregiver model
   const caregiver = new Caregiver({
     name: req.body.name,
@@ -234,7 +249,7 @@ app.post("/api/caregivers", (req, res, next) => {
     experience: req.body.experience,
     dailyPrice: req.body.dailyPrice,
     monthlyPrice: req.body.monthlyPrice,
-    imagePath: req.body.imagePath,
+    imagePath: path,
     schedule: req.body.schedule,
     approval: req.body.approval
   });
@@ -255,7 +270,7 @@ app.post("/api/caregivers", (req, res, next) => {
         error: err
       });
     });
-  // });
+  });
 });
 // get caregivers
 app.get("/api/caregivers", (req, res, next) => {
@@ -311,6 +326,11 @@ app.get("/api/caregivers/:postalCode", (req, res, next) => {
 
 // update caregivers
 app.patch("/api/caregivers/:email", (req, res, next) => {
+  let path;
+  imagePath.findOne({ email: req.body.email }).then(document => {
+    console.log(document);
+    path = document.path;
+    console.log('path is ' + path);
   const caregiver = new Caregiver({
     _id: req.body._id,
     name: req.body.name,
@@ -330,7 +350,7 @@ app.patch("/api/caregivers/:email", (req, res, next) => {
     experience: req.body.experience,
     dailyPrice: req.body.dailyPrice,
     monthlyPrice: req.body.monthlyPrice,
-    imagePath: req.body.imagePath,
+    imagePath: path,
     schedule: req.body.availability,
     approval: req.body.approval
   });
@@ -340,6 +360,7 @@ app.patch("/api/caregivers/:email", (req, res, next) => {
   console.log('new caregiver');
   console.log(caregiver);
   sendUpdateEmail(caregiver.email, caregiver.name);
+  });
 });
 
 

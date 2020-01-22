@@ -82,6 +82,7 @@ export class CaregiverProfileComponent implements OnInit {
       this.experience = this.caregiver.experience;
       this.dailyPrice = this.caregiver.dailyPrice;
       this.monthlyPrice = this.caregiver.monthlyPrice;
+      this.imagePath = this.caregiver.imagePath;
 
       console.log(this.caregiver);
     });
@@ -94,11 +95,11 @@ export class CaregiverProfileComponent implements OnInit {
       );
   }
 
-  editCalendar() {
-    this.id = this.authService.getUserId();
-    console.log('id is ' + this.id);
-    this.router.navigate(['/calendar/' + this.id]);
-  }
+  // editCalendar() {
+  //   this.id = this.authService.getUserId();
+  //   console.log('id is ' + this.id);
+  //   this.router.navigate(['/calendar/' + this.id]);
+  // }
 
 }
 

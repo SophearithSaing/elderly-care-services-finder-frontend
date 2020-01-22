@@ -1,16 +1,16 @@
 const sgMail = require('@sendgrid/mail');
-const sendGridAPIKey = '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';
+const sendGridAPIKey = '';
 
 sgMail.setApiKey(sendGridAPIKey);
 
-const msg = {
-  to: 'sophearithsaing123@gmail.com',
-  from: 'test@example.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
-  // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-};
-sgMail.send(msg);
+// const msg = {
+//   to: 'sophearithsaing123@gmail.com',
+//   from: 'test@example.com',
+//   subject: 'Sending with Twilio SendGrid is Fun',
+//   text: 'and easy to do anywhere, even with Node.js',
+//   // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+// };
+// sgMail.send(msg);
 
 const sendWelcomeEmail = (email, name) => {
   console.log('sending to ' + email + ' for ' + name);

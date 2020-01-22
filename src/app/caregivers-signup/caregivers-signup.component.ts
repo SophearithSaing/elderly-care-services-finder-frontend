@@ -67,8 +67,8 @@ export class CaregiversSignupComponent implements OnInit {
     console.log(this.name.value);
 
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('elderEmail')) {
-        this.email = paramMap.get('elderEmail');
+      if (paramMap.has('caregiverEmail')) {
+        this.email = paramMap.get('caregiverEmail');
       }
     });
 
@@ -157,8 +157,14 @@ export class CaregiversSignupComponent implements OnInit {
     const Data = new FormData();
     Data.append('email', this.email);
     Data.append('upload', file);
-    this.http.post(BACKEND_URL + 'upload', Data).subscribe((res) => {});
-    console.log('post image ran for ' + this.email);
+    if (this.mode === 'add') {
+      this.http.post(BACKEND_URL + 'upload', Data).subscribe((res) => {});
+      console.log('post image ran for ' + this.email);
+    } else {
+      this.http.patch(BACKEND_URL + 'upload/' + this.email, Data).subscribe((res) => {});
+      console.log('update image ran for ' + this.email);
+    }
+
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -239,7 +245,9 @@ export class CaregiversSignupComponent implements OnInit {
         this.image.value,
       );
       console.log('updated');
-      this.router.navigate(['/caregiver-profile']);
+      setTimeout(() => {
+        this.router.navigate(['/caregiver-profile']);
+      }, 2000);
     }
     // form.resetForm();
   }

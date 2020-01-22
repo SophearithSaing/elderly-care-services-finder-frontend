@@ -13,15 +13,16 @@ export class CaregiverHomeComponent implements OnInit {
 
   id: string;
   caregiver: Caregiver;
+  email: string;
 
   constructor(public searchService: SearchService , public authService: AuthService, public router: Router) { }
 
   ngOnInit() {
-
+    this.email = this.authService.getUserId();
   }
-  editCalendar() {
-    this.id = this.authService.getUserId();
-    console.log('id is ' + this.id);
-    this.router.navigate(['/calendar/' + this.id]);
-  }
+  // editCalendar() {
+  //   this.id = this.authService.getUserId();
+  //   console.log('id is ' + this.id);
+  //   this.router.navigate(['/calendar/' + this.id]);
+  // }
 }

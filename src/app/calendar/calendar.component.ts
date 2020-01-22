@@ -133,6 +133,11 @@ export class CalendarComponent implements OnInit {
       startDate: this.startDate,
       stopDate: this.stopDate
     });
+    const newElement = {
+      startDate: `${this.startDate.getDate()}/${this.startDate.getMonth() + 1}/${this.startDate.getFullYear()}`,
+      stopDate: `${this.stopDate.getDate()}/${this.stopDate.getMonth() + 1}/${this.stopDate.getFullYear()}`
+    };
+    this.availabilityString.push(newElement);
     console.log('data after pushed');
     console.log(this.availability);
     if (this.mode === 'add') {
@@ -140,7 +145,6 @@ export class CalendarComponent implements OnInit {
       this.mode = 'update';
     } else if (this.mode === 'update') {
       this.searchService.updateSchedule(this.id, this.email, this.availability);
-
     }
     console.log("update for user " + this.email);
 

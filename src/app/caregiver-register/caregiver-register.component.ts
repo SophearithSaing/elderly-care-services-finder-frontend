@@ -16,7 +16,7 @@ export class CaregiverRegisterComponent implements OnInit {
   private caregiverId: string;
   private mode = "create";
 
-  confirmPassword = true;
+  confirmPassword: boolean = null;
 
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
@@ -65,6 +65,9 @@ export class CaregiverRegisterComponent implements OnInit {
       console.log(this.confirmPassword);
     }
 
+  }
 
+  close() {
+    this.confirmPassword = null;
   }
 }

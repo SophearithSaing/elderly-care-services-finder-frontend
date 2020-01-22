@@ -5,6 +5,10 @@ import { SearchService } from '../services/search.service';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
+import { environment } from 'src/environments/environment';
+
+const BACKEND_URL = environment.apiUrl;
+
 @Component({
   selector: 'app-caregiver-services',
   templateUrl: './caregiver-services.component.html',
@@ -89,7 +93,7 @@ export class CaregiverServicesComponent implements OnInit {
       };
       console.log(caregiver);
       this.http
-        .patch("http://localhost:3000/api/caregivers/" + email, caregiver)
+        .patch(BACKEND_URL + "caregivers/" + email, caregiver)
         .subscribe(response => {
           // const updatedCaregiver = [...this.caregivers];
           // const oldIndex = updatedCaregiver.findIndex(u => u._id === caregiver._id);
@@ -111,7 +115,7 @@ export class CaregiverServicesComponent implements OnInit {
     console.log(this.monthlyPrice);
     console.log(this.services);
     this.UpdatePriceServices(this.email, this.services, this.dailyPrice, this.monthlyPrice);
-    this.router.navigate(['/caregiver-home']);
+    this.router.navigate(['/caregiver-login']);
   }
 
 
