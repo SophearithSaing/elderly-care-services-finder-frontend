@@ -1,3 +1,38 @@
+/* css for header */
+.header-logo {
+  flex: 1;
+}
+
+.header-logo img {
+  height: 50px;
+}
+
+li.nav-item a {
+  color: #000;
+}
+
+li.nav-item {
+  padding: 1px 20px;
+  border-radius: 13px;
+  margin: 0 10px;
+}
+
+li.nav-item.active {
+  background: rgb(2, 216, 66);
+}
+
+li.nav-item.active a {
+  color: white;
+}
+
+li.nav-item:hover {
+  background: rgb(2, 216, 66);
+}
+
+li.nav-item:hover a {
+  color: #fff;
+}
+
 h1, p {
   font-family: 'Ubuntu', sans-serif;
 }
@@ -26,9 +61,7 @@ h1, p {
   min-width: 130px;
   height: 35px;
   border-radius: 21px;
-  /* background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2); */
-  background: rgb(95,93,244);
-  background: linear-gradient(90deg, rgba(95,93,244,1) 0%, rgba(81,116,194,1) 59%, rgba(0,181,255,1) 100%);
+  background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2);
   position: relative;
   z-index: 1;
 

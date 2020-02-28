@@ -4,6 +4,9 @@
         <div class="justify-content-center">
             <form (submit)="onRegisterElder(postForm)" #postForm="ngForm">
               <span class="login-form-title">ELDER REGISTER</span>
+              <div class="form-group alert alert-danger" role="alert" *ngIf="userExisted === true">
+                This user already existed!
+              </div>
               <div class="form-group">
                   <input
                   type="text"
@@ -36,6 +39,7 @@
                 name="password"
                 ngModel
                 #password="ngModel"
+                (click)="close()"
                 >
               </div>
               <div class="form-group">
@@ -46,6 +50,7 @@
                 name="passwordConfirmation"
                 ngModel
                 #passwordConfirmation="ngModel"
+                (click)="close()"
                 >
               </div>
               <div class="form-group container-login100-form-btn">

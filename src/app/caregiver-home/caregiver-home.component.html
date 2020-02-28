@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
@@ -20,17 +20,37 @@
       </li>
     </ul>
   </div>
+</nav> -->
+
+<nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
+  <div _ngcontent-vuo-c3="" class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="header-logo">
+          <img src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.0-9/79731930_137989890973179_6631381564599042048_n.png?_nc_cat=104&_nc_ohc=KPi8-ipnoqsAQnH6PyVV_Tdfqn0EIo9Thh2OSloW_ETyslvY78sLBCk_A&_nc_ht=scontent.fbkk12-2.fna&oh=96636c40577e051798bef5ac5c7d4404&oe=5E68D64D">
+      </div>
+      <ul _ngcontent-vuo-c3="" class="navbar-nav">
+          <li _ngcontent-vuo-c3="" class="nav-item active"><a _ngcontent-vuo-c3="" class="nav-link">Home <span _ngcontent-vuo-c3="" class="sr-only">(current)</span></a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/caregiver-profile">Profile</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/requests">Requests</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/services', email]"routerLinkActive="router-link-active">Services</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/calendar', email]"routerLinkActive="router-link-active">Schedule</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/home">Logout</a></li>
+      </ul>
+  </div>
 </nav>
+
 <div id="home" style="background-image: url('https://www.visaplace.com/wp-content/uploads/2019/02/6150A2E5-C9AA-4014-B51B-CBA3D60BB39F.jpeg');">
+
 
   <div class="container text-center">
     <!-- <div class="row"> -->
-          <h1 class="display-4">Welcome Back {{id}}</h1>
+          <h1 class="display-4">Welcome Back {{name}}</h1>
+          <h1 *ngIf="approval === null">Your Request is Pending</h1>
           <div class="pt-5">
             <div class="col-md-12">
-              <h3 class="pb-3">You Currently Have 0 Request</h3>
+              <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1" >You Currently Have {{requestNumber}} Request</h3>
+              <h3 class="pb-3" *ngIf="requestNumber > 1">You Currently Have {{requestNumber}} Requests</h3>
               <div class="pb-3">
-                <button class="btn btn-primary" routerLink="/caregiver-register" routerLinkActive="active">SEE REQUEST</button>
+                <button class="btn btn-primary" routerLink="/requests" routerLinkActive="active">SEE REQUEST</button>
               </div>
               <!-- <div class="pb-3">
                 <button class="btn btn-primary" routerLink="/history" routerLinkActive="active">SEE HISTORY</button>

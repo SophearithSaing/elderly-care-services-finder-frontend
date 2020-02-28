@@ -116,6 +116,8 @@ export class AdminServicesComponent implements OnInit {
       this.dailyCare.splice(index, 1);
     });
     console.log(this.dailyCare);
+
+    this.undo = true;
   }
 
   removeSCItem() {

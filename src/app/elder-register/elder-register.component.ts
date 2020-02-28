@@ -15,15 +15,25 @@ import { AuthService } from '../auth/auth.service';
 export class ElderRegisterComponent implements OnInit {
 
   elder: Elder;
+  elders = [];
+  elderEmails = [];
   private elderId: string;
   private mode = "create";
 
-  confirmPassword = true;
+  confirmPassword: boolean = null;
+  userExisted = false;
 
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
 
   ngOnInit() {
+    this.searchService.getElders().subscribe(data => {
+      this.elders = data.users;
+      this.elders.forEach(element => {
+        const email = element.email;
+        this.elderEmails.push(email);
+      });
+    });
   }
   onRegisterElder(form: NgForm) {
     if (form.invalid) {
@@ -53,20 +63,32 @@ export class ElderRegisterComponent implements OnInit {
       console.log(form.value.password + ' === ' + form.value.passwordConfirmation);
       this.confirmPassword = true;
       console.log(this.confirmPassword);
-      // create auth user
-      this.authService.createUser(form.value.email, form.value.password);
-      // navigate to fill information
-      this.router.navigate(
-        ['/elder-register', form.value.email],
-        { queryParams: { mode: 'add', name: form.value.name } }
-      );
+
+      this.elderEmails.forEach(element => {
+        if (form.value.email === element) {
+          this.userExisted = true;
+        }
+      });
+
+      if (this.userExisted === false) {
+        // create auth user
+        this.authService.createUser(form.value.email, form.value.password);
+        // navigate to fill information
+        this.router.navigate(
+          ['/elder-register', form.value.email],
+          { queryParams: { mode: 'add', name: form.value.name } }
+        );
+      }
+
     } else if (form.value.password !== form.value.passwordConfirmation) {
       console.log(form.value.password + ' !== ' + form.value.passwordConfirmation);
       this.confirmPassword = false;
       console.log(this.confirmPassword);
     }
+  }
 
-
+  close() {
+    this.confirmPassword = null;
   }
 
 

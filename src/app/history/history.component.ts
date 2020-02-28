@@ -29,8 +29,8 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.elderEmail = this.authService.getUserId();
-    this.elderEmail = 'john@mail.com';
+    this.elderEmail = this.authService.getUserId();
+    // this.elderEmail = 'john@mail.com';
 
     this.search.getHistory(this.elderEmail).subscribe((data) => {
       this.history = data;

@@ -13,14 +13,24 @@ import { AuthService } from '../auth/auth.service';
 })
 export class CaregiverRegisterComponent implements OnInit {
   caregiver: Caregiver;
+  caregivers = [];
+  cgEmails = [];
   private caregiverId: string;
   private mode = "create";
 
   confirmPassword: boolean = null;
+  userExisted = false;
 
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
   ngOnInit() {
+    this.searchService.getCaregivers().subscribe(data => {
+      this.caregivers = data.users;
+      this.caregivers.forEach(element => {
+        const email = element.email;
+        this.cgEmails.push(email);
+      });
+    });
   }
   onRegisterCaregiver(form: NgForm) {
     if (form.invalid) {
@@ -52,13 +62,26 @@ export class CaregiverRegisterComponent implements OnInit {
       console.log(form.value.password + ' === ' + form.value.passwordConfirmation);
       this.confirmPassword = true;
       console.log(this.confirmPassword);
-      this.authService.createUser(form.value.email, form.value.password);
-      // form.resetForm();
-      // this.router.navigate(['/caregiver-login']);
-      this.router.navigate(
-        ['/caregiver-register', form.value.email],
-        { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
-      );
+
+      console.log(this.userExisted);
+      console.log(this.cgEmails);
+      this.cgEmails.forEach(element => {
+        if (form.value.email === element) {
+          console.log(form.value.email + ' = ' + element);
+          this.userExisted = true;
+        }
+      });
+      console.log(this.userExisted);
+      if (this.userExisted === false) {
+        this.authService.createUser(form.value.email, form.value.password);
+        // form.resetForm();
+        // this.router.navigate(['/caregiver-login']);
+        this.router.navigate(
+          ['/caregiver-register', form.value.email],
+          { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
+        );
+      }
+
     } else if (form.value.password !== form.value.passwordConfirmation) {
       console.log(form.value.password + ' !== ' + form.value.passwordConfirmation);
       this.confirmPassword = false;
@@ -69,5 +92,9 @@ export class CaregiverRegisterComponent implements OnInit {
 
   close() {
     this.confirmPassword = null;
+  }
+
+  resetValidation() {
+    this.userExisted = false;
   }
 }

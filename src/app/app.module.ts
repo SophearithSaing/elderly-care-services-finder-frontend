@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -34,6 +34,7 @@ import { ElderLoginComponent } from './auth/elder-login/elder-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 import {MatExpansionModule} from '@angular/material/expansion';
@@ -53,14 +54,18 @@ import { RequestStatusComponent } from './request-status/request-status.componen
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { AdminApprovalComponent } from './admin-approval/admin-approval.component';
 import { AdminServicesComponent } from './admin-services/admin-services.component';
+import { AuthInterceptor } from './auth/auth-interceptor';
+import { AdminAllusersComponent } from './admin-allusers/admin-allusers.component';
+import { ChatAppComponent } from './chat-app/chat-app.component';
 
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminHomeComponent },
+  { path: 'admin-allusers', component: AdminAllusersComponent },
   { path: 'admin-approval', component: AdminApprovalComponent },
   { path: 'admin-services', component: AdminServicesComponent, canActivate: [AuthGuard] },
-  { path: 'caregiver-home', component: CaregiverHomeComponent, canActivate: [AuthGuard] },
+  { path: 'caregiver-home', component: CaregiverHomeComponent },
   { path: 'elder-home', component: ElderHomeComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'caregiver-login', component: CaregiverLoginComponent },
@@ -86,8 +91,9 @@ const appRoutes: Routes = [
   { path: 'requests', component: RequestComponent, canActivate: [AuthGuard]},
   { path: 'requests-status', component: RequestStatusComponent, canActivate: [AuthGuard]},
   // { path: 'calendar/:email', component: CalendarComponent, canActivate: [AuthGuard]},
-  { path: 'calendar/:email', component: CalendarComponent, canActivate: [AuthGuard]},
+  { path: 'calendar/:email', component: CalendarComponent},
   { path: 'services/:email', component: CaregiverServicesComponent },
+  { path: 'chat-app', component: ChatAppComponent },
   { path: '',
     redirectTo: '/home',
     pathMatch: 'full'
@@ -124,7 +130,9 @@ const appRoutes: Routes = [
     RequestStatusComponent,
     AdminHomeComponent,
     AdminApprovalComponent,
-    AdminServicesComponent
+    AdminServicesComponent,
+    AdminAllusersComponent,
+    ChatAppComponent
   ],
   imports: [
     BrowserModule,
@@ -143,6 +151,7 @@ const appRoutes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatSelectModule,
     MatInputModule,
     MatCardModule,
     MatCheckboxModule,
@@ -152,7 +161,10 @@ const appRoutes: Routes = [
     MatGridListModule,
     MatButtonModule
   ],
-  providers: [AuthGuard, MatDatepickerModule],
+  providers: [
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

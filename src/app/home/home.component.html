@@ -14,8 +14,8 @@
         <button class="btn btn-primary" (click)='caregiver()'>CAREGIVER</button>
       </div>
       <div class="col-md-6" *ngIf="user === 'caregiver'">
-        <h1>10</h1>
-        <p>Currently, 10 caregivers join us!</p>
+        <h1>{{caregiverNumber}}</h1>
+        <p>Currently, {{caregiverNumber}} caregivers join us!</p>
         <button class="btn btn-primary" type="submit" routerLink="/caregiver-register" routerLinkActive="active">JOIN US</button>
         <br>
         <p class="pt-5">You already have an account?</p>
@@ -28,8 +28,8 @@
         <button class="btn btn-success" (click)='elder()'>ELDER</button>
       </div>
       <div class="col-md-6" *ngIf="user === 'elder'">
-        <h1>100</h1>
-        <p>100 elders are getting helps from us!</p>
+        <h1>{{elderNumber}}</h1>
+        <p>{{elderNumber}} elders are getting helps from us!</p>
         <button class="btn btn-success" type="submit" routerLink="/elder-register" routerLinkActive="active">GET STARTED</button>
         <p class="pt-5">You already have an account?</p>
         <button class="btn btn-success" type="submit" routerLink="/elder-login" routerLinkActive="active">LOGIN</button>

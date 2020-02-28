@@ -31,7 +31,9 @@
                   <mat-panel-description>
                     <!-- Currently using {{panelOpenState ? 'New Services' : 'Default Services'}} -->
 
-                    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                    <!-- <div mat-card-avatar class="example-header-image">
+                      <img src={{item.imagePath}} alt="">
+                    </div> -->
                     <div class="new-font">
                     </div>
                     <div class="new-font">
@@ -46,7 +48,9 @@
                 <div class="align-center">
                   <mat-card class="example-card">
                     <mat-card-header>
-                      <div mat-card-avatar class="example-header-image"></div>
+                      <div mat-card-avatar class="example-header-image">
+                        <img src={{item.imagePath}} alt="" style="width: 100%; height: 100%;">
+                      </div>
                       <div class="new-font">
                         <mat-card-title>{{item.name}}</mat-card-title>
                         <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
@@ -64,17 +68,14 @@
                         <br><br>
                         Services:
                         <br>
-                        Daily Care: None
+                        Daily Care: {{item.services.dailyCare}}
                         <br>
-                        Special Care: Medicine(Injection)
+                        Special Care: {{item.services.specialCare}}
                         <br><br>
                         Email: {{item.email}}
                         <br>
                         Phone Number: {{item.phoneNumber}}
                         <br><br>
-                        <!-- Time: -->
-                        <br><br>
-                        Require Interview: {{panelOpenState ? 'Yes' : 'No'}}
                       </p>
                     </mat-card-content>
                     <mat-card-actions>
@@ -94,12 +95,16 @@
 
 
         <div class="pb-3">
-          <button class="btn btn-primary" routerLink="/caregiver-register" routerLinkActive="active">EDIT
+          <button class="btn btn-primary" routerLink="/admin-services" routerLinkActive="active">EDIT
             SERVICES</button>
         </div>
         <div class="pb-3">
-          <button class="btn btn-primary" routerLink="/caregiver-profile" routerLinkActive="active">VIEW
+          <button class="btn btn-primary" routerLink="/" routerLinkActive="active">VIEW
             ACTIVITIES</button>
+        </div>
+        <div class="pb-3">
+          <button class="btn btn-primary" routerLink="/" routerLinkActive="active">VIEW
+            ALL USERS</button>
         </div>
       </div>
     </div>

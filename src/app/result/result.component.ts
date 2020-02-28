@@ -8,7 +8,7 @@ import { Elder } from '../models/elder.model';
 import { AuthService } from '../auth/auth.service';
 import { Schedule } from '../models/schedule.model';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import * as Fuse from 'fuse.js';
 
@@ -38,7 +38,8 @@ export class ResultComponent implements OnInit {
   stopDate: Date;
   postalCode: string;
   services: Array<any>;
-  results: any;
+  // results: any;
+  results = [];
 
   dailyCare;
   specialCare;
@@ -54,15 +55,19 @@ export class ResultComponent implements OnInit {
 
   requireInterview = false;
 
+  index: number;
 
-  constructor(public searchService: SearchService, public authService: AuthService, public http: HttpClient, public route: ActivatedRoute) { }
+
+  constructor(
+    public searchService: SearchService,
+    public authService: AuthService,
+    public http: HttpClient,
+    public route: ActivatedRoute,
+    public router: Router) { }
 
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
-    // this.elderEmail = 'john@gmail.com';
-    // this.searchService.getCaregivers().subscribe((data) => {
-    //   this.caregivers = data.users;
-    // });
+    // this.elderEmail = 'sophearithsaing123@hotmail.com';
     this.searchService.getElder(this.elderEmail).subscribe(data => {
       this.elderName = data.name;
     });
@@ -92,7 +97,10 @@ export class ResultComponent implements OnInit {
       )
       .subscribe((data) => {
         this.caregivers = data.users;
+
+        // get the one with matched dates
         this.caregivers.forEach(element => {
+          element.showButton = true;
           this.s = element.schedule;
           if (this.s !== null) {
             this.s.forEach(item => {
@@ -110,38 +118,140 @@ export class ResultComponent implements OnInit {
             });
           }
         });
+
+        // search via postalcode match
         console.log(this.availableCaregivers);
         const postalSearch: Fuse.FuseOptions<any> = {
           keys: ['postalCode'],
+          includeScore: true
         };
         const fuse = new Fuse(this.availableCaregivers, postalSearch);
+        let fuses: any;
+        fuses = fuse.search(`${postalCode}`);
+        fuses.forEach(element => {
+          const item = element.item;
+          const p = (1 - element.score) * 100;
+          const p2 = p.toFixed(2);
+          const p3 = parseInt(p2, 10);
+          item.percentage = p3;
+          console.log(item);
+          this.results.push(item);
+          console.log(item);
+        });
 
-        this.results = fuse.search(`${postalCode}`);
         console.log(this.results);
-        console.log(dailyCare);
-        console.log(specialCare);
+        console.log(this.dailyCare);
+        console.log(this.specialCare);
+
+        // get matched services
+        // let ds = 0;
+        // let dsMatched = 0;
+        // this.dailyCare.forEach(element => {
+        //   console.log(element);
+        //   this.results.forEach(item => {
+        //     dsMatched = 0;
+        //     console.log(item);
+        //     const daily = item.services.dailyCare;
+        //     console.log(dailyCare);
+        //     daily.forEach(service => {
+        //       if (service === element) {
+        //         console.log(service + ' = ' + element);
+        //         dsMatched += 1;
+        //       }
+        //     });
+        //     console.log(dsMatched, ds);
+        //     const average = (dsMatched / ds) * 100;
+        //     console.log(average);
+        //   });
+        //   ds += 1;
+        // });
+
+        let dc = 0;
+        let dcMatched = 0;
+        dc = this.dailyCare.length;
+        let sc = 0;
+        let scMatched = 0;
+        sc = this.specialCare.length;
+        console.log('array length is ' + dc);
+
+        // get every cg
+        this.results.forEach(item => {
+          console.log(item);
+          const daily = item.services.dailyCare;
+          console.log(dailyCare);
+
+          // get matched daily care
+          dcMatched = 0;
+          daily.forEach(service => {
+            this.dailyCare.forEach(element => {
+              if (service === element) {
+                console.log(service + ' = ' + element);
+                dcMatched++;
+              }
+            });
+          });
+
+          // get matched special care
+          const special = item.services.specialCare;
+          scMatched = 0;
+          console.log(special);
+          special.forEach(service => {
+            this.specialCare.forEach(element => {
+              if (service === element) {
+                console.log(service + ' = ' + element);
+                scMatched++;
+              }
+            });
+          });
+
+          console.log(dcMatched, dc);
+          const dcp = (dcMatched / dc) * 100;
+          console.log('percentage for ' + item.name + ' is ' + dcp);
+
+          console.log(scMatched, sc);
+          const scp = (scMatched / sc) * 100;
+          console.log('percentage for ' + item.name + ' is ' + scp);
+
+          console.log(item.percentage);
+          const avg = (((dcp + scp) / 2) + item.percentage) / 2;
+          console.log(avg);
+          const percentage = avg.toFixed(2);
+          // item.percentage = percentage;
+          item.percentage = parseInt(percentage, 10);
+
+          const birthYear = new Date(item.birthDate).getFullYear();
+          const year = new Date().getFullYear();
+          item.age = year - birthYear;
+        });
+
+
+
         // const serviceSearch: Fuse.FuseOptions<any> = {
         //   includeScore: true,
         //   keys: ['services.dailyCare', 'services.specialCare']
         // };
         // const newfuse = new Fuse(this.results, serviceSearch);
         // console.log(newfuse);
-        // this.results = newfuse.search(`${dailyCare} ${specialCare}`);
+        // this.results = newfuse.search(`${dailyCare}`);
+        // console.log(this.results);
+        // this.results = newfuse.search(`${specialCare}`);
+        // console.log(this.results);
         // console.log(this.results);
 
 
+        // get star rating
         this.results.forEach(element => {
           this.stars = [];
           this.halfStar = false;
           this.reviews = [];
-          console.log(element.item);
-          const p = (1 - element.score) * 100;
-          console.log(p.toFixed(2) + '%');
-          element.item.percentage = p.toFixed(2);
-          console.log(element.item);
-          this.matches.push(element.item);
+          console.log(element);
+          // const p = (1 - element.score) * 100;
+          // console.log(p.toFixed(2) + '%');
+          // element.item.percentage = p.toFixed(2);
+          // console.log(element.item);
+          // this.matches.push(element.item);
 
-          this.http.get<Array<any>>(BACKEND_URL + 'history/' + element.item.email).subscribe(data => {
+          this.http.get<Array<any>>(BACKEND_URL + 'history/' + element.email).subscribe(data => {
             let rating = null;
             let round = null;
             data.forEach(item => {
@@ -158,19 +268,26 @@ export class ResultComponent implements OnInit {
                 this.reviews.push(i);
               }
             });
-            console.log(`${rating} / ${round}`);
-            rating = rating / round;
-            console.log(rating);
-            if (rating % 1 > 0) {
-              this.halfStar = true;
+            if (rating !== null) {
+              console.log(`${rating} / ${round}`);
+              rating = rating / round;
+              console.log(rating);
+              if (rating % 1 > 0) {
+                this.halfStar = true;
+              }
+              for (let index = 1; index <= rating; index++) {
+                this.stars.push('item');
+              }
+              element.item.rating = rating;
+              this.matches.push(element.item);
             }
-            for (let index = 1; index <= rating; index++) {
-              this.stars.push('item');
-            }
-            // element.item.rating = rating;
-            // this.matches.push(element.item);
           });
         });
+
+        // this.results.sort((a, b) => (a.percentage > b.percentage) ? 1 : (a.percentage === b.percentage) ? ((a.name > b.name) ? 1 : -1) : -1 );
+        this.results.sort((a, b) => (a.percentage < b.percentage) ? 1 : -1);
+        console.log(this.results);
+
         // this.results = newfuse.search(`${specialCare}`);
         // console.log(this.results);
 
@@ -191,19 +308,27 @@ export class ResultComponent implements OnInit {
     this.requireInterview = item;
   }
 
-  setValue(email: string, name: string) {
+  setValue(email: string, name: string, index: number) {
     this.caregiverEmail = email;
     this.caregiverName = name;
+    this.index = index;
   }
-
 
   request() {
     this.searchService.sendRequest(this.elderEmail, this.caregiverEmail, this.elderName, this.caregiverName, this.startDate, this.stopDate, this.requireInterview, null);
+    console.log('this ran');
+    console.log(this.index);
+    console.log(this.results[this.index]);
+    this.results[this.index].showButton = false;
+    console.log(this.results[this.index]);
   }
 
 
-  reload() {
-    location.reload();
+  home() {
+    this.router.navigate(['/elder-home']);
+    // setTimeout(() => {
+    //   this.router.navigate(['/elder-home']);
+    // }, 1000);
   }
 
 }

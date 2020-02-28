@@ -24,6 +24,7 @@ const BACKEND_URL = environment.apiUrl;
   styleUrls: ['./elders-signup.component.css']
 })
 export class EldersSignupComponent implements OnInit {
+  validForm: boolean = null;
   elder: Elder;
   elderId: string;
   // form: FormGroup;
@@ -48,7 +49,7 @@ export class EldersSignupComponent implements OnInit {
   // email = new FormControl(null);
   birthDate = new FormControl(null);
   tsDate: Date;
-  gender = new FormControl(null);
+  gender = new FormControl('');
   houseNumber = new FormControl(null);
   street = new FormControl(null);
   subDistrict = new FormControl(null);
@@ -74,7 +75,7 @@ export class EldersSignupComponent implements OnInit {
     config: NgbDatepickerConfig, calendar: NgbCalendar
   ) {
     config.minDate = { year: 1900, month: 1, day: 1 };
-    config.maxDate = { year: 2099, month: 12, day: 31 };
+    config.maxDate = { year: 2020, month: 1, day: 31 };
   }
 
   ngOnInit() {
@@ -117,7 +118,7 @@ export class EldersSignupComponent implements OnInit {
               province: Data.province,
               postalCode: Data.postalCode,
               phoneNumber: Data.phoneNumber,
-              imagePath: null
+              imagePath: Data.imagePath
             };
             const newDate = new Date(this.elder.birthDate);
             this.birthDate.setValue({
@@ -133,14 +134,11 @@ export class EldersSignupComponent implements OnInit {
             this.province.setValue(this.elder.province);
             this.postalCode.setValue(this.elder.postalCode);
             this.phoneNumber.setValue(this.elder.phoneNumber);
-            this.image.setValue(this.image);
+            this.image.setValue(this.elder.imagePath);
           });
         }
       });
     }
-
-
-
     //   this.route.paramMap.subscribe((paramMap: ParamMap) => {
     //     if (paramMap.has("elderEmail")) {
     //       this.mode = "edit";
@@ -215,8 +213,13 @@ export class EldersSignupComponent implements OnInit {
     const Data = new FormData();
     Data.append('email', this.email);
     Data.append('upload', file);
-    this.http.post(BACKEND_URL + 'upload', Data).subscribe((res) => {});
-    console.log('post image ran for ' + this.email);
+    if (this.mode === 'add') {
+      this.http.post(BACKEND_URL + 'upload', Data).subscribe((res) => { });
+      console.log('post image ran for ' + this.email);
+    } else {
+      this.http.patch(BACKEND_URL + 'upload/' + this.email, Data).subscribe((res) => { });
+      console.log('update image ran for ' + this.email);
+    }
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -230,92 +233,71 @@ export class EldersSignupComponent implements OnInit {
     this.router.navigate(['/elder-profile']);
   }
 
-  upload() {
-    const data = new FormData();
-    console.log(this.image.value);
-    this.imageFile = this.image.value;
-    data.set('profilepic', this.imageFile);
-    console.log(data);
-    console.log(this.imageFile);
-    data.forEach((value, key) => {
-      console.log(key + ':' + value)
-    });
-
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json'
-      })
-    };
-
-    this.http
-      .post<{ message: string }>(
-        'http://localhost:3000/api/profiles',
-        data,
-        httpOptions
-      )
-      .subscribe(responseData => {
-      });
-  }
   // onSaveElder(form: NgForm) {
   onSaveElder() {
     // if (form.invalid) {
-    //   return;
-    // }
-    if (this.mode === 'add') {
-      this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
-      this.searchService
-        .addElder(
-          // this.form.value.name,
-          // this.form.value.email,
-          // this.form.value.password,
-          // this.form.value.birthdate,
-          // this.form.value.gender,
-          // this.form.value.houseNumber,
-          // this.form.value.street,
-          // this.form.value.subDistrict,
-          // this.form.value.district,
-          // this.form.value.province,
-          // this.form.value.postalCode,
-          // this.form.value.phoneNumber
-          this.name.value,
-          this.email,
-          // this.birthDate.value,
-          this.tsDate,
-          this.gender.value,
-          this.houseNumber.value,
-          this.street.value,
-          this.subDistrict.value,
-          this.district.value,
-          this.province.value,
-          this.postalCode.value,
-          this.phoneNumber.value,
-          this.image.value
-        );
+    //   this.validForm = false;
+    //   console.log(this.validForm);
+    // } else {
+      console.log(this.validForm);
+      if (this.mode === 'add') {
+        this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
+        this.searchService
+          .addElder(
+            // this.form.value.name,
+            // this.form.value.email,
+            // this.form.value.password,
+            // this.form.value.birthdate,
+            // this.form.value.gender,
+            // this.form.value.houseNumber,
+            // this.form.value.street,
+            // this.form.value.subDistrict,
+            // this.form.value.district,
+            // this.form.value.province,
+            // this.form.value.postalCode,
+            // this.form.value.phoneNumber
+            this.name.value,
+            this.email,
+            // this.birthDate.value,
+            this.tsDate,
+            this.gender.value,
+            this.houseNumber.value,
+            this.street.value,
+            this.subDistrict.value,
+            this.district.value,
+            this.province.value,
+            this.postalCode.value,
+            this.phoneNumber.value,
+            this.image.value
+          );
 
-      console.log('added');
-      // this.router.navigate(['/elder-home']);
-    } else {
-      this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
-      console.log('Running Update');
-      this.searchService
-        .UpdateElder(
-          this.elder._id,
-          this.name.value,
-          this.email,
-          // this.birthDate.value,
-          this.tsDate,
-          this.gender.value,
-          this.houseNumber.value,
-          this.street.value,
-          this.subDistrict.value,
-          this.district.value,
-          this.province.value,
-          this.postalCode.value,
-          this.phoneNumber.value,
-          this.image.value
-        );
-      console.log('updated');
-      this.router.navigate(['/elder-profile']);
-    }
+        console.log('added');
+        this.router.navigate(['/elder-login']);
+      } else {
+        this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
+        console.log('Running Update');
+        this.searchService
+          .UpdateElder(
+            this.elder._id,
+            this.name.value,
+            this.email,
+            // this.birthDate.value,
+            this.tsDate,
+            this.gender.value,
+            this.houseNumber.value,
+            this.street.value,
+            this.subDistrict.value,
+            this.district.value,
+            this.province.value,
+            this.postalCode.value,
+            this.phoneNumber.value,
+            this.image.value
+          );
+        console.log('updated');
+        setTimeout(() => {
+          this.router.navigate(['/elder-profile']);
+        }, 2000);
+      }
+    // }
   }
 }

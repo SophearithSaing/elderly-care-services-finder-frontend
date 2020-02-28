@@ -4,70 +4,122 @@
 
   <form (submit)="onSaveCaregiver()" #infoForm="ngForm">
 
-    <label for="">Basic Information</label>
-
-    <div class="form-group form-row">
-      <div class="col-md-12">
-        <input type="text" class="form-control" placeholder="Name" [formControl]="name">
+    <div class="form-group">
+      <div>
+        <label for="">Profile Picture</label>
       </div>
-    </div>
-    <div class="form-group form-row">
-      <div class="col-md-12">
-        <input type="text" class="form-control" placeholder="Phone Number" [formControl]="phoneNumber">
+      <div class="col-md-4 mb-3" *ngIf="image.value !== ''">
+        <img src={{image.value}} alt="" style="width: 75%; height: 100%;">
       </div>
-    </div>
-
-
-    <div class="form-group form-row">
-      <!-- <div class="col-md-4">
-        <input type="text" class="form-control" id="age" placeholder="Birthdate" [formControl]="birthDate">
-      </div> -->
-
-      <div class="form-group col-md-4">
-        <div class="input-group">
-          <input class="form-control" placeholder="Birthdate"
-                 name="dp" ngbDatepicker #d="ngbDatepicker" [formControl]="birthDate">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
-              class="fa fa-calendar" aria-hidden="true"></i></button>
-              <!-- <button type="button" (click)="show()" >btn</button> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <select id="inputState" class="form-control" [formControl]="gender">
-          <option value="Male">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+      <div class="col-md-4 mb-3" *ngIf="imagePreview !== '' && imagePreview">
+        <img [src]="imagePreview" alt="" style="width: 75%; height: 100%;">
       </div>
       <div class="custom-file col-md-4">
         <input type="file" class="custom-file-input" (change)="onImagePicked($event)">
         <label class="custom-file-label" for="validatedCustomFile">Upload Image</label>
       </div>
     </div>
+    <!-- <div class="image-preview col-md-4" *ngIf="image.value !== ''">
+      <img src={{image.value}} alt="" style="width: 75%;">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+      <img [src]="imagePreview" alt="">
+    </div> -->
+
+
+    <label for="">Basic Information</label>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w100">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" [formControl]="name">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w100">
+            <mat-label>Phone Number</mat-label>
+            <input matInput placeholder="Phone Number" [formControl]="phoneNumber">
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input class="form-control" placeholder="Birthdate" name="dp" ngbDatepicker #d="ngbDatepicker"
+              [formControl]="birthDate">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
+                  class="fa fa-calendar" aria-hidden="true"></i></button>
+              <!-- <button type="button" (click)="show()" >btn</button> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>Gender</mat-label>
+            <mat-select [formControl]="gender">
+              <mat-option value="Male">Male</mat-option>
+              <mat-option value="Female">Female</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
     <div class="form-group">
       <label for="inputAddress">Address</label>
-      <input type="text" class="form-control" placeholder="House Number" [formControl]="houseNumber">
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Street" [formControl]="street">
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="District" [formControl]="district">
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Sub-district" [formControl]="subDistrict">
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <input type="text" class="form-control" placeholder="Province" [formControl]="province">
+      <br>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>House Number</mat-label>
+            <input matInput placeholder="House Number" [formControl]="houseNumber">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>Street</mat-label>
+            <input matInput placeholder="Street" [formControl]="street">
+          </mat-form-field>
+        </div>
       </div>
-      <div class="form-group col-md-6">
-        <input type="text" class="form-control" placeholder="Postal Code" [formControl]="postalCode">
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>District</mat-label>
+            <input matInput placeholder="District" [formControl]="district">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>Sub-District</mat-label>
+            <input matInput placeholder="Sub-District" [formControl]="subDistrict">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>Province</mat-label>
+            <input matInput placeholder="Province" [formControl]="province">
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="mr-5 w100">
+            <mat-label>Postal Code</mat-label>
+            <input matInput placeholder="Postal Code" [formControl]="postalCode">
+          </mat-form-field>
+        </div>
       </div>
     </div>
+
     <div id="center">
       <button type="submit" class="btn btn-success">Save</button>
       <button (click)="goBack()" id="cancel" class="btn">Cancel</button>

@@ -29,7 +29,7 @@ export class AdminService {
   GetCaregivers() {
     return this.http
     .get<{ message: string; users: any }>(
-      BACKEND_URL + 'caregivers/',
+      BACKEND_URL + 'u-caregivers/',
     );
   }
 

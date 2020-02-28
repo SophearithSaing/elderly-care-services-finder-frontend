@@ -16,7 +16,8 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class CaregiverServicesComponent implements OnInit {
 
-  email = 'sophearithgiver@gmail.com';
+  // email = 'sophearithgiver@gmail.com';
+  email;
 
   dailyCare = [
     {
@@ -52,8 +53,11 @@ export class CaregiverServicesComponent implements OnInit {
   newDailyCare;
   newSpecialCare;
   services;
-  dailyPrice;
-  monthlyPrice;
+  dailyPrice: number;
+  monthlyPrice: number;
+
+  checkedDailyCare;
+  checkedSpecialCare;
 
   constructor(public searchservice: SearchService, public http: HttpClient, private router: Router, public route: ActivatedRoute) { }
 
@@ -61,6 +65,31 @@ export class CaregiverServicesComponent implements OnInit {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('email')) {
         this.email = paramMap.get('email');
+        this.searchservice.getCaregiver(this.email).subscribe(data => {
+          this.dailyPrice = data.dailyPrice;
+          this.monthlyPrice = data.monthlyPrice;
+          this.checkedDailyCare = data.services.dailyCare;
+          this.checkedSpecialCare = data.services.specialCare;
+          console.log(this.checkedDailyCare);
+          console.log(this.checkedSpecialCare);
+          this.checkedDailyCare.forEach(element => {
+            console.log(element);
+            this.dailyCare.forEach(item => {
+              if (item.name === element) {
+                console.log(item.name + ' = ' + element);
+                item.checked = true;
+              }
+            });
+          });
+          this.checkedSpecialCare.forEach(element => {
+            this.specialCare.forEach(item => {
+              if (item.name === element) {
+                console.log(item.name + ' = ' + element);
+                item.checked = true;
+              }
+            });
+          });
+        });
       }
     });
   }

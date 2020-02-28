@@ -42,11 +42,14 @@ export class RequestComponent implements OnInit {
 
   id;
 
+  item;
+
   constructor(public authService: AuthService, public search: SearchService, private router: Router) { }
 
   ngOnInit() {
     this.caregiverEmail = this.authService.getUserId();
     // this.caregiverEmail = 'sophearithsaing123@gmail.com';
+    console.log(this.caregiverEmail);
 
     this.search.getCaregiver(this.caregiverEmail).subscribe((data) => {
       this.caregiverName = data.name;
@@ -104,9 +107,13 @@ export class RequestComponent implements OnInit {
   });
 }
 
-  acceptRequest(item, elderName) {
-    this.search.updateRequest(item, elderName, this.caregiverName, true, null);
-    console.log(item);
+  setItem(item) {
+    this.item = item;
+  }
+
+  acceptRequest(elderName) {
+    this.search.updateRequest(this.item, elderName, this.caregiverName, true, null);
+    console.log(this.item);
   }
 
   rejectRequest(item, elderName) {

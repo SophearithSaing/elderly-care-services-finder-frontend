@@ -63,14 +63,14 @@ export class AuthService {
           this.isAuthenticated = true;
           // this.userId = response.userId;
           this.userId = email;
-          console.log('logged in by userId '+this.userId);
+          console.log('logged in by userId ' + this.userId);
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           console.log(expirationDate);
           this.saveAuthData(token, expirationDate, this.userId);
           // this.router.navigate(["/"]);
-          console.log('login success')
+          console.log('login success');
         }
       });
   }
@@ -98,7 +98,7 @@ export class AuthService {
     this.userId = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(["/"]);
+    this.router.navigate(["/home"]);
   }
 
   private setAuthTimer(duration: number) {

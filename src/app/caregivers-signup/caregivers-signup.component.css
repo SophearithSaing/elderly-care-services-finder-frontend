@@ -9,6 +9,15 @@
 
 }
 
+.w100 {
+  width: 100%;
+}
+
+.image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
 .btn-success {
   font-family: 'Ubuntu', sans-serif;
   font-size: 18px;

@@ -4,6 +4,9 @@
         <div class="justify-content-center">
             <form (submit)="onRegisterCaregiver(postForm)" #postForm="ngForm">
               <span class="login-form-title">CAREGIVER REGISTER</span>
+              <div class="form-group alert alert-danger" role="alert" *ngIf="userExisted === true">
+                This user already existed!
+              </div>
               <div class="form-group">
                   <input
                   type="text"
@@ -23,6 +26,7 @@
                 name="email"
                 ngModel
                 #email="ngModel"
+                (click)="resetValidation()"
                 >
               </div>
               <div class="form-group alert alert-danger" role="alert" *ngIf="confirmPassword === false">
@@ -36,6 +40,7 @@
                 name="password"
                 ngModel
                 #password="ngModel"
+                (click)="close()"
                 >
               </div>
               <div class="form-group">

@@ -9,11 +9,16 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent implements OnInit {
   elderId: string;
   title = 'first-app';
+
   constructor(private authService: AuthService) {}
 
+  // ngOnInit() {
+  //   this.elderId = this.authService.getUserId();
+  // }
   ngOnInit() {
-    this.elderId = this.authService.getUserId();
+    this.authService.autoAuthUser();
   }
+
   onLogout() {
     this.authService.logout();
   }

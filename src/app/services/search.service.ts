@@ -38,6 +38,9 @@ export class SearchService {
   private scheduleUpdate = new Subject<Schedule[]>();
   constructor(private http: HttpClient) { }
 
+  results: any;
+  newResult: any;
+
   // add elder
   addElder(
     name: string,
@@ -159,14 +162,14 @@ export class SearchService {
   }
   // get all elders
   getElders() {
-    this.http
-      .get<{ message: string; users: any }>(
+    return this.http
+      .get<{ users: any }>(
         BACKEND_URL + 'elders'
-      )
-      .subscribe((data) => {
-        this.elders = data.users;
-        this.elderUpdated.next([...this.elders]);
-      });
+      );
+    // .subscribe((data) => {
+    //   this.elders = data.users;
+    //   this.elderUpdated.next([...this.elders]);
+    // });
   }
   getElderUpdateListener() {
     return this.elderUpdated.asObservable();
@@ -402,7 +405,7 @@ export class SearchService {
 
   // get one caregiver
   getCaregiver(email: string) {
-    return this.http.get<{ _id: string, name: string, email: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string, services: string, certificate: string, experience: string, dailyPrice: number, monthlyPrice: number, imagePath: string }>(
+    return this.http.get<{ _id: string, name: string, email: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string, services: any, certificate: string, experience: string, dailyPrice: number, monthlyPrice: number, imagePath: string, approval: boolean }>(
       BACKEND_URL + "caregivers/" + email
     );
   }
@@ -426,8 +429,6 @@ export class SearchService {
     return this.caregiverUpdated.asObservable();
   }
 
-  results: any;
-  newResult: any;
 
   // searchCaregivers(postalCode: string, startDate: Date, stopDate: Date, services: Array<any>) {
   //   let searchParams = new HttpParams();
@@ -472,7 +473,17 @@ export class SearchService {
       });
   }
 
-  sendRequest(elderEmail: string, caregiverEmail: string, elderName: string, caregiverName: string, startDate: Date, stopDate: Date, requireInterview: boolean, status: boolean) {
+  sendRequest(
+    elderEmail: string,
+    caregiverEmail: string,
+    elderName: string,
+    caregiverName: string,
+    startDate: Date,
+    stopDate: Date,
+    requireInterview: boolean,
+    status: boolean
+    ) {
+
     const request: Request = {
       _id: null,
       elderEmail: elderEmail,
@@ -495,6 +506,15 @@ export class SearchService {
     return this.http
       .get<{ requests: Array<any> }>(
         BACKEND_URL + 'requests/' + email
+      );
+    // .subscribe((data) => {
+    // });
+  }
+
+  getRequestsStatus(email: string) {
+    return this.http
+      .get<{ requests: Array<any> }>(
+        BACKEND_URL + 'requests-status/' + email
       );
     // .subscribe((data) => {
     // });

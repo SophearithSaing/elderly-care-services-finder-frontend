@@ -14,11 +14,29 @@ export class CaregiverHomeComponent implements OnInit {
   id: string;
   caregiver: Caregiver;
   email: string;
+  name: string;
+  approval: boolean;
 
-  constructor(public searchService: SearchService , public authService: AuthService, public router: Router) { }
+  requests: any;
+  requestNumber = 0;
+
+  constructor(public search: SearchService , public authService: AuthService, public router: Router) { }
 
   ngOnInit() {
     this.email = this.authService.getUserId();
+
+    this.search.getCaregiver(this.email).subscribe(data => {
+      this.name = data.name;
+      this.approval = data.approval;
+    });
+
+    this.search.getRequests(this.email).subscribe((data) => {
+      this.requests = data;
+      console.log(this.requests);
+      this.requests.forEach(element => {
+        this.requestNumber = this.requestNumber + 1;
+      });
+    });
   }
   // editCalendar() {
   //   this.id = this.authService.getUserId();

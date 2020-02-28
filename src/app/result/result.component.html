@@ -1,6 +1,20 @@
+<nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
+  <div _ngcontent-vuo-c3="" class="collapse navbar-collapse" id="navbarNavDropdown">
+      <div class="header-logo">
+          <img src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.0-9/79731930_137989890973179_6631381564599042048_n.png?_nc_cat=104&_nc_ohc=KPi8-ipnoqsAQnH6PyVV_Tdfqn0EIo9Thh2OSloW_ETyslvY78sLBCk_A&_nc_ht=scontent.fbkk12-2.fna&oh=96636c40577e051798bef5ac5c7d4404&oe=5E68D64D">
+      </div>
+      <ul _ngcontent-vuo-c3="" class="navbar-nav">
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/elder-home">Home <span _ngcontent-vuo-c3="" class="sr-only">(current)</span></a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/elder-profile">Profile</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/requests-status">Request Status</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/history">History</a></li>
+      </ul>
+  </div>
+</nav>
+
 <div class="mt-5">
   <h1 class="text-center new-font">Matched Results</h1>
-  <div class="container" *ngFor="let item of matches">
+  <div class="container" *ngFor="let item of results; let i = index">
     <mat-accordion class="example-headers-align">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
@@ -39,7 +53,7 @@
             </mat-card-header>
             <mat-card-content>
               <p>
-                Age: {{item.birthDate}}
+                Age: {{item.age}}
                 <br>
                 Gender: {{item.gender}}
                 <br>
@@ -79,12 +93,13 @@
                 </mat-card-content> -->
               </p>
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions *ngIf="item.showButton === true">
               <mat-checkbox #interview (click)="toggle(!interview.checked)">Require Interview</mat-checkbox>
             </mat-card-actions>
             <mat-card-actions>
               <button class="btn btn-success" type="button" data-toggle="modal"
-                data-target="#exampleModal" (click)="setValue(item.email, item.name)">REQUEST</button>
+                data-target="#exampleModal" (click)="setValue(item.email, item.name, i)" *ngIf="item.showButton === true">REQUEST</button>
+                <h5 class="new-font" *ngIf="item.showButton === false">Request Sent</h5>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -115,8 +130,11 @@
 
 
     <!-- end of loop -->
+
+
   </div>
 </div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -134,7 +152,7 @@ aria-hidden="true">
     </div>
     <div class="modal-footer">
       <button type="button" class="btn" id="cancel" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed" (click)="request()">Confirm</button>
+      <button type="button" class="btn btn-success" data-dismiss="modal" data-toggle="modal" data-target="#confirmed" (click)="request()">Confirm</button>
     </div>
   </div>
 </div>
@@ -154,7 +172,8 @@ aria-hidden="true">
       Your Request Has Been Sent.
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="reload()">Okay</button>
+      <!-- <button type="button" class="btn btn-success" data-dismiss="modal" (click)="home()">Okay</button> -->
+      <button type="button" class="btn btn-success" data-dismiss="modal">Okay</button>
     </div>
   </div>
 </div>

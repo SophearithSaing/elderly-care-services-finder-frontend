@@ -99,7 +99,7 @@ export class CaregiversSignupComponent implements OnInit {
               experience: Data.experience,
               dailyPrice: Data.dailyPrice,
               monthlyPrice: Data.monthlyPrice,
-              imagePath: null,
+              imagePath: Data.imagePath,
               schedule: null,
               approval: null
             };
@@ -119,7 +119,7 @@ export class CaregiversSignupComponent implements OnInit {
             this.province.setValue(this.caregiver.province);
             this.postalCode.setValue(this.caregiver.postalCode);
             this.phoneNumber.setValue(this.caregiver.phoneNumber);
-
+            this.image.setValue(this.caregiver.imagePath);
           });
 
         }
@@ -164,7 +164,6 @@ export class CaregiversSignupComponent implements OnInit {
       this.http.patch(BACKEND_URL + 'upload/' + this.email, Data).subscribe((res) => {});
       console.log('update image ran for ' + this.email);
     }
-
 
     const reader = new FileReader();
     reader.onload = () => {

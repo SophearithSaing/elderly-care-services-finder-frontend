@@ -33,6 +33,7 @@ export class AdminApprovalComponent implements OnInit {
   province: string;
   postalCode: string;
   phoneNumber: string;
+  imagePath: string;
 
   year = new Date().getFullYear();
   age: number;
@@ -66,7 +67,7 @@ export class AdminApprovalComponent implements OnInit {
         province: Data.province,
         postalCode: Data.postalCode,
         phoneNumber: Data.phoneNumber,
-        imagePath: null
+        imagePath: Data.imagePath
       };
       this.name = this.caregiver.name;
       this.birthDate = this.caregiver.birthDate;
@@ -80,6 +81,7 @@ export class AdminApprovalComponent implements OnInit {
       this.province = this.caregiver.province;
       this.postalCode = this.caregiver.postalCode;
       this.phoneNumber = this.caregiver.phoneNumber;
+      this.imagePath = this.caregiver.imagePath;
 
       console.log(this.caregiver);
 
