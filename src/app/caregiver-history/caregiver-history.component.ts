@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
-
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from '../auth/auth.service';
 import { SearchService } from '../services/search.service';
 
 @Component({
-  selector: 'app-history',
-  templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css']
+  selector: 'app-caregiver-history',
+  templateUrl: './caregiver-history.component.html',
+  styleUrls: ['./caregiver-history.component.css']
 })
-export class HistoryComponent implements OnInit {
-  currentRate = 0;
-  review: string;
-  rating: number;
+export class CaregiverHistoryComponent implements OnInit {
+
   elderEmail;
+  caregiverEmail;
   history;
 
   startDate: Date;
@@ -22,17 +20,15 @@ export class HistoryComponent implements OnInit {
   isoStart;
   isoStop;
 
-  reviewed = false;
+
   constructor(config: NgbRatingConfig, public authService: AuthService, public search: SearchService) {
-    // customize default values of ratings used by this component tree
     config.max = 5;
   }
 
   ngOnInit() {
-    this.elderEmail = this.authService.getUserId();
-    // this.elderEmail = 'john@mail.com';
+    this.caregiverEmail = this.authService.getUserId();
 
-    this.search.getHistory(this.elderEmail).subscribe((data) => {
+    this.search.getHistory(this.caregiverEmail).subscribe((data) => {
       this.history = data;
       console.log(this.history);
       // this.isoStart = new Date(this.startDate).toISOString();
@@ -77,20 +73,6 @@ export class HistoryComponent implements OnInit {
       });
       console.log(this.history);
     });
-
-  }
-
-  saveReview(item, rating, review) {
-    this.currentRate = rating;
-    console.log(this.currentRate);
-    console.log(review);
-    this.search.updateHistory(item, rating, review);
-
-    // this.reviewed = true;
-    // this.rating = rating;
-    // this.review = review;
-    item.rating = rating;
-    item.review = review;
   }
 
 }

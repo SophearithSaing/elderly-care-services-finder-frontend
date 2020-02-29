@@ -44,6 +44,10 @@ export class CaregiversSignupComponent implements OnInit {
   imagePreview: string;
   imageFile: any;
 
+  certificate = new FormControl('');
+  certificatePreview: string;
+  certificateFile: any;
+
 
   constructor(
     public searchService: SearchService, public route: ActivatedRoute, private router: Router,
@@ -171,6 +175,35 @@ export class CaregiversSignupComponent implements OnInit {
     };
     reader.readAsDataURL(file);
     console.log(this.image.valid);
+  }
+
+  onCertificatePicked(event) {
+    // const file = (event.target as HTMLInputElement).files[0];
+    const file = event.target.files[0];
+    this.certificateFile = file;
+    this.certificate.patchValue({ certificate: file });
+    this.certificate.updateValueAndValidity();
+    console.log(file);
+    console.log(this.certificate);
+
+    const Data = new FormData();
+    Data.append('email', this.email);
+    Data.append('certificates', file);
+    if (this.mode === 'add') {
+      this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
+      console.log('post file ran for ' + this.email);
+    } else {
+      this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
+      // this.http.patch(BACKEND_URL + 'certificates/' + this.email, Data).subscribe((res) => {});
+      console.log('update file ran for ' + this.email);
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.certificatePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+    console.log(this.certificate.valid);
   }
 
   goBack() {

@@ -9,13 +9,14 @@
           <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/requests">Requests</a></li>
           <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/services', email]"routerLinkActive="router-link-active">Services</a></li>
           <li _ngcontent-vuo-c3="" class="nav-item active"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/calendar', email]"routerLinkActive="router-link-active">Schedule</a></li>
+          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/caregiver-history', email]"routerLinkActive="router-link-active">History</a></li>
           <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/home">Logout</a></li>
       </ul>
   </div>
 </nav>
 <div class="container text-center pt-5">
   <h1>Select Avaible Date Range</h1>
-  <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+  <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="3" [dayTemplate]="t" outsideDays="hidden">
   </ngb-datepicker>
 
   <ng-template #t let-date let-focused="focused">
@@ -30,11 +31,11 @@
 
   <!-- <pre>From: {{ fromDate | json }}</pre>
   <pre>To: {{ toDate | json }} </pre> -->
-  <button class="btn btn-success mb-5 mt-5" (click)="save()">Add Date</button>
+  <button class="btn btn-success mb-5 mt-5" (click)="save()" (click)="open(content)">Add Date</button>
 </div>
 
 <div class="container" *ngFor="let item of availabilityString; let i = index">
-  <div class="card mb-3 mx-auto" style="width: 18rem;">
+  <div class="card mb-3 mx-auto col-md-6" *ngIf="show === true">
       <div class="card-body" *ngIf="item !== null">
       <h5 class="card-title">No. {{i+1}}</h5>
       <p class="card-text">
@@ -46,7 +47,20 @@
     </div>
     <div class="card-body" *ngIf="item === null">
       <h5 class="card-title">No. {{i+1}} Deleted</h5>
+      <button class="btn small-button" (click)="undo(i)">Undo</button>
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Duplicated Date</h4>
+  </div>
+  <div class="modal-body">
+    <h5> This Date Range Already Existed!</h5>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn small-button" (click)="modal.close()">OKAY</button>
+  </div>
+</ng-template>
 

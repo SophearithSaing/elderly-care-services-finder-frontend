@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SearchService } from '../services/search.service';
 import { AuthService } from '../auth/auth.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -45,7 +45,18 @@ export class CalendarComponent implements OnInit {
 
   mode;
 
-  constructor(calendar: NgbCalendar, public searchService: SearchService, private auth: AuthService, public route: ActivatedRoute, public router: Router) {
+  deletedDate: Array<any> = [];
+  show = true;
+
+  duplicated: boolean;
+
+  constructor(
+    calendar: NgbCalendar,
+    public searchService: SearchService,
+    private auth: AuthService,
+    public route: ActivatedRoute,
+    public router: Router,
+    private modalService: NgbModal) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
@@ -114,6 +125,7 @@ export class CalendarComponent implements OnInit {
   }
 
   save() {
+    this.duplicated = false;
     this.startDay = this.fromDate.day;
     this.startMonth = this.fromDate.month;
     this.startYear = this.fromDate.year;
@@ -129,25 +141,46 @@ export class CalendarComponent implements OnInit {
 
     console.log(this.availability);
 
-    this.availability.push(this.dateRange = {
-      startDate: this.startDate,
-      stopDate: this.stopDate
+    this.availability.forEach(element => {
+      const startDate = new Date(element.startDate);
+      const stopDate = new Date(element.stopDate);
+      if (startDate.getTime() === this.startDate.getTime() && stopDate.getTime() === this.stopDate.getTime()) {
+        console.log(element);
+        // this.open('content');
+        this.duplicated = true;
+        return;
+      }
     });
-    const newElement = {
-      startDate: `${this.startDate.getDate()}/${this.startDate.getMonth() + 1}/${this.startDate.getFullYear()}`,
-      stopDate: `${this.stopDate.getDate()}/${this.stopDate.getMonth() + 1}/${this.stopDate.getFullYear()}`
-    };
-    this.availabilityString.push(newElement);
-    console.log('data after pushed');
-    console.log(this.availability);
-    if (this.mode === 'add') {
-      this.searchService.addSchedule(this.email, this.availability);
-      this.mode = 'update';
-    } else if (this.mode === 'update') {
-      this.searchService.updateSchedule(this.id, this.email, this.availability);
+    // console.log(duplicated);
+    if (this.duplicated === false ) {
+      this.availability.unshift(this.dateRange = {
+        startDate: this.startDate,
+        stopDate: this.stopDate
+      });
+      const newElement = {
+        startDate: `${this.startDate.getDate()}/${this.startDate.getMonth() + 1}/${this.startDate.getFullYear()}`,
+        stopDate: `${this.stopDate.getDate()}/${this.stopDate.getMonth() + 1}/${this.stopDate.getFullYear()}`,
+        removed: false
+      };
+      this.availabilityString.unshift(newElement);
+      console.log('data after pushed');
+      console.log(this.availability);
+      if (this.mode === 'add') {
+        this.searchService.addSchedule(this.email, this.availability);
+        this.mode = 'update';
+      } else if (this.mode === 'update') {
+        this.searchService.updateSchedule(this.id, this.email, this.availability);
+      }
+      console.log("update for user " + this.email);
     }
-    console.log("update for user " + this.email);
+  }
 
+  open(content) {
+    if (this.duplicated === true) {
+      this.modalService.open(content, {centered: true});
+    } else {
+      return;
+    }
   }
 
   remove(i: any) {
@@ -162,10 +195,35 @@ export class CalendarComponent implements OnInit {
     // console.log('deleting ' + this.availability[i]);
     // delete this.availabilityString[i];
     // delete this.availability[i];
+
+    const date = {
+      i,
+      availability: this.availability[i],
+      availabilityString: this.availabilityString[i]
+    };
+
+    this.deletedDate.push(date);
+    console.log(this.deletedDate);
+
     this.availabilityString[i] = null;
+    console.log(this.availability);
     this.availability.splice(i, 1);
     console.log(this.availability);
     this.searchService.updateSchedule(this.id, this.email, this.availability);
     // location.reload();
+
+  }
+
+  undo(i: any) {
+    console.log(this.availability);
+    this.deletedDate.forEach(element => {
+      if (element.i === i) {
+        console.log(element);
+        this.availability.splice(i, 0, element.availability);
+        this.availabilityString.splice(i, 1, element.availabilityString);
+      }
+    });
+    this.searchService.updateSchedule(this.id, this.email, this.availability);
+    console.log(this.availability);
   }
 }
