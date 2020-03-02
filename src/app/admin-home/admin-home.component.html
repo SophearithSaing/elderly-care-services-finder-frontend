@@ -1,7 +1,8 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Admin</span>
-    <button mat-button [routerLink]="['/admin']" routerLinkActive="home" >Home</button>
+    <span class="space"></span>
+    <button mat-flat-button [routerLink]="['/admin']" routerLinkActive="home" >Home</button>
     <button mat-button [routerLink]="['/admin-services']" routerLinkActive="router-link-active" >Services</button>
     <button mat-button [routerLink]="['/admin-allusers']" routerLinkActive="router-link-active" >All Users</button>
     <button mat-button [routerLink]="['/admin-allactivities']" routerLinkActive="router-link-active" >All Activities</button>

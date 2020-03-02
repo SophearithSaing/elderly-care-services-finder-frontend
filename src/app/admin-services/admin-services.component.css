@@ -22,3 +22,7 @@ mat-checkbox {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.space {
+  flex: 1 1 auto;
+}

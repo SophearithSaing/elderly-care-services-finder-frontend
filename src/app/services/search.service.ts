@@ -529,6 +529,13 @@ export class SearchService {
     // });
   }
 
+  getAllHistory() {
+    return this.http
+      .get<{ message: string, history: Array<any> }>(
+        BACKEND_URL + 'history/'
+      );
+  }
+
   getRequest(id: string) {
     return this.http.get<{ _id: string, elderEmail: string, caregiverEmail: string, startDate: Date, stopDate: Date, requireInterview: boolean, status: boolean }>(
       BACKEND_URL + "requests/" + id
@@ -560,22 +567,24 @@ export class SearchService {
     console.log(requestStartDate);
     console.log(requestStopDate);
 
-    const history = {
-      _id: null,
-      elderEmail: request.elderEmail,
-      elderName,
-      caregiverEmail: request.caregiverEmail,
-      caregiverName,
-      startDate: request.startDate,
-      stopDate: request.stopDate,
-      requireInterview: request.requireInterview,
-      rating: null,
-      review: null
-    };
-    console.log(history);
-    this.http
-      .post<{ message: string, postId: string }>(BACKEND_URL + 'history/', history)
-      .subscribe(response => { });
+    if (status === true) {
+      const history = {
+        _id: null,
+        elderEmail: request.elderEmail,
+        elderName,
+        caregiverEmail: request.caregiverEmail,
+        caregiverName,
+        startDate: request.startDate,
+        stopDate: request.stopDate,
+        requireInterview: request.requireInterview,
+        rating: null,
+        review: null
+      };
+      console.log(history);
+      this.http
+        .post<{ message: string, postId: string }>(BACKEND_URL + 'history/', history)
+        .subscribe(response => { });
+    }
   }
 
   updateHistory(item, rating, review) {

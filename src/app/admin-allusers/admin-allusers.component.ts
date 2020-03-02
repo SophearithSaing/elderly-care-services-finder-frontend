@@ -14,13 +14,16 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class AdminAllusersComponent implements OnInit {
 
+  // elders varaible
   elders;
+  eLoading: boolean;
 
   // caregivers variables
   caregivers;
   stars = [];
   halfStar: boolean;
   reviews = [];
+  cgLoading: boolean;
 
 
   constructor(
@@ -29,6 +32,9 @@ export class AdminAllusersComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit() {
+    this.cgLoading = true;
+    this.eLoading = true;
+
     this.search.getCaregivers().subscribe(data => {
       this.caregivers = data.users;
 
@@ -76,9 +82,12 @@ export class AdminAllusersComponent implements OnInit {
 
       // // sort by name
       // this.caregivers.sort((a, b) => (a.percentage < b.percentage) ? 1 : -1);
+      this.cgLoading = false;
     });
     this.search.getElders().subscribe(data => {
       this.elders = data.users;
+
+      this.eLoading = false;
     });
   }
 

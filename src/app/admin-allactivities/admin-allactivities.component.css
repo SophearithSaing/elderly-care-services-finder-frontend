@@ -1,0 +1,11 @@
+.space {
+  flex: 1 1 auto;
+}
+
+.new-font {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+mat-spinner {
+  margin: auto;
+}

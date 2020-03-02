@@ -48,6 +48,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { RequestComponent } from './request/request.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CaregiverServicesComponent } from './caregiver-services/caregiver-services.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RequestStatusComponent } from './request-status/request-status.component';
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminHomeComponent },
   { path: 'admin-allusers', component: AdminAllusersComponent },
+  { path: 'admin-allactivities', component: AdminAllactivitiesComponent },
   { path: 'admin-approval', component: AdminApprovalComponent },
   { path: 'admin-services', component: AdminServicesComponent },
   { path: 'caregiver-home', component: CaregiverHomeComponent },
@@ -164,7 +166,8 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatToolbarModule,
     MatGridListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthGuard,

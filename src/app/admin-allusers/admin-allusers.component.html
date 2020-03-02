@@ -5,7 +5,8 @@
     <button mat-button [routerLink]="['/admin']" routerLinkActive="">Home</button>
     <button mat-button [routerLink]="['/admin-services']">Services</button>
     <button mat-flat-button [routerLink]="['/admin-allusers']">All Users</button>
-    <button mat-button [routerLink]="['/admin-allactivities']" routerLinkActive="router-link-active" >All Activities</button>
+    <button mat-button [routerLink]="['/admin-allactivities']" routerLinkActive="router-link-active">All
+      Activities</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -13,8 +14,9 @@
   <div class="row">
     <div class="col-md-6">
       <h1 class="new-font mb-4">Caregivers</h1>
+      <mat-spinner *ngIf="cgLoading"></mat-spinner>
       <div *ngFor="let item of caregivers" class="mb-4">
-        <mat-accordion class="example-headers-align">
+        <mat-accordion class="example-headers-align" *ngIf="!cgLoading">
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
               <mat-panel-description>
@@ -30,50 +32,50 @@
 
             <!-- start row -->
             <div class="row">
-            <div class="col-md-8">
-              <mat-card class="example-card">
-                <mat-card-header>
-                  <div mat-card-avatar class="example-header-image">
-                    <img src="{{item.imagePath}}" alt="" style="height: 100%; width: 100;">
-                  </div>
-                  <div class="new-font">
-                    <mat-card-title>{{item.name}}</mat-card-title>
-                    <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
-                  </div>
-                </mat-card-header>
-                <mat-card-content>
-                  <p>
-                    Age: {{item.age}}
-                    <br>
-                    Gender: {{item.gender}}
-                    <br>
-                    Address: {{item.houseNumber}}, {{item.street}}, {{item.subDistrict}}, {{item.district}},
-                    {{item.province}}
-                    <br><br>
+              <div class="col-md-8">
+                <mat-card class="example-card">
+                  <mat-card-header>
+                    <div mat-card-avatar class="example-header-image">
+                      <img src="{{item.imagePath}}" alt="" style="height: 100%; width: 100;">
+                    </div>
+                    <div class="new-font">
+                      <mat-card-title>{{item.name}}</mat-card-title>
+                      <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
+                    </div>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <p>
+                      Age: {{item.age}}
+                      <br>
+                      Gender: {{item.gender}}
+                      <br>
+                      Address: {{item.houseNumber}}, {{item.street}}, {{item.subDistrict}}, {{item.district}},
+                      {{item.province}}
+                      <br><br>
 
-                    Services:
+                      Services:
                       <br>
                       Daily Care: {{item.services.dailyCare}}
                       <br>
                       Special Care: {{item.services.specialCare}}
-                    <br><br>
+                      <br><br>
 
-                    Prices:
-                    <br>
+                      Prices:
+                      <br>
                       Daily Price: {{item.dailyPrice}}
-                    <br>
+                      <br>
                       Monthly Price: {{item.monthlyPrice}}
-                    <br><br>
+                      <br><br>
 
-                    Email: {{item.email}}
-                    <br>
-                    Phone Number: {{item.phoneNumber}}
-                    <br><br>
-                    Experience: {{item.experience}}
-                    <br>
-                    <!-- Certification:  -->
-                    <br><br>
-                    <!-- Availability:
+                      Email: {{item.email}}
+                      <br>
+                      Phone Number: {{item.phoneNumber}}
+                      <br><br>
+                      Experience: {{item.experience}}
+                      <br>
+                      <!-- Certification:  -->
+                      <br><br>
+                      <!-- Availability:
                     <mat-card-content *ngFor="let i of item.schedule">
                       <mat-checkbox>
                         From {{i.startDate}}
@@ -81,29 +83,29 @@
                         To {{i.stopDate}}
                       </mat-checkbox>
                     </mat-card-content> -->
-                  </p>
-                </mat-card-content>
-              </mat-card>
-            </div>
-            <div class="col-md-4" >
-              <div *ngFor="let item of reviews">
-                <mat-card class="mb-3">
-                  <div class="new-font">
-                    <mat-card-title>
-                      From {{item.reviewer}}
-                    </mat-card-title>
-                    <mat-card-subtitle>
-                      {{item.rating}} stars
-                    </mat-card-subtitle>
-                  </div>
-                  <mat-card-content class="new-font">
-                    {{item.review}}
+                    </p>
                   </mat-card-content>
                 </mat-card>
               </div>
+              <div class="col-md-4">
+                <div *ngFor="let item of reviews">
+                  <mat-card class="mb-3">
+                    <div class="new-font">
+                      <mat-card-title>
+                        From {{item.reviewer}}
+                      </mat-card-title>
+                      <mat-card-subtitle>
+                        {{item.rating}} stars
+                      </mat-card-subtitle>
+                    </div>
+                    <mat-card-content class="new-font">
+                      {{item.review}}
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+              </div>
             </div>
-          </div>
-          <!-- end row -->
+            <!-- end row -->
           </mat-expansion-panel>
         </mat-accordion>
         <!-- end of loop -->
@@ -111,8 +113,9 @@
     </div>
     <div class="col-md-6">
       <h1 class="new-font mb-4">Elders</h1>
+      <mat-spinner *ngIf="eLoading"></mat-spinner>
       <div *ngFor="let item of elders" class="mb-4">
-        <mat-accordion class="example-headers-align">
+        <mat-accordion class="example-headers-align" *ngIf="!eLoading">
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
               <mat-panel-description>
@@ -151,8 +154,8 @@
                   </p>
                 </mat-card-content>
               </mat-card>
-          </div>
-          <!-- end row -->
+            </div>
+            <!-- end row -->
           </mat-expansion-panel>
         </mat-accordion>
         <!-- end of loop -->

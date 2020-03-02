@@ -1,10 +1,11 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>Admin</span>
-    <button mat-button [routerLink]="['/admin']" routerLinkActive="router-link-active" >Home</button>
-    <button mat-button [routerLink]="['/admin-services']" routerLinkActive="router-link-active" >Services</button>
-    <button mat-button [routerLink]="['/admin-allusers']" routerLinkActive="router-link-active" >All Users</button>
-    <button mat-button [routerLink]="['/admin-allactivities']" routerLinkActive="router-link-active" >All Activities</button>
+    <span class="space"></span>
+    <button mat-button [routerLink]="['/admin']">Home</button>
+    <button mat-flat-button [routerLink]="['/admin-services']">Services</button>
+    <button mat-button [routerLink]="['/admin-allusers']">All Users</button>
+    <button mat-button [routerLink]="['/admin-allactivities']">All Activities</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
