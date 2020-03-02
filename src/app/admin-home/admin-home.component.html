@@ -1,3 +1,13 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Admin</span>
+    <button mat-button [routerLink]="['/admin']" routerLinkActive="home" >Home</button>
+    <button mat-button [routerLink]="['/admin-services']" routerLinkActive="router-link-active" >Services</button>
+    <button mat-button [routerLink]="['/admin-allusers']" routerLinkActive="router-link-active" >All Users</button>
+    <button mat-button [routerLink]="['/admin-allactivities']" routerLinkActive="router-link-active" >All Activities</button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <div id="home"
   style="background-image: url('https://images.designtrends.com/wp-content/uploads/2016/04/06094112/Beautiful-Mountain-HD-Backgrounds.jpg');">
 

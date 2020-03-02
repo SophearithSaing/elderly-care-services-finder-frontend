@@ -245,11 +245,6 @@ export class ResultComponent implements OnInit {
           this.halfStar = false;
           this.reviews = [];
           console.log(element);
-          // const p = (1 - element.score) * 100;
-          // console.log(p.toFixed(2) + '%');
-          // element.item.percentage = p.toFixed(2);
-          // console.log(element.item);
-          // this.matches.push(element.item);
 
           this.http.get<Array<any>>(BACKEND_URL + 'history/' + element.email).subscribe(data => {
             let rating = null;
@@ -280,11 +275,13 @@ export class ResultComponent implements OnInit {
               }
               element.item.rating = rating;
               this.matches.push(element.item);
+              console.log(this.matches);
             }
           });
         });
 
         // this.results.sort((a, b) => (a.percentage > b.percentage) ? 1 : (a.percentage === b.percentage) ? ((a.name > b.name) ? 1 : -1) : -1 );
+        // sort by percentage
         this.results.sort((a, b) => (a.percentage < b.percentage) ? 1 : -1);
         console.log(this.results);
 

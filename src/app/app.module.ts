@@ -58,6 +58,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { AdminAllusersComponent } from './admin-allusers/admin-allusers.component';
 import { ChatAppComponent } from './chat-app/chat-app.component';
 import { CaregiverHistoryComponent } from './caregiver-history/caregiver-history.component';
+import { AdminAllactivitiesComponent } from './admin-allactivities/admin-allactivities.component';
 
 
 const appRoutes: Routes = [
@@ -65,7 +66,7 @@ const appRoutes: Routes = [
   { path: 'admin', component: AdminHomeComponent },
   { path: 'admin-allusers', component: AdminAllusersComponent },
   { path: 'admin-approval', component: AdminApprovalComponent },
-  { path: 'admin-services', component: AdminServicesComponent, canActivate: [AuthGuard] },
+  { path: 'admin-services', component: AdminServicesComponent },
   { path: 'caregiver-home', component: CaregiverHomeComponent },
   { path: 'elder-home', component: ElderHomeComponent },
   { path: 'signup', component: SignupComponent },
@@ -135,7 +136,8 @@ const appRoutes: Routes = [
     AdminServicesComponent,
     AdminAllusersComponent,
     ChatAppComponent,
-    CaregiverHistoryComponent
+    CaregiverHistoryComponent,
+    AdminAllactivitiesComponent
   ],
   imports: [
     BrowserModule,
