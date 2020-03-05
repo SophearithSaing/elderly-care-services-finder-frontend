@@ -50,6 +50,8 @@ export class CalendarComponent implements OnInit {
 
   duplicated: boolean;
 
+  isLoading: boolean;
+
   constructor(
     calendar: NgbCalendar,
     public searchService: SearchService,
@@ -62,6 +64,8 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;
+    console.log(this.router.url);
     this.startDate = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day);
     this.stopDate = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day);
 
@@ -99,6 +103,7 @@ export class CalendarComponent implements OnInit {
           }
         });
       }
+      this.isLoading = false;
     });
   }
   onDateSelection(date: NgbDate) {

@@ -148,3 +148,7 @@ p {
   background-color: red;
 }
 
+mat-spinner {
+  margin: auto;
+}
+

@@ -12,11 +12,15 @@ export class RequestStatusComponent implements OnInit {
   requests: any;
   elderEmail: string;
 
+  isLoading: boolean;
+
   constructor(public search: SearchService, public authService: AuthService) { }
 
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
     // this.elderEmail = 'elderemail@gmail.com';
+
+    this.isLoading = true;
 
     this.search.getRequestsStatus(this.elderEmail).subscribe((data) => {
       this.requests = data;
@@ -29,8 +33,16 @@ export class RequestStatusComponent implements OnInit {
         const stopDateString = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
         element.startDate = startDateString;
         element.stopDate = stopDateString;
+
+        this.isLoading = false;
       });
     });
+  }
+
+  cancel(id, index) {
+    this.search.cancelRequest(id);
+    console.log('cancelling id ' + id);
+    this.requests.splice(index, 1);
   }
 
 }

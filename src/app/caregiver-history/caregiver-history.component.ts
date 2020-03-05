@@ -20,6 +20,8 @@ export class CaregiverHistoryComponent implements OnInit {
   isoStart;
   isoStop;
 
+  isLoading: boolean;
+
 
   constructor(config: NgbRatingConfig, public authService: AuthService, public search: SearchService) {
     config.max = 5;
@@ -28,28 +30,21 @@ export class CaregiverHistoryComponent implements OnInit {
   ngOnInit() {
     this.caregiverEmail = this.authService.getUserId();
 
+    this.isLoading = true;
+
     this.search.getHistory(this.caregiverEmail).subscribe((data) => {
       this.history = data;
-      console.log(this.history);
-      // this.isoStart = new Date(this.startDate).toISOString();
-      // this.isoStop = new Date(this.stopDate).toISOString();
+
       this.history.forEach(element => {
         const startDate = new Date(element.startDate);
         const stopDate = new Date(element.stopDate);
-        // const newElement = {
-        //   startDate: `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`,
-        //   stopDate: `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`
-        // };
+
         element.startDate = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
         element.stopDate = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
-        // this.availabilityString.push(newElement);
 
         const date = new Date();
         const msAgo = date.getTime() - stopDate.getTime();
-        // const daysAgo = (msAgo / 86400000).toFixed(0);
         const daysAgo = Math.trunc(msAgo / 86400000);
-        // daysAgo = daysAgo.toFixed(0);
-        // Math.trunc(daysAgo);
         element.daysAgo = daysAgo;
         if (daysAgo > 30) {
           const monthsAgo = Math.trunc(daysAgo / 30);
@@ -72,6 +67,7 @@ export class CaregiverHistoryComponent implements OnInit {
         }
       });
       console.log(this.history);
+      this.isLoading = false;
     });
   }
 

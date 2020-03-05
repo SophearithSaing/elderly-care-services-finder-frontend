@@ -97,3 +97,7 @@ h1, p {
   opacity: 1;
 }
 
+mat-spinner {
+  margin: auto;
+}
+

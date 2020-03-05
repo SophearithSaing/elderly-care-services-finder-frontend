@@ -57,6 +57,8 @@ export class ResultComponent implements OnInit {
 
   index: number;
 
+  isLoading: boolean;
+
 
   constructor(
     public searchService: SearchService,
@@ -68,6 +70,9 @@ export class ResultComponent implements OnInit {
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
     // this.elderEmail = 'sophearithsaing123@hotmail.com';
+
+    this.isLoading = true;
+
     this.searchService.getElder(this.elderEmail).subscribe(data => {
       this.elderName = data.name;
     });
@@ -273,7 +278,9 @@ export class ResultComponent implements OnInit {
               for (let index = 1; index <= rating; index++) {
                 this.stars.push('item');
               }
-              element.item.rating = rating;
+              console.log(element);
+              element.rating = rating;
+              console.log(element);
               this.matches.push(element.item);
               console.log(this.matches);
             }
@@ -296,6 +303,9 @@ export class ResultComponent implements OnInit {
         // console.log(`search for date ${startDate}`);
         // console.log(dateSearch);
         // console.log(this.results);
+
+        this.isLoading = false;
+        console.log(this.isLoading);
       });
 
   }

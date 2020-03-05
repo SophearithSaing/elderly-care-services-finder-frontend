@@ -60,6 +60,11 @@ import { AdminAllusersComponent } from './admin-allusers/admin-allusers.componen
 import { ChatAppComponent } from './chat-app/chat-app.component';
 import { CaregiverHistoryComponent } from './caregiver-history/caregiver-history.component';
 import { AdminAllactivitiesComponent } from './admin-allactivities/admin-allactivities.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { ElderNavComponent } from './elder-nav/elder-nav.component';
 
 
 const appRoutes: Routes = [
@@ -139,7 +144,9 @@ const appRoutes: Routes = [
     AdminAllusersComponent,
     ChatAppComponent,
     CaregiverHistoryComponent,
-    AdminAllactivitiesComponent
+    AdminAllactivitiesComponent,
+    MainNavComponent,
+    ElderNavComponent
   ],
   imports: [
     BrowserModule,
@@ -167,7 +174,10 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatGridListModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LayoutModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [
     AuthGuard,

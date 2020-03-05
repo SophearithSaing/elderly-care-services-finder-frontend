@@ -2,10 +2,10 @@
   <mat-toolbar-row>
     <span>Admin</span>
     <span class="space"></span>
-    <button mat-flat-button [routerLink]="['/admin']" routerLinkActive="home" >Home</button>
-    <button mat-button [routerLink]="['/admin-services']" routerLinkActive="router-link-active" >Services</button>
-    <button mat-button [routerLink]="['/admin-allusers']" routerLinkActive="router-link-active" >All Users</button>
-    <button mat-button [routerLink]="['/admin-allactivities']" routerLinkActive="router-link-active" >All Activities</button>
+    <button mat-flat-button [routerLink]="['/admin']">Home</button>
+    <button mat-button [routerLink]="['/admin-services']">Services</button>
+    <button mat-button [routerLink]="['/admin-allusers']">All Users</button>
+    <button mat-button [routerLink]="['/admin-allactivities']">All Activities</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -24,11 +24,11 @@
             REQUEST</button>
         </div> -->
         <div class="pb-3">
-          <button class="btn btn-primary" *ngIf="seeRequest === false" (click)="openRequest()">SEE CAREGIVER
+          <button mat-raised-button color="primary" *ngIf="seeRequest === false" (click)="openRequest()">SEE CAREGIVER
             REQUESTS</button>
         </div>
         <div class="pb-3">
-          <button class="btn btn-primary" *ngIf="seeRequest === true" (click)="closeRequest()">CLOSE
+          <button mat-raised-button color="primary" *ngIf="seeRequest === true" (click)="closeRequest()">CLOSE
             REQUESTS</button>
         </div>
 
@@ -106,16 +106,13 @@
 
 
         <div class="pb-3">
-          <button class="btn btn-primary" routerLink="/admin-services" routerLinkActive="active">EDIT
-            SERVICES</button>
+          <button mat-raised-button color="primary" routerLink="/admin-services">EDIT SERVICES</button>
         </div>
         <div class="pb-3">
-          <button class="btn btn-primary" routerLink="/" routerLinkActive="active">VIEW
-            ACTIVITIES</button>
+          <button mat-raised-button color="primary" routerLink="/admin-allactivities">VIEW ACTIVITIES</button>
         </div>
         <div class="pb-3">
-          <button class="btn btn-primary" routerLink="/" routerLinkActive="active">VIEW
-            ALL USERS</button>
+          <button mat-raised-button color="primary" routerLink="/admin-allusers">VIEW ALL USERS</button>
         </div>
       </div>
     </div>

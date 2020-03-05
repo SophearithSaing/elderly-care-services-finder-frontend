@@ -11,6 +11,8 @@ export class AdminServicesComponent implements OnInit {
   dailyCare = [];
   specialCare = [];
 
+  additionalHeight: number;
+
   // dailyCare = [
   //   {
   //     name: 'Bathroom Assistance',

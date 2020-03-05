@@ -87,3 +87,7 @@ li.nav-item:hover a {
 .btn-primary:hover:before {
   opacity: 1;
 }
+
+mat-spinner {
+  margin: auto;
+}

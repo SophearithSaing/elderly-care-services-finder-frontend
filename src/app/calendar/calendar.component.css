@@ -154,3 +154,7 @@ h1, h4, h5 {
   height: 35px;
   border-radius: 21px;
 }
+
+mat-spinner {
+  margin: auto;
+}

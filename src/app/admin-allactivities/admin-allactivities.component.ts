@@ -26,6 +26,30 @@ export class AdminAllactivitiesComponent implements OnInit {
         const stopDateString = `${stopDate.getDate()}/${stopDate.getMonth()}/${stopDate.getFullYear()}`;
         element.startDate = startDateString;
         element.stopDate = stopDateString;
+
+        const date = new Date();
+        const msAgo = date.getTime() - stopDate.getTime();
+        const daysAgo = Math.trunc(msAgo / 86400000);
+        element.daysAgo = daysAgo;
+        if (daysAgo > 30) {
+          const monthsAgo = Math.trunc(daysAgo / 30);
+          if (monthsAgo === 1) {
+            element.monthsAgo = `${monthsAgo} month`;
+          } else if (monthsAgo > 1) {
+            element.monthsAgo = `${monthsAgo} months`;
+          }
+          let newDaysAgo;
+          if (daysAgo % 30 > 0) {
+              newDaysAgo = daysAgo % 30;
+              let stringNewDaysAgo;
+              if (newDaysAgo === 1) {
+                stringNewDaysAgo = `${newDaysAgo} day`;
+              } else if (newDaysAgo > 1) {
+                stringNewDaysAgo = `${newDaysAgo} days`;
+              }
+              element.monthsAgo = element.monthsAgo + ' and ' + stringNewDaysAgo;
+            }
+        }
       });
 
       this.isLoading = false;

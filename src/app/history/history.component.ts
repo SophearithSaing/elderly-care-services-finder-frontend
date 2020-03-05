@@ -22,6 +22,8 @@ export class HistoryComponent implements OnInit {
   isoStart;
   isoStop;
 
+  isLoading: boolean;
+
   reviewed = false;
   constructor(config: NgbRatingConfig, public authService: AuthService, public search: SearchService) {
     // customize default values of ratings used by this component tree
@@ -31,6 +33,8 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
     // this.elderEmail = 'john@mail.com';
+
+    this.isLoading = true;
 
     this.search.getHistory(this.elderEmail).subscribe((data) => {
       this.history = data;
@@ -76,6 +80,8 @@ export class HistoryComponent implements OnInit {
         }
       });
       console.log(this.history);
+
+      this.isLoading = false;
     });
 
   }

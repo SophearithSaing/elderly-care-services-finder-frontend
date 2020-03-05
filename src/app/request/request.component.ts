@@ -44,12 +44,16 @@ export class RequestComponent implements OnInit {
 
   item;
 
+  isLoading: boolean;
+
   constructor(public authService: AuthService, public search: SearchService, private router: Router) { }
 
   ngOnInit() {
     this.caregiverEmail = this.authService.getUserId();
     // this.caregiverEmail = 'sophearithsaing123@gmail.com';
     console.log(this.caregiverEmail);
+
+    this.isLoading = true;
 
     this.search.getCaregiver(this.caregiverEmail).subscribe((data) => {
       this.caregiverName = data.name;
@@ -61,6 +65,7 @@ export class RequestComponent implements OnInit {
       this.requests.forEach(element => {
         this.requestNumber = this.requestNumber + 1;
       });
+      this.isLoading = false;
     });
 
 

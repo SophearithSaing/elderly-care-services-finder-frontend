@@ -121,3 +121,7 @@ h1 {
 #cancel:hover {
   background-color: red;
 }
+
+mat-spinner {
+  margin: auto;
+}

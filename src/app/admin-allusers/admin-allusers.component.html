@@ -31,8 +31,8 @@
             </mat-expansion-panel-header>
 
             <!-- start row -->
-            <div class="row">
-              <div class="col-md-8">
+            <!-- <div class="row"> -->
+              <div class="col-md-12">
                 <mat-card class="example-card">
                   <mat-card-header>
                     <div mat-card-avatar class="example-header-image">
@@ -87,24 +87,35 @@
                   </mat-card-content>
                 </mat-card>
               </div>
-              <div class="col-md-4">
-                <div *ngFor="let item of reviews">
+              <div class="col-md-12 mt-3">
+                <div *ngIf="item.reviews === null">
                   <mat-card class="mb-3">
                     <div class="new-font">
                       <mat-card-title>
-                        From {{item.reviewer}}
+                        No Review for This Caregiver
                       </mat-card-title>
-                      <mat-card-subtitle>
-                        {{item.rating}} stars
-                      </mat-card-subtitle>
                     </div>
-                    <mat-card-content class="new-font">
-                      {{item.review}}
-                    </mat-card-content>
                   </mat-card>
                 </div>
+                <div *ngIf="item.reviews !== null">
+                  <div *ngFor="let item of item.reviews">
+                    <mat-card class="mb-3">
+                      <div class="new-font">
+                        <mat-card-title>
+                          From {{item.reviewer}}
+                        </mat-card-title>
+                        <mat-card-subtitle>
+                          {{item.rating}} stars
+                        </mat-card-subtitle>
+                      </div>
+                      <mat-card-content class="new-font">
+                        {{item.review}}
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </div>
               </div>
-            </div>
+            <!-- </div> -->
             <!-- end row -->
           </mat-expansion-panel>
         </mat-accordion>

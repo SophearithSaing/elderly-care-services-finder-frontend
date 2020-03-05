@@ -162,3 +162,11 @@ h1 {
   display: block;
 }
 
+#forgot-password {
+  color: #fff;
+}
+
+mat-spinner {
+  margin: auto;
+}
+

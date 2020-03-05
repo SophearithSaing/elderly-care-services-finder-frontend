@@ -4,6 +4,10 @@ import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
 import { SearchService } from '../services/search.service';
 import { Router } from '@angular/router';
 
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+
 @Component({
   selector: 'app-elder-home',
   templateUrl: './elder-home.component.html',
@@ -59,7 +63,14 @@ export class ElderHomeComponent implements OnInit {
 
   searchButton = false;
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
+
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private calendar: NgbCalendar, public formatter: NgbDateParserFormatter, public searchService: SearchService, public router: Router
   ) {
     this.fromDate = calendar.getToday();

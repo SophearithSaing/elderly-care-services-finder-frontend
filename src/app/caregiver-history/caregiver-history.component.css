@@ -39,3 +39,7 @@ h1 {
 .list-group {
   font-family: 'Ubuntu', sans-serif;
 }
+
+mat-spinner {
+  margin: auto;
+}

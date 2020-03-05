@@ -14,6 +14,8 @@ const BACKEND_URL = environment.apiUrl;
 })
 export class AdminAllusersComponent implements OnInit {
 
+  panelOpenState = false;
+
   // elders varaible
   elders;
   eLoading: boolean;
@@ -38,11 +40,17 @@ export class AdminAllusersComponent implements OnInit {
     this.search.getCaregivers().subscribe(data => {
       this.caregivers = data.users;
 
-      // get star rating
       this.caregivers.forEach(element => {
-        // this.stars = [];
+        // calculate age
+        const thisYear = new Date().getFullYear();
+        const cgYear = new Date(element.birthDate).getFullYear();
+        const cgAge = thisYear - cgYear;
+        element.age = cgAge;
+        console.log(thisYear, cgYear, cgAge);
+
+
+        element.reviews = null;
         this.halfStar = false;
-        // this.reviews = [];
 
         this.http.get<Array<any>>(BACKEND_URL + 'history/' + element.email).subscribe(res => {
           let rating = null;
@@ -59,6 +67,7 @@ export class AdminAllusersComponent implements OnInit {
                 rating: item.rating
               };
               this.reviews.push(i);
+              element.reviews = this.reviews;
             }
           });
           if (rating !== null) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,15 +9,18 @@ import { AuthService } from './auth/auth.service';
 })
 export class AppComponent implements OnInit {
   elderId: string;
-  title = 'first-app';
+  currentRoute: string;
 
-  constructor(private authService: AuthService) {}
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   // ngOnInit() {
   //   this.elderId = this.authService.getUserId();
   // }
   ngOnInit() {
     this.authService.autoAuthUser();
+    this.currentRoute = this.router.url;
+    console.log(this.currentRoute);
   }
 
   onLogout() {

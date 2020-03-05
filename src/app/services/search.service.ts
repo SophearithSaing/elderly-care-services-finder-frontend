@@ -542,6 +542,10 @@ export class SearchService {
     );
   }
 
+  cancelRequest(id: string) {
+    this.http.delete(BACKEND_URL + 'requests/' + id).subscribe(res => {});
+  }
+
   updateRequest(item: Request, elderName: string, caregiverName: string, status: boolean, rejectionReason: string) {
     const request: Request = {
       _id: item._id,

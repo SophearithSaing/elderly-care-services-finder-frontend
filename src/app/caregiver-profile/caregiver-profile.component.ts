@@ -37,10 +37,15 @@ export class CaregiverProfileComponent implements OnInit {
   age;
   id;
 
+  isLoading: boolean;
+
   constructor(public searchService: SearchService, public authService: AuthService, public router: Router) { }
 
   ngOnInit() {
     this.caregiverEmail = this.authService.getUserId();
+
+    this.isLoading = true;
+
     this.searchService.getCaregiver(this.caregiverEmail).subscribe((Data) => {
       console.log(Data);
       this.caregiver = {
@@ -85,6 +90,7 @@ export class CaregiverProfileComponent implements OnInit {
       this.imagePath = this.caregiver.imagePath;
 
       console.log(this.caregiver);
+      this.isLoading = false;
     });
   }
 

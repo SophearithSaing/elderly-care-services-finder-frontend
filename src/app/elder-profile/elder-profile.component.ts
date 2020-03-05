@@ -33,13 +33,16 @@ export class ElderProfileComponent implements OnInit {
   year = new Date().getFullYear();
   age;
 
+  isLoading: boolean;
+
 
   constructor(public searchService: SearchService, public authService: AuthService, public router: Router) { }
 
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
-    // console.log('User email is ' + this.elderEmail);
-    // this.elderEmail = 'john@gmail.com';
+
+    this.isLoading = true;
+
     this.searchService.getElder(this.elderEmail).subscribe((Data) => {
       this.elder = {
         _id: Data._id,
@@ -71,6 +74,8 @@ export class ElderProfileComponent implements OnInit {
       this.imagePath = this.elder.imagePath;
 
       console.log(this.elder);
+
+      this.isLoading = false;
     });
   }
 

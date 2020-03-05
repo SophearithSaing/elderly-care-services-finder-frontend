@@ -85,12 +85,7 @@ h1 {
   height: 42px;
   border-radius: 21px;
 
-  /* background: linear-gradient(left, #28a745, #389b64,  #97f7c2); */
-  /* background: #28a745; */
   background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2);
-  /* background: -o-linear-gradient(left, #28a745, #389b64, #97f7c2);
-  background: -moz-linear-gradient(left, #28a745, #389b64, #97f7c2); */
-  /* background: linear-gradient(left, #28a745, #389b64, #97f7c2); */
   position: relative;
   z-index: 1;
 
@@ -160,6 +155,7 @@ h1 {
 #cancel:hover {
   background-color: red;
 }
+
 .login-form-title {
   font-family: 'Ubuntu', sans-serif;
   font-size: 50px;
@@ -172,3 +168,29 @@ h1 {
   display: block;
 }
 
+#login-button {
+  background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2);
+}
+
+/* css for mat-form-field */
+/* //mat-input focused color */
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color:rgb(5, 190, 61)!important;
+}
+
+/* // mat-label focused style */
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: rgb(5, 190, 61)!important;
+}
+
+#forgot-password {
+  color: #fff;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.mat-spinner ::ng-deep circle {
+      stroke: rgb(5, 190, 61);
+}

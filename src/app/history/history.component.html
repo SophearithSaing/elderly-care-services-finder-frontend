@@ -15,6 +15,7 @@
 <div class="container mt-5">
   <h1 style="text-align: center;">History</h1>
   <!-- <div class="list-group"> -->
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
   <div class="list-group" *ngFor="let item of history">
     <div href="#" class="list-group-item list-group-item-action mt-3 mb-3" *ngIf="item.daysAgo > 0">
       <div class="d-flex w-100 justify-content-between">
