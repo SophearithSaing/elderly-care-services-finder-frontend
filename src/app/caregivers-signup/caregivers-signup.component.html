@@ -28,7 +28,7 @@
 
     <div class="form-group">
       <div>
-        <label for="">Profile Picture</label>
+        <label for="">Certificate</label>
       </div>
       <div class="col-md-4 mb-3" *ngIf="certificate.value !== ''">
         <img src={{certificate.value}} alt="" style="width: 75%; height: 100%;">
@@ -64,17 +64,14 @@
     <div class="form-group">
       <div class="row">
         <div class="col-md-6">
-          <div class="input-group">
-            <input class="form-control" placeholder="Birthdate" name="dp" ngbDatepicker #d="ngbDatepicker"
-              [formControl]="birthDate">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"><i
-                  class="fa fa-calendar" aria-hidden="true"></i></button>
-              <!-- <button type="button" (click)="show()" >btn</button> -->
-            </div>
-          </div>
-        </div>
+          <mat-form-field appearance="outline" class="w100">
+            <mat-label>Birthdate</mat-label>
+            <input matInput [matDatepicker]="dp" [formControl]="birthDate">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp disabled="false"></mat-datepicker>
+          </mat-form-field>
 
+        </div>
         <div class="col-md-6">
           <mat-form-field appearance="outline" class="mr-5 w100">
             <mat-label>Gender</mat-label>

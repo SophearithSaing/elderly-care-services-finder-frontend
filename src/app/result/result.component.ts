@@ -266,6 +266,10 @@ export class ResultComponent implements OnInit {
                   rating: item.rating
                 };
                 this.reviews.push(i);
+                element.reviews = this.reviews;
+                console.log(element);
+                console.log(element.reviews);
+                console.log(this.reviews);
               }
             });
             if (rating !== null) {
@@ -279,10 +283,8 @@ export class ResultComponent implements OnInit {
                 this.stars.push('item');
               }
               console.log(element);
-              element.rating = rating;
+              element.stars = this.stars;
               console.log(element);
-              this.matches.push(element.item);
-              console.log(this.matches);
             }
           });
         });

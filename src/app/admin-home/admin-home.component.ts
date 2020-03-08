@@ -36,6 +36,15 @@ export class AdminHomeComponent implements OnInit {
       this.requestNumber = count;
       console.log(count);
       console.log(this.unapproved);
+
+      this.unapproved.forEach(element => {
+        // calculate age
+        const thisYear = new Date().getFullYear();
+        const cgYear = new Date(element.birthDate).getFullYear();
+        const cgAge = thisYear - cgYear;
+        element.age = cgAge;
+        console.log(thisYear, cgYear, cgAge);
+      });
     });
   }
 

@@ -21,6 +21,12 @@ export class CaregiverRegisterComponent implements OnInit {
   confirmPassword: boolean = null;
   userExisted = false;
 
+  firstPassword: string;
+  secondPassword: string;
+  shortPassword: boolean;
+  showHelp = false;
+
+
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
   ngOnInit() {
@@ -90,8 +96,28 @@ export class CaregiverRegisterComponent implements OnInit {
 
   }
 
-  close() {
+  editPassword() {
+    this.showHelp = true;
     this.confirmPassword = null;
+    this.shortPassword = false;
+  }
+
+  validatePassword() {
+    this.showHelp = false;
+    if (this.firstPassword.length < 8) {
+      this.shortPassword = true;
+    }
+  }
+
+  editSecondPassword() {
+    this.confirmPassword = null;
+  }
+
+  checkPasswordMatch() {
+    console.log(this.firstPassword, this.secondPassword);
+    if (this.firstPassword !== this.secondPassword) {
+      this.confirmPassword = false;
+    }
   }
 
   resetValidation() {

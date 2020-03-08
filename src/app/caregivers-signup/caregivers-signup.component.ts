@@ -110,11 +110,7 @@ export class CaregiversSignupComponent implements OnInit {
             this.name.setValue(this.caregiver.name);
             // this.birthDate.setValue(this.caregiver.birthDate);
             const newDate = new Date(this.caregiver.birthDate);
-            this.birthDate.setValue({
-              year: newDate.getFullYear(),
-              month: newDate.getMonth() + 1,
-              day: newDate.getDate()
-            });
+            this.birthDate.setValue(newDate);
             this.gender.setValue(this.caregiver.gender);
             this.houseNumber.setValue(this.caregiver.houseNumber);
             this.street.setValue(this.caregiver.street);
@@ -215,7 +211,7 @@ export class CaregiversSignupComponent implements OnInit {
     //   return;
     // }
     if (this.mode === 'add') {
-      this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
+      this.tsDate = new Date(this.birthDate.value);
       this.searchService
         .addCaregiver(
           // form.value.name,
@@ -259,7 +255,7 @@ export class CaregiversSignupComponent implements OnInit {
       this.router.navigate(['/services', this.email]);
       console.log(this.router.navigate(['/services', this.email]));
     } else {
-      this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
+      this.tsDate = new Date(this.birthDate.value);
       this.searchService.UpdateCaregiver(
         this.caregiver._id,
         this.name.value,

@@ -9,6 +9,10 @@
 
 }
 
+.w100 {
+  width: 100%;
+}
+
 .btn-success {
   font-family: 'Ubuntu', sans-serif;
   font-size: 18px;

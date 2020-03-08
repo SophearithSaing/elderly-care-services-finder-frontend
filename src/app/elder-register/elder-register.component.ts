@@ -20,8 +20,14 @@ export class ElderRegisterComponent implements OnInit {
   private elderId: string;
   private mode = "create";
 
+  showHelp = false;
+
   confirmPassword: boolean = null;
   userExisted = false;
+
+  firstPassword: string;
+  secondPassword: string;
+  shortPassword: boolean;
 
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
@@ -59,7 +65,9 @@ export class ElderRegisterComponent implements OnInit {
     // form.resetForm();
     // this.router.navigate(['/elder-login']);
 
-    if (form.value.password === form.value.passwordConfirmation) {
+    console.log(form.value.password.length);
+
+    if (form.value.password === form.value.passwordConfirmation && form.value.password.length > 8 ) {
       console.log(form.value.password + ' === ' + form.value.passwordConfirmation);
       this.confirmPassword = true;
       console.log(this.confirmPassword);
@@ -87,8 +95,33 @@ export class ElderRegisterComponent implements OnInit {
     }
   }
 
-  close() {
+
+  editPassword() {
+    this.showHelp = true;
     this.confirmPassword = null;
+    this.shortPassword = false;
+  }
+
+  validatePassword() {
+    this.showHelp = false;
+    if (this.firstPassword.length < 8) {
+      this.shortPassword = true;
+    }
+  }
+
+  editSecondPassword() {
+    this.confirmPassword = null;
+  }
+
+  checkPasswordMatch() {
+    console.log(this.firstPassword, this.secondPassword);
+    if (this.firstPassword !== this.secondPassword) {
+      this.confirmPassword = false;
+    }
+  }
+
+  resetValidation() {
+    this.userExisted = false;
   }
 
 

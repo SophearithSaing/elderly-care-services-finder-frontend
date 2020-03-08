@@ -65,6 +65,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { ElderNavComponent } from './elder-nav/elder-nav.component';
+import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 
 
 const appRoutes: Routes = [
@@ -146,7 +147,8 @@ const appRoutes: Routes = [
     CaregiverHistoryComponent,
     AdminAllactivitiesComponent,
     MainNavComponent,
-    ElderNavComponent
+    ElderNavComponent,
+    PasswordRecoveryComponent
   ],
   imports: [
     BrowserModule,

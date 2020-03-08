@@ -121,11 +121,12 @@ export class EldersSignupComponent implements OnInit {
               imagePath: Data.imagePath
             };
             const newDate = new Date(this.elder.birthDate);
-            this.birthDate.setValue({
-              year: newDate.getFullYear(),
-              month: newDate.getMonth() + 1,
-              day: newDate.getDate()
-            });
+            // this.birthDate.setValue({
+            //   year: newDate.getFullYear(),
+            //   month: newDate.getMonth() + 1,
+            //   day: newDate.getDate()
+            // });
+            this.birthDate.setValue(newDate);
             this.gender.setValue(this.elder.gender);
             this.houseNumber.setValue(this.elder.houseNumber);
             this.street.setValue(this.elder.street);
@@ -241,7 +242,7 @@ export class EldersSignupComponent implements OnInit {
     // } else {
       console.log(this.validForm);
       if (this.mode === 'add') {
-        this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
+        this.tsDate = new Date(this.birthDate.value);
         this.searchService
           .addElder(
             // this.form.value.name,
@@ -274,7 +275,8 @@ export class EldersSignupComponent implements OnInit {
         console.log('added');
         this.router.navigate(['/elder-login']);
       } else {
-        this.tsDate = new Date(this.birthDate.value.year, this.birthDate.value.month - 1, this.birthDate.value.day);
+        this.tsDate = new Date(this.birthDate.value);
+        console.log(this.tsDate);
         console.log('Running Update');
         this.searchService
           .UpdateElder(

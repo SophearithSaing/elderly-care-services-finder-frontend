@@ -33,7 +33,7 @@
 </nav> -->
 
 
-  <div id="home"
+<div id="home"
   style="background-image: url('https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/79364600_137989457639889_2963431248447406080_o.jpg?_nc_cat=110&_nc_ohc=MtppSSgwt8QAQmBwl8iUAnexAIyCKUlSwzAQrQiJzNb9GjWTAW0qK0POg&_nc_ht=scontent-cdg2-1.xx&oh=7f5c4a0ada95b7d5a80d950d1758f9a8&oe=5E6F9E51');">
 
   <div class="container text-center">
@@ -110,10 +110,11 @@
         <mat-accordion>
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
-              <mat-panel-title class="new-font">
+              <mat-panel-title class="panelText">
                 Services
               </mat-panel-title>
-              <mat-panel-description class="new-font">
+              <mat-panel-description class="panelText">
+                <!-- <mat-panel-description class="new-font"> -->
                 {{panelOpenState ? 'Select Services Below' : 'Click Here to Specify Services'}}
               </mat-panel-description>
             </mat-expansion-panel-header>
@@ -121,12 +122,14 @@
               <mat-grid-tile>
                 <mat-card>
                   <mat-card-header>
-                    <mat-card-title>Daily Care</mat-card-title>
+                    <mat-card-title class="panelText">
+                      Daily Care
+                    </mat-card-title>
                   </mat-card-header>
                   <mat-card-content>
 
                     <div *ngFor="let item of dailyCare" align="left">
-                      <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+                      <mat-checkbox class="panelText" [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
                     </div>
 
                   </mat-card-content>
@@ -136,14 +139,14 @@
               <mat-grid-tile>
                 <mat-card>
                   <mat-card-header>
-                    <mat-card-title>
+                    <mat-card-title class="panelText">
                       Special Care
                     </mat-card-title>
                   </mat-card-header>
                   <mat-card-content>
 
                     <div *ngFor="let item of specialCare" align="left">
-                      <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
+                      <mat-checkbox class="panelText" [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>
                     </div>
 
                   </mat-card-content>
