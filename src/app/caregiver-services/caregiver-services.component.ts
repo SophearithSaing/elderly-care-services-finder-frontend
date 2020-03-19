@@ -144,7 +144,7 @@ export class CaregiverServicesComponent implements OnInit {
     console.log(this.monthlyPrice);
     console.log(this.services);
     this.UpdatePriceServices(this.email, this.services, this.dailyPrice, this.monthlyPrice);
-    this.router.navigate(['/caregiver-login']);
+    // this.router.navigate(['/caregiver-login']);
   }
 
 

@@ -19,6 +19,7 @@ const BACKEND_URL = environment.apiUrl;
   styleUrls: ['./caregivers-signup.component.css']
 })
 export class CaregiversSignupComponent implements OnInit {
+  isLoading = false;
 
   caregiver: Caregiver;
   caregiverEmail: string;
@@ -37,6 +38,8 @@ export class CaregiversSignupComponent implements OnInit {
   postalCode = new FormControl('');
   phoneNumber = new FormControl('');
   image = new FormControl('');
+  availability: Array<any>;
+  experience: Array<any>;
 
   query: any;
   email: string;
@@ -47,7 +50,6 @@ export class CaregiversSignupComponent implements OnInit {
   certificate = new FormControl('');
   certificatePreview: string;
   certificateFile: any;
-
 
   constructor(
     public searchService: SearchService, public route: ActivatedRoute, private router: Router,
@@ -104,9 +106,10 @@ export class CaregiversSignupComponent implements OnInit {
               dailyPrice: Data.dailyPrice,
               monthlyPrice: Data.monthlyPrice,
               imagePath: Data.imagePath,
-              schedule: null,
+              schedule: Data.schedule,
               approval: null
             };
+            console.log(this.caregiver);
             this.name.setValue(this.caregiver.name);
             // this.birthDate.setValue(this.caregiver.birthDate);
             const newDate = new Date(this.caregiver.birthDate);
@@ -120,6 +123,9 @@ export class CaregiversSignupComponent implements OnInit {
             this.postalCode.setValue(this.caregiver.postalCode);
             this.phoneNumber.setValue(this.caregiver.phoneNumber);
             this.image.setValue(this.caregiver.imagePath);
+            this.availability = this.caregiver.schedule;
+            this.experience = this.caregiver.experience;
+            console.log(this.availability);
           });
 
         }
@@ -271,8 +277,11 @@ export class CaregiversSignupComponent implements OnInit {
         this.postalCode.value,
         this.phoneNumber.value,
         this.image.value,
+        this.availability,
+        this.experience
       );
       console.log('updated');
+      this.isLoading = true;
       setTimeout(() => {
         this.router.navigate(['/caregiver-profile']);
       }, 2000);

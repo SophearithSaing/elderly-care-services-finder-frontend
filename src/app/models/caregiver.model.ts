@@ -13,7 +13,7 @@ export interface Caregiver {
   phoneNumber: string;
   services: any;
   certificate: string;
-  experience: string;
+  experience: Array<any>;
   dailyPrice: number;
   monthlyPrice: number;
   imagePath: string;

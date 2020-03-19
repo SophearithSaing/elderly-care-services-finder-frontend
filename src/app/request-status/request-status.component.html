@@ -1,4 +1,4 @@
-<nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
+<!-- <nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
   <div _ngcontent-vuo-c3="" class="collapse navbar-collapse" id="navbarNavDropdown">
     <div class="header-logo">
       <img
@@ -17,7 +17,8 @@
       </li>
     </ul>
   </div>
-</nav>
+</nav> -->
+<app-elder-nav>
 <div class="container mt-5">
   <h1 style="text-align: center;">Requests Status</h1>
   <!-- <div class="list-group"> -->
@@ -26,21 +27,46 @@
     <div href="#" class="list-group-item list-group-item-action mt-3 mb-3">
       <div class="d-flex w-100 justify-content-between">
         <h3 class="mb-1">{{item.caregiverName}}</h3>
-        <h4 class="mb-1">{{item.caregiverEmail}}</h4>
-        <!-- <small>days ago</small> -->
+        <small *ngIf="item.daysAgo < 30">{{item.daysAgo}} days ago</small>
+        <small *ngIf="item.daysAgo >= 30">{{item.monthsAgo}} ago</small>
       </div>
-      <p class="mb-3">From: {{item.startDate}}</p>
-      <p class="mb-3">To: {{item.stopDate}}</p>
+      <h4 class="mb-1">{{item.caregiverEmail}}</h4>
+
+      <p class="mb-3">From: {{item.startDate}} To: {{item.stopDate}}</p>
+      <p class="mb-3">Daily Care: {{item.selectedServices.dailyCare}}</p>
+      <p class="mb-3">Special Care: {{item.selectedServices.specialCare}}</p>
+      <p class="mb-3">Price: {{item.selectedDP}} daily or {{item.selectedMP}} monthly</p>
       <p class="mb-3" *ngIf="item.status !== null">Status: {{item.status ? 'Accepted' : 'Rejected'}}</p>
       <p class="mb-3" *ngIf="item.status === false">Reason: {{item.rejectionReason}}</p>
       <p class="mb-3" *ngIf="item.status === null">Status: Pending</p>
 
 
       <div>
-        <button class="btn btn-sm" id="cancel" *ngIf="item.status === null" (click)="cancel(item._id, i)">Cancel
+        <button class="btn btn-sm" id="cancel" *ngIf="item.status === null" (click)="setValue(item._id, i)" data-toggle="modal" data-target="#saved">Cancel
           Request</button>
       </div>
+    </div>
+  </div>
+</div>
+</app-elder-nav>
 
+<!-- Modal -->
+<div class="modal fade" id="saved" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to cancel this request?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="btn-okay" data-dismiss="modal" (click)="cancel()">Yes</button>
+        <button class="btn btn-sm" id="cancel" data-dismiss="modal">Cancel</button>
+      </div>
     </div>
   </div>
 </div>

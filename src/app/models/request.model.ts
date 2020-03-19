@@ -9,4 +9,8 @@ export interface Request {
   requireInterview: boolean;
   status: boolean;
   rejectionReason: string;
+  dateSent: Date;
+  selectedServices: any;
+  selectedDP: number;
+  selectedMP: number;
 }

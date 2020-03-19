@@ -299,7 +299,9 @@ export class SearchService {
     province: string,
     postalCode: string,
     phoneNumber: string,
-    imagePath: string
+    imagePath: string,
+    availability: Array<any>,
+    experience: Array<any>
   ) {
     const caregiver = {
       _id: id,
@@ -314,7 +316,9 @@ export class SearchService {
       province: province,
       postalCode: postalCode,
       phoneNumber: phoneNumber,
-      imagePath: imagePath
+      imagePath: imagePath,
+      availability: availability,
+      experience: experience
     };
     console.log(caregiver);
     this.http
@@ -395,7 +399,7 @@ export class SearchService {
       caregiverEmail: email,
       availability: availability
     }
-    this.http.put(BACKEND_URL + "schedules/" + email, schedule).subscribe(response => { });
+    this.http.patch(BACKEND_URL + "schedules/" + email, schedule).subscribe(response => { });
     console.log("update schedule ran")
     console.log(availability);
     console.log(schedule);
@@ -405,7 +409,27 @@ export class SearchService {
 
   // get one caregiver
   getCaregiver(email: string) {
-    return this.http.get<{ _id: string, name: string, email: string, birthDate: Date, gender: string, houseNumber: string, street: string, subDistrict: string, district: string, province: string, postalCode: string, phoneNumber: string, services: any, certificate: string, experience: string, dailyPrice: number, monthlyPrice: number, imagePath: string, approval: boolean }>(
+    return this.http.get<{
+      _id: string,
+      name: string,
+      email: string,
+      birthDate: Date,
+      gender: string,
+      houseNumber: string,
+      street: string,
+      subDistrict: string,
+      district: string,
+      province: string,
+      postalCode: string,
+      phoneNumber: string,
+      services: any,
+      certificate: string,
+      experience: Array<any>,
+      dailyPrice: number,
+      monthlyPrice: number,
+      imagePath: string,
+      schedule: Array<any>,
+      approval: boolean }>(
       BACKEND_URL + "caregivers/" + email
     );
   }
@@ -481,7 +505,11 @@ export class SearchService {
     startDate: Date,
     stopDate: Date,
     requireInterview: boolean,
-    status: boolean
+    status: boolean,
+    dateSent: Date,
+    selectedServices: any,
+    selectedDP: number,
+    selectedMP: number
     ) {
 
     const request: Request = {
@@ -494,7 +522,11 @@ export class SearchService {
       stopDate: stopDate,
       requireInterview: requireInterview,
       status: null,
-      rejectionReason: null
+      rejectionReason: null,
+      dateSent: dateSent,
+      selectedServices: selectedServices,
+      selectedDP: selectedDP,
+      selectedMP: selectedMP
     };
     console.log(request);
     this.http
@@ -546,16 +578,21 @@ export class SearchService {
     this.http.delete(BACKEND_URL + 'requests/' + id).subscribe(res => {});
   }
 
-  updateRequest(item: Request, elderName: string, caregiverName: string, status: boolean, rejectionReason: string) {
-    const request: Request = {
+  updateRequest(
+    item: Request,
+    elderName: string,
+    caregiverName: string,
+    status: boolean,
+    rejectionReason: string) {
+    const request = {
       _id: item._id,
-      elderEmail: item.elderEmail,
-      elderName,
-      caregiverEmail: item.caregiverEmail,
-      caregiverName,
-      startDate: item.startDate,
-      stopDate: item.stopDate,
-      requireInterview: item.requireInterview,
+      // elderEmail: item.elderEmail,
+      // elderName,
+      // caregiverEmail: item.caregiverEmail,
+      // caregiverName,
+      // startDate: item.startDate,
+      // stopDate: item.stopDate,
+      // requireInterview: item.requireInterview,
       status,
       rejectionReason
     };
@@ -565,22 +602,25 @@ export class SearchService {
       .patch<{ message: string, postId: string }>(url, request)
       .subscribe(response => { });
 
-    const requestStartDate = new Date(request.startDate);
-    const requestStopDate = new Date(request.stopDate);
+    // const requestStartDate = new Date(request.startDate);
+    // const requestStopDate = new Date(request.stopDate);
 
-    console.log(requestStartDate);
-    console.log(requestStopDate);
+    // console.log(requestStartDate);
+    // console.log(requestStopDate);
 
     if (status === true) {
       const history = {
         _id: null,
-        elderEmail: request.elderEmail,
+        elderEmail: item.elderEmail,
         elderName,
-        caregiverEmail: request.caregiverEmail,
+        caregiverEmail: item.caregiverEmail,
         caregiverName,
-        startDate: request.startDate,
-        stopDate: request.stopDate,
-        requireInterview: request.requireInterview,
+        startDate: item.startDate,
+        stopDate: item.stopDate,
+        requireInterview: item.requireInterview,
+        selectedServices: item.selectedServices,
+        selectedDP: item.selectedDP,
+        selectedMP: item.selectedMP,
         rating: null,
         review: null
       };

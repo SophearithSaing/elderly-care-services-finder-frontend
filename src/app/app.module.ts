@@ -66,6 +66,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { ElderNavComponent } from './elder-nav/elder-nav.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
+import { CaregiverExperienceComponent } from './caregiver-experience/caregiver-experience.component';
 
 
 const appRoutes: Routes = [
@@ -104,6 +105,7 @@ const appRoutes: Routes = [
   // { path: 'calendar/:email', component: CalendarComponent, canActivate: [AuthGuard]},
   { path: 'calendar/:email', component: CalendarComponent},
   { path: 'services/:email', component: CaregiverServicesComponent },
+  { path: 'caregiver-experience', component: CaregiverExperienceComponent },
   { path: 'chat-app', component: ChatAppComponent },
   { path: '',
     redirectTo: '/home',
@@ -148,7 +150,8 @@ const appRoutes: Routes = [
     AdminAllactivitiesComponent,
     MainNavComponent,
     ElderNavComponent,
-    PasswordRecoveryComponent
+    PasswordRecoveryComponent,
+    CaregiverExperienceComponent
   ],
   imports: [
     BrowserModule,

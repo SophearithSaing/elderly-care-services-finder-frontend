@@ -24,6 +24,8 @@ const BACKEND_URL = environment.apiUrl;
   styleUrls: ['./elders-signup.component.css']
 })
 export class EldersSignupComponent implements OnInit {
+  isLoading = false;
+
   validForm: boolean = null;
   elder: Elder;
   elderId: string;
@@ -296,6 +298,7 @@ export class EldersSignupComponent implements OnInit {
             this.image.value
           );
         console.log('updated');
+        this.isLoading = true;
         setTimeout(() => {
           this.router.navigate(['/elder-profile']);
         }, 2000);

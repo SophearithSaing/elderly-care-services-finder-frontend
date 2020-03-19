@@ -42,6 +42,13 @@ export class CaregiverHistoryComponent implements OnInit {
         element.startDate = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
         element.stopDate = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
 
+        if (element.selectedServices === undefined) {
+          element.selectedServices = {
+            dailyCare: 'none',
+            specialCare: 'none'
+          };
+        };
+
         const date = new Date();
         const msAgo = date.getTime() - stopDate.getTime();
         const daysAgo = Math.trunc(msAgo / 86400000);

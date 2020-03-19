@@ -1,4 +1,4 @@
-<nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
+<!-- <nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
   <div _ngcontent-vuo-c3="" class="collapse navbar-collapse" id="navbarNavDropdown">
       <div class="header-logo">
           <img src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.0-9/79731930_137989890973179_6631381564599042048_n.png?_nc_cat=104&_nc_ohc=KPi8-ipnoqsAQnH6PyVV_Tdfqn0EIo9Thh2OSloW_ETyslvY78sLBCk_A&_nc_ht=scontent.fbkk12-2.fna&oh=96636c40577e051798bef5ac5c7d4404&oe=5E68D64D">
@@ -11,11 +11,12 @@
           <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/home">Logout</a></li>
       </ul>
   </div>
-</nav>
+</nav> -->
 
+<app-elder-nav>
 <div class="container mt-5">
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <mat-card class="example-card">
+  <mat-card class="example-card" *ngIf="!isLoading">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image">
         <img src="{{imagePath}}" alt="" style="width: 100%; height: 100%;">
@@ -37,5 +38,6 @@
   <!-- <h1 class="display-4">{{name}}</h1>
   <p class="lead"><b>Age: </b> <b>Gender: </b>{{gender}}</p> -->
 
-  <button type="submit" class="btn btn-success mt-5" (click)="edit()">EDIT</button>
+  <button *ngIf="!isLoading" type="submit" class="btn btn-success mt-5" (click)="edit()">EDIT</button>
 </div>
+</app-elder-nav>

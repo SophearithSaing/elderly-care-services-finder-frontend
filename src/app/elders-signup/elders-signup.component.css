@@ -13,6 +13,24 @@
   width: 100%;
 }
 
+/* //mat-input focused color */
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color:rgb(5, 190, 61)!important;
+}
+
+/* // mat-label focused style */
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: rgb(5, 190, 61)!important;
+}
+
+mat-spinner {
+margin: auto;
+}
+
+.mat-spinner ::ng-deep circle {
+    stroke: rgb(5, 190, 61);
+}
+
 .btn-success {
   font-family: 'Ubuntu', sans-serif;
   font-size: 18px;

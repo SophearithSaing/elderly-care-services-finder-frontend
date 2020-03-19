@@ -56,6 +56,9 @@ export class ResultComponent implements OnInit {
   requireInterview = false;
 
   index: number;
+  selectedServices;
+  selectedDP;
+  selectedMP;
 
   isLoading: boolean;
 
@@ -321,10 +324,27 @@ export class ResultComponent implements OnInit {
     this.caregiverEmail = email;
     this.caregiverName = name;
     this.index = index;
+    this.selectedServices = this.results[index].services;
+    this.selectedDP = this.results[index].dailyPrice;
+    this.selectedMP = this.results[index].monthlyPrice;
   }
 
   request() {
-    this.searchService.sendRequest(this.elderEmail, this.caregiverEmail, this.elderName, this.caregiverName, this.startDate, this.stopDate, this.requireInterview, null);
+    const currentDate = new Date()
+    this.searchService.sendRequest(
+      this.elderEmail,
+      this.caregiverEmail,
+      this.elderName,
+      this.caregiverName,
+      this.startDate,
+      this.stopDate,
+      this.requireInterview,
+      null,
+      currentDate,
+      this.selectedServices,
+      this.selectedDP,
+      this.selectedMP
+      );
     console.log('this ran');
     console.log(this.index);
     console.log(this.results[this.index]);

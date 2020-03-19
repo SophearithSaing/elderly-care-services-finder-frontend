@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../services/search.service';
+import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin-allactivities',
@@ -11,7 +12,9 @@ export class AdminAllactivitiesComponent implements OnInit {
   history: any;
   isLoading: boolean;
 
-  constructor(private search: SearchService) { }
+  constructor(config: NgbRatingConfig, private search: SearchService) {
+    config.max = 5;
+   }
 
   ngOnInit() {
     this.isLoading = true;
@@ -26,6 +29,13 @@ export class AdminAllactivitiesComponent implements OnInit {
         const stopDateString = `${stopDate.getDate()}/${stopDate.getMonth()}/${stopDate.getFullYear()}`;
         element.startDate = startDateString;
         element.stopDate = stopDateString;
+
+        if (element.selectedServices === undefined) {
+          element.selectedServices = {
+            dailyCare: 'none',
+            specialCare: 'none'
+          };
+        };
 
         const date = new Date();
         const msAgo = date.getTime() - stopDate.getTime();

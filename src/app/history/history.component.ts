@@ -52,6 +52,13 @@ export class HistoryComponent implements OnInit {
         element.stopDate = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
         // this.availabilityString.push(newElement);
 
+        if (element.selectedServices === undefined) {
+          element.selectedServices = {
+            dailyCare: 'none',
+            specialCare: 'none'
+          };
+        };
+
         const date = new Date();
         const msAgo = date.getTime() - stopDate.getTime();
         // const daysAgo = (msAgo / 86400000).toFixed(0);
