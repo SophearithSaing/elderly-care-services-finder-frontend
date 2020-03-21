@@ -58,11 +58,14 @@ export class AdminHomeComponent implements OnInit {
 
   acceptRequest(email: string) {
     this.admin.UpdateCGStatus(this.id, email, true);
-    // this.accept = true;
+    this.accept = true;
   }
 
   rejectRequest(email: string) {
-    // this.accept = false;
+    this.accept = false;
+    if (this.reason === null) {
+      this.reason = '';
+    }
     this.admin.UpdateCGStatus(this.id, email, false);
     this.admin.AddReason(email, this.reason);
     console.log(this.reason);

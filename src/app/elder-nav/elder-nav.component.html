@@ -2,7 +2,11 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport [ngClass]="{hidden:  (isHandset$ | async) === false}"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>{{name}}  </mat-toolbar>
+    <!-- <mat-toolbar>{{name}} </mat-toolbar> -->
+    <mat-toolbar>
+      <button mat-fab routerLink="/history" routerLinkActive="mat-raised-button"
+      style="background-image: url(https://ewscripps.brightspotcdn.com/dims4/default/ab468c4/2147483647/strip/true/crop/4677x2631+0+325/resize/1280x720!/quality/90/?url=https%3A%2F%2Fewscripps.brightspotcdn.com%2F0c%2Ffe%2F2081efbd4a15ad2e9473fe6d3e76%2Fs093868613.JPG); background-size:cover; background-position: center;"></button>
+    </mat-toolbar>
     <!-- <mat-nav-list>
       <a mat-list-item><button mat-button routerLink="/elder-home" routerLinkActive="mat-raised-button">Home</button></a>
       <a mat-list-item><button mat-button routerLink="/elder-profile" routerLinkActive="mat-raised-button">Profile</button></a>
@@ -10,37 +14,53 @@
       <a mat-list-item><button mat-button routerLink="/history" routerLinkActive="mat-raised-button">History</button></a>
     </mat-nav-list> -->
     <mat-nav-list>
+      <!-- <mat-list-item>
+        <button mat-fab routerLink="/history" routerLinkActive="mat-raised-button"
+        style="background-image: url(https://ewscripps.brightspotcdn.com/dims4/default/ab468c4/2147483647/strip/true/crop/4677x2631+0+325/resize/1280x720!/quality/90/?url=https%3A%2F%2Fewscripps.brightspotcdn.com%2F0c%2Ffe%2F2081efbd4a15ad2e9473fe6d3e76%2Fs093868613.JPG); background-size:cover; background-position: center;"></button>
+      </mat-list-item> -->
       <mat-list-item>
-        <button mat-button routerLink="/elder-home" routerLinkActive="mat-raised-button" >Home</button>
+        <button mat-button routerLink="/elder-home" routerLinkActive="mat-raised-button">Home</button>
       </mat-list-item>
       <mat-list-item>
-    <button mat-button routerLink="/elder-profile" routerLinkActive="mat-raised-button" >Profile</button>
+        <button mat-button routerLink="/elder-profile" routerLinkActive="mat-raised-button">Profile</button>
       </mat-list-item>
       <mat-list-item>
-    <button mat-button routerLink="/requests-status" routerLinkActive="mat-raised-button" >Request Status</button>
+        <button mat-button routerLink="/requests-status" routerLinkActive="mat-raised-button">Request Status</button>
       </mat-list-item>
       <mat-list-item>
-    <button mat-button routerLink="/history" routerLinkActive="mat-raised-button" >History</button>
+        <button mat-button routerLink="/history" routerLinkActive="mat-raised-button">History</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/home" routerLinkActive="mat-raised-button">Logout</button>
       </mat-list-item>
     </mat-nav-list>
 
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar style="background: rgb(2, 216, 66); color: white;">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+    <mat-toolbar style="background: rgb(2, 216, 66); color: white; padding-left: 0;">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span> {{name}} </span>
+      <!-- <img src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t1.0-9/90196562_533873644198217_3743365608247394304_n.jpg?_nc_cat=111&_nc_sid=8024bb&_nc_ohc=lASQGptOc-4AX93fscP&_nc_ht=scontent.fbkk5-3.fna&oh=c40a8d0aface15e251219dd43885325d&oe=5E9AC1EA"> -->
       <span class="spacer"></span>
-      <button mat-button routerLink="/elder-home" routerLinkActive="mat-raised-button" [ngClass]="{hidden:  (isHandset$ | async) === true}">Home</button>
-      <button mat-button routerLink="/elder-profile" routerLinkActive="mat-raised-button" [ngClass]="{hidden:  (isHandset$ | async) === true}">Profile</button>
-      <button mat-button routerLink="/requests-status" routerLinkActive="mat-raised-button" [ngClass]="{hidden:  (isHandset$ | async) === true}">Request Status</button>
-      <button mat-button routerLink="/history" routerLinkActive="mat-raised-button" [ngClass]="{hidden:  (isHandset$ | async) === true}">History</button>
+      <span class="spacer"> {{name}} </span>
+      <span class="spacer"></span>
+      <button mat-button routerLink="/elder-home" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}">Home</button>
+      <!-- <button mat-button routerLink="/elder-profile" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}">Profile</button> -->
+      <button mat-button routerLink="/requests-status" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}">Request Status</button>
+      <button mat-button routerLink="/history" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}">History</button>
+      <!-- <button class="ml-3" mat-fab [matMenuTriggerFor]="menu"
+      [ngClass]="{hidden:  (isHandset$ | async) === true}" style="background-image: url({{image}}); background-size:cover; background-position: center;"></button> -->
+      <img src="{{image}}" alt="" style="margin-left: 10px; width: 56px; height: 56px; border-radius: 50%;" [matMenuTriggerFor]="menu">
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/elder-profile">Profile</button>
+        <button mat-menu-item routerLink="/home">Logout</button>
+      </mat-menu>
     </mat-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>

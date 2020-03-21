@@ -65,6 +65,105 @@
   <div id="center">
     <button class="btn btn-success" (click)="save()" data-toggle="modal" data-target="#saved">Save</button>
   </div>
+
+  <!-- Certificate -->
+  <div class="form-group">
+    <div>
+      <label for="">Certificate</label>
+    </div>
+    <div class="col-md-4 mb-3" *ngIf="certificate.value !== ''">
+      <img src={{certificate.value}} alt="" style="width: 75%; height: 100%;">
+    </div>
+    <div class="col-md-4 mb-3" *ngIf="certificatePreview !== '' && certificatePreview">
+      <img [src]="certificatePreview" alt="" style="width: 75%; height: 100%;">
+    </div>
+    <div class="custom-file col-md-4">
+      <input type="file" class="custom-file-input" (change)="onCertificatePicked($event)">
+      <label class="custom-file-label" for="validatedCustomFile">Upload Image</label>
+    </div>
+  </div>
+
+  <!-- Work Experience -->
+  <mat-card class="mt-5 mb-5" *ngIf="!isLoading">
+    <mat-card-header>
+      <mat-card-title>Work Experiences</mat-card-title>
+      <!-- <mat-card-subtitle></mat-card-subtitle> -->
+      <button class="btn btn-success" id="add" (click)="add()">Add</button>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row" *ngFor="let item of experiences, let i = index">
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w100">
+            <mat-label>Work Place</mat-label>
+            <input matInput *ngIf="item.editing === true" [(ngModel)]="item.workplace">
+            <input matInput [(ngModel)]="item.workplace" readonly *ngIf="item.editing !== true" (click)="setValue(i)">
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" class="mr-5 w100" *ngIf="item.editing === true">
+            <mat-label>Start Month</mat-label>
+            <mat-select [(value)]="item.startMonth">
+              <mat-option *ngFor="let item of months" value="{{item}}"> {{item}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mr-5 w100" *ngIf="item.editing !== true" (click)="setValue(i)">
+            <mat-label>Start Month</mat-label>
+            <mat-select [(value)]="item.startMonth">
+              <mat-option value="{{item.startMonth}}"> {{item.startMonth}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" class="w100" *ngIf="item.editing === true">
+            <mat-label>Start Year</mat-label>
+            <mat-select [(value)]="item.startYear">
+              <mat-option *ngFor="let item of years" value="{{item}}"> {{item}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mr-5 w100" *ngIf="item.editing !== true" (click)="setValue(i)">
+            <mat-label>Start Month</mat-label>
+            <mat-select [(value)]="item.startYear">
+              <mat-option value="{{item.startYear}}"> {{item.startYear}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" class="mr-5 w100" *ngIf="item.editing === true">
+            <mat-label>Stop Month</mat-label>
+            <mat-select [(value)]="item.stopMonth">
+              <mat-option *ngFor="let item of months" value="{{item}}"> {{item}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="mr-5 w100" *ngIf="item.editing !== true" (click)="setValue(i)">
+            <mat-label>Stop Month</mat-label>
+            <mat-select [(value)]="item.stopMonth">
+              <mat-option value="{{item.stopMonth}}"> {{item.stopMonth}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" class="w100" *ngIf="item.editing === true">
+            <mat-label>Stop Year</mat-label>
+            <mat-select [(value)]="item.stopYear">
+              <mat-option *ngFor="let item of years" value="{{item}}"> {{item}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w100" *ngIf="item.editing !== true" (click)="setValue(i)">
+            <mat-label>Stop Year</mat-label>
+            <mat-select [(value)]="item.stopYear">
+              <mat-option value="{{item.stopYear}}"> {{item.stopYear}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <!-- <button class="btn btn-warning mb-3" data-toggle="modal" data-target="#edit" (click)="setValue(i)">Edit</button> -->
+          <!-- <button class="btn btn-warning mb-3" (click)="setValue(i)" *ngIf="item.editing === undefined || item.editing === null || item.editing === false">Edit</button> -->
+          <button class="btn btn-success mb-3" (click)="saveValue()" *ngIf="item.editing === true">Save</button>
+          <button class="btn mb-3" id="cancel" (click)="cancelEdit(i)" *ngIf="item.editing === true">Cancel</button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 
 <!-- Modal -->

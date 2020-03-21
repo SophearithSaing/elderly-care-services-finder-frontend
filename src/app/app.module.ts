@@ -51,6 +51,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CaregiverServicesComponent } from './caregiver-services/caregiver-services.component';
 import { MatButtonModule } from '@angular/material/button';
+import {MatMenuModule} from '@angular/material/menu';
+
 import { RequestStatusComponent } from './request-status/request-status.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { AdminApprovalComponent } from './admin-approval/admin-approval.component';
@@ -182,7 +184,8 @@ const appRoutes: Routes = [
     MatProgressSpinnerModule,
     LayoutModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatMenuModule
   ],
   providers: [
     AuthGuard,

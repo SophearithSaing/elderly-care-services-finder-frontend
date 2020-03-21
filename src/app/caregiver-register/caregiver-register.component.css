@@ -166,3 +166,7 @@ h1 {
   color: white;
 }
 
+mat-spinner {
+  margin: auto;
+}
+

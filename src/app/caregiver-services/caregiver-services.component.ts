@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
+import { FormControl } from '@angular/forms';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -18,6 +19,7 @@ export class CaregiverServicesComponent implements OnInit {
 
   // email = 'sophearithgiver@gmail.com';
   email;
+  caregiverEmail;
 
   dailyCare = [
     {
@@ -59,13 +61,59 @@ export class CaregiverServicesComponent implements OnInit {
   checkedDailyCare;
   checkedSpecialCare;
 
-  constructor(public searchservice: SearchService, public http: HttpClient, private router: Router, public route: ActivatedRoute) { }
+  editingExperience: boolean;
+  experiences = [];
+  numberOfExperience = 0;
+
+  editIndex: number;
+
+  workplace;
+  startMonth;
+  startYear;
+  stopMonth;
+  stopYear;
+
+  mode = 'update';
+
+  certificate = new FormControl('');
+  certificatePreview: string;
+  certificateFile: any;
+
+  months = [
+    'Januray',
+    'Februay',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  years = [];
+
+  isLoading: boolean;
+
+  constructor(public searchservice: SearchService, public http: HttpClient, private router: Router, public route: ActivatedRoute) {
+    for (let year = 1960; year <= 2020; year++) {
+      this.years.unshift(year);
+    }
+    for (let index = 0; index < this.experiences.length; index++) {
+      this.numberOfExperience += 1;
+    }
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('email')) {
         this.email = paramMap.get('email');
+        this.caregiverEmail = this.email;
         this.searchservice.getCaregiver(this.email).subscribe(data => {
+          this.experiences = data.experience;
           this.dailyPrice = data.dailyPrice;
           this.monthlyPrice = data.monthlyPrice;
           this.checkedDailyCare = data.services.dailyCare;
@@ -145,6 +193,85 @@ export class CaregiverServicesComponent implements OnInit {
     console.log(this.services);
     this.UpdatePriceServices(this.email, this.services, this.dailyPrice, this.monthlyPrice);
     // this.router.navigate(['/caregiver-login']);
+  }
+
+  add() {
+    this.experiences.unshift({
+      workplace: '',
+      startMonth: '',
+      startYear: '',
+      stopMonth: '',
+      stopYear: ''
+    });
+    console.log(this.experiences);
+    this.setValue(0);
+  }
+
+  setValue(index) {
+    this.editIndex = index;
+    this.workplace = this.experiences[index].workplace;
+    this.startMonth = this.experiences[index].startMonth;
+    this.startYear = this.experiences[index].startYear;
+    this.stopMonth = this.experiences[index].stopMonth;
+    this.stopYear = this.experiences[index].stopYear;
+    this.experiences[index].editing = true;
+  }
+
+  cancelEdit(index) {
+    this.experiences[index].editing = false;
+  }
+
+  saveValue() {
+    console.log(this.experiences);
+    console.log(this.editIndex);
+    console.log(this.experiences[this.editIndex]);
+    this.experiences[this.editIndex] = this.experiences[this.editIndex]
+    // this.experiences[this.editIndex].workplace = this.workplace;
+    // this.experiences[this.editIndex].startMonth = this.startMonth;
+    // this.experiences[this.editIndex].startYear = this.startYear;
+    // this.experiences[this.editIndex].stopMonth = this.stopMonth;
+    // this.experiences[this.editIndex].stopYear = this.stopYear;
+    console.log(this.experiences);
+    this.experiences[this.editIndex].editing = false;
+    this.saveExperience();
+  }
+
+  saveExperience() {
+    const experiences = {
+      email: this.caregiverEmail,
+      experiences: this.experiences
+    };
+    console.log(experiences);
+    this.http.patch(BACKEND_URL + "experiences", experiences).subscribe(response => { });
+  }
+
+  onCertificatePicked(event) {
+    // const file = (event.target as HTMLInputElement).files[0];
+    const file = event.target.files[0];
+    this.certificateFile = file;
+    this.certificate.patchValue({ certificate: file });
+    this.certificate.updateValueAndValidity();
+    console.log(file);
+    console.log(this.certificate);
+
+    const Data = new FormData();
+    Data.append('email', this.email);
+    Data.append('certificates', file);
+    if (this.mode === 'add') {
+      this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
+      console.log('post file ran for ' + this.email);
+    } else {
+      this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
+      // this.http.patch(BACKEND_URL + 'certificates/' + this.email, Data).subscribe((res) => {});
+      console.log('update file ran for ' + this.email);
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.certificatePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+    console.log(this.certificate.valid);
   }
 
 

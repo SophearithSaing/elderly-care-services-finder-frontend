@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-elder-home',
@@ -26,6 +27,9 @@ export class ElderHomeComponent implements OnInit {
   postalCode: string;
 
   form: FormControl;
+
+  email: string;
+  name: string;
 
   dailyCare = [
     {
@@ -70,15 +74,22 @@ export class ElderHomeComponent implements OnInit {
   );
 
   constructor(
+    private auth: AuthService,
     private breakpointObserver: BreakpointObserver,
-    private calendar: NgbCalendar, public formatter: NgbDateParserFormatter, public searchService: SearchService, public router: Router
+    private calendar: NgbCalendar,
+    public formatter: NgbDateParserFormatter,
+    public searchService: SearchService,
+    public router: Router
   ) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
   }
 
   ngOnInit() {
-
+    this.email = this.auth.getUserId();
+    this.searchService.getElder(this.email).subscribe(data => {
+      this.name = data.name;
+    });
   }
 
   openSearch() {

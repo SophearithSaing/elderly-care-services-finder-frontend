@@ -95,6 +95,7 @@ export class RequestComponent implements OnInit {
         imagePath: Data.imagePath
       };
       this.name = this.elder.name;
+      this.email = this.elder.email;
       this.birthDate = this.elder.birthDate;
       const birthYear = new Date(this.elder.birthDate).getFullYear();
       this.age = this.year - birthYear;

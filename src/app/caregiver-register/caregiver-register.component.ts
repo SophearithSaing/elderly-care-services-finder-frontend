@@ -26,6 +26,9 @@ export class CaregiverRegisterComponent implements OnInit {
   shortPassword: boolean;
   showHelp = false;
 
+  creating: boolean;
+  loggingIn: boolean;
+
 
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
@@ -80,12 +83,20 @@ export class CaregiverRegisterComponent implements OnInit {
       console.log(this.userExisted);
       if (this.userExisted === false) {
         this.authService.createUser(form.value.email, form.value.password);
+        this.creating = true;
+        setTimeout(() => {
+          this.authService.login(form.value.email, form.value.password);
+          this.creating = false;
+          this.loggingIn = true;
+        }, 2000);
         // form.resetForm();
         // this.router.navigate(['/caregiver-login']);
-        this.router.navigate(
-          ['/caregiver-register', form.value.email],
-          { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
-        );
+        setTimeout(() => {
+          this.router.navigate(
+            ['/caregiver-register', form.value.email],
+            { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
+          );
+        }, 2000);
       }
 
     } else if (form.value.password !== form.value.passwordConfirmation) {

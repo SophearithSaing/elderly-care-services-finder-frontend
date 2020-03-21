@@ -52,7 +52,7 @@
   <h1 style="text-align: center;" *ngIf="requestNumber <= 1">You have {{requestNumber}} Request</h1>
   <h1 style="text-align: center;" *ngIf="requestNumber > 1">You have {{requestNumber}} Requests</h1>
   <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <div class="container mt-5" *ngFor="let item of requests">
+  <div class="container mt-5" *ngFor="let item of requests; let i = index">
     <mat-accordion class="example-headers-align">
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false"
         (click)="getElder(item.elderEmail)">
@@ -93,9 +93,9 @@
                 <br><br>
                 Services:
                 <br>
-                Daily Care:
+                Daily Care: {{item.selectedServices.dailyCare}}
                 <br>
-                Special Care:
+                Special Care: {{item.selectedServices.specialCare}}
                 <br><br>
                 Email: {{email}}
                 <br>

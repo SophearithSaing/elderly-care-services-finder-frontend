@@ -4,7 +4,7 @@
     <span class="space"></span>
     <button mat-flat-button [routerLink]="['/admin']">Home</button>
     <button mat-button [routerLink]="['/admin-services']">Services</button>
-    <button mat-button [routerLink]="['/admin-allusers']">All Users</button>
+    <button mat-button [routerLink]="['/admin-allusers']">Approved Users</button>
     <button mat-button [routerLink]="['/admin-allactivities']">All Activities</button>
   </mat-toolbar-row>
 </mat-toolbar>
@@ -24,11 +24,11 @@
             REQUEST</button>
         </div> -->
         <div class="pb-3">
-          <button mat-raised-button color="primary" *ngIf="seeRequest === false" (click)="openRequest()">SEE CAREGIVER
+          <button mat-raised-button color="primary" *ngIf="seeRequest === false && requestNumber > 0" (click)="openRequest()">SEE CAREGIVER
             REQUESTS</button>
         </div>
         <div class="pb-3">
-          <button mat-raised-button color="primary" *ngIf="seeRequest === true" (click)="closeRequest()">CLOSE
+          <button mat-raised-button color="primary" *ngIf="seeRequest === true && requestNumber > 0" (click)="closeRequest()">CLOSE
             REQUESTS</button>
         </div>
 
@@ -105,7 +105,7 @@
         </div>
 
 
-        <div class="pb-3">
+        <!-- <div class="pb-3">
           <button mat-raised-button color="primary" routerLink="/admin-services">EDIT SERVICES</button>
         </div>
         <div class="pb-3">
@@ -113,7 +113,7 @@
         </div>
         <div class="pb-3">
           <button mat-raised-button color="primary" routerLink="/admin-allusers">VIEW ALL USERS</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -134,7 +134,7 @@ aria-hidden="true">
     </div>
     <div class="modal-footer">
       <button type="button" class="btn" id="cancel" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed"
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed" data-dismiss="modal"
         (click)="acceptRequest(email)">Confirm</button>
     </div>
   </div>
@@ -161,8 +161,8 @@ aria-hidden="true">
     </div>
     <div class="modal-footer">
       <button type="button" class="btn" id="cancel" data-dismiss="modal">Cancel</button>
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed"
-        (click)="rejectRequest(email)">Confirm</button>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#confirmed" data-dismiss="modal"
+        (click)="rejectRequest(email)" *ngIf="reason !== null && reason !== ''">Confirm</button>
     </div>
   </div>
 </div>
@@ -179,10 +179,10 @@ aria-hidden="true" *ngIf="reason !== ''">
       </button>
     </div>
     <div class="modal-body">
-      You have {{accept ? 'Accepted' : 'Rejected'}} the Request.
+      You Have {{accept ? 'Accepted' : 'Rejected'}} the Request.
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-success" (click)="reload()">Okay</button>
+      <button type="button" class="btn btn-success" data-dismiss="modal" (click)='reload()'>Okay</button>
     </div>
   </div>
 </div>

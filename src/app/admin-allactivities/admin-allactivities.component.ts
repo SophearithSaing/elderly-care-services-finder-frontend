@@ -23,12 +23,18 @@ export class AdminAllactivitiesComponent implements OnInit {
       this.history = data.history;
 
       this.history.forEach(element => {
+        console.log(element);
         const startDate = new Date(element.startDate);
         const stopDate = new Date(element.stopDate);
-        const startDateString = `${startDate.getDate()}/${startDate.getMonth()}/${startDate.getFullYear()}`;
-        const stopDateString = `${stopDate.getDate()}/${stopDate.getMonth()}/${stopDate.getFullYear()}`;
+        const startDateString = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
+        const stopDateString = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
         element.startDate = startDateString;
         element.stopDate = stopDateString;
+
+        element.totalDays = Math.trunc((stopDate.getTime() - startDate.getTime()) / 86400000);
+        console.log(element.totalDays);
+        element.totalPrice = element.totalDays * element.selectedDP;
+        console.log(element.totalPrice);
 
         if (element.selectedServices === undefined) {
           element.selectedServices = {
@@ -61,7 +67,7 @@ export class AdminAllactivitiesComponent implements OnInit {
             }
         }
       });
-
+      // this.history.sort((a, b) => (a.daysAgo > b.daysAgo) ? 1 : -1);
       this.isLoading = false;
     });
   }

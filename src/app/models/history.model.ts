@@ -9,4 +9,7 @@ export interface History {
   requireInterview: boolean;
   rating: number;
   review: string;
+  dailyPrice: number;
+  monthyPrice: number;
+  services: Array<any>;
 }

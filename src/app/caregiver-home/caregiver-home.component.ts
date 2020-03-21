@@ -16,6 +16,7 @@ export class CaregiverHomeComponent implements OnInit {
   email: string;
   name: string;
   approval: boolean;
+  rejectionReason: string;
 
   requests: any;
   requestNumber = 0;
@@ -28,6 +29,12 @@ export class CaregiverHomeComponent implements OnInit {
     this.search.getCaregiver(this.email).subscribe(data => {
       this.name = data.name;
       this.approval = data.approval;
+
+      if (this.approval === false) {
+        this.search.getCGRejection(this.email).subscribe(data => {
+          this.rejectionReason = data.reason;
+        });
+      }
     });
 
     this.search.getRequests(this.email).subscribe((data) => {

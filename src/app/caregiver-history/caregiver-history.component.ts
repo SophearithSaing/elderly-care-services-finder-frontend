@@ -22,6 +22,9 @@ export class CaregiverHistoryComponent implements OnInit {
 
   isLoading: boolean;
 
+  totalPrice: number;
+  totalDays: number;
+
 
   constructor(config: NgbRatingConfig, public authService: AuthService, public search: SearchService) {
     config.max = 5;
@@ -39,6 +42,10 @@ export class CaregiverHistoryComponent implements OnInit {
         const startDate = new Date(element.startDate);
         const stopDate = new Date(element.stopDate);
 
+        this.totalDays = Math.trunc((stopDate.getTime() - startDate.getTime()) / 86400000);
+        this.totalPrice = this.totalDays * element.selectedDP;
+
+
         element.startDate = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
         element.stopDate = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
 
@@ -52,6 +59,7 @@ export class CaregiverHistoryComponent implements OnInit {
         const date = new Date();
         const msAgo = date.getTime() - stopDate.getTime();
         const daysAgo = Math.trunc(msAgo / 86400000);
+
         element.daysAgo = daysAgo;
         if (daysAgo > 30) {
           const monthsAgo = Math.trunc(daysAgo / 30);

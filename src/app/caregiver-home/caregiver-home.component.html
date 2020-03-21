@@ -46,23 +46,29 @@
     <!-- <div class="row"> -->
           <h1 class="display-4">Welcome Back {{name}}</h1>
           <h1 *ngIf="approval === null">Your Request is Pending</h1>
+          <div *ngIf="approval === false">
+            <h1>Your Request is Rejected</h1>
+            <h3>Admin's comment: {{rejectionReason}}</h3>
+            <button class="btn btn-primary">Resubmit Request</button>
+          </div>
+
           <div class="pt-5">
             <div class="col-md-12">
               <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1" >You Currently Have {{requestNumber}} Request</h3>
               <h3 class="pb-3" *ngIf="requestNumber > 1">You Currently Have {{requestNumber}} Requests</h3>
               <div class="pb-3">
-                <button class="btn btn-primary" routerLink="/requests" routerLinkActive="active">SEE REQUEST</button>
+                <button class="btn btn-primary" routerLink="/requests" routerLinkActive="active" *ngIf="requestNumber > 0">SEE REQUEST</button>
               </div>
               <!-- <div class="pb-3">
                 <button class="btn btn-primary" routerLink="/history" routerLinkActive="active">SEE HISTORY</button>
               </div> -->
-              <div class="pb-3">
+              <!-- <div class="pb-3">
                 <button class="btn btn-primary" routerLink="/caregiver-profile" routerLinkActive="active">Profile</button>
               </div>
               <div>
                 <button class="btn btn-primary" [routerLink]="['/calendar', email]"
                 routerLinkActive="router-link-active">CHANGE SCHEDULE</button>
-              </div>
+              </div> -->
             </div>
           </div>
 

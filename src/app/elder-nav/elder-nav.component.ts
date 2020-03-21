@@ -14,6 +14,8 @@ export class ElderNavComponent implements OnInit {
 
   email: string;
   name: string;
+  // image = 'http://localhost:3000/images/excited-elder-man-cheering-up.jpg-1582173897314.jpg';
+  image: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -21,13 +23,20 @@ export class ElderNavComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private searchService: SearchService) {}
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private searchService: SearchService) {
+
+  }
 
   ngOnInit() {
     this.email = this.authService.getUserId();
     this.searchService.getElder(this.email).subscribe(res => {
       this.name = res.name;
+      this.image = res.imagePath;
     });
+  }
+
+  getImage() {
+    return `url('${this.image}')`;
   }
 
 }

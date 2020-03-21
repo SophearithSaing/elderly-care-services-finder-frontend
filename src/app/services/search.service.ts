@@ -160,6 +160,10 @@ export class SearchService {
       BACKEND_URL + "elders/" + email
     );
   }
+
+  getCGRejection(email: string) {
+    return this.http.get<{email: string, reason: string}>(BACKEND_URL + 'rejections/' + email);
+  }
   // get all elders
   getElders() {
     return this.http

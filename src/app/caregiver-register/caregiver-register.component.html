@@ -2,6 +2,11 @@
   <div class="wrap-login100">
       <!-- <div class="row"> -->
         <div class="justify-content-center">
+          <div *ngIf="creating === true || loggingIn === true">
+            <h1 class="login-form-title" *ngIf="creating === true">Creating User</h1>
+            <h1 class="login-form-title" *ngIf="loggingIn === true">Logging In</h1>
+            <mat-spinner></mat-spinner>
+          </div>
             <form (submit)="onRegisterCaregiver(postForm)" #postForm="ngForm">
               <span class="login-form-title">CAREGIVER REGISTER</span>
               <div class="form-group alert alert-danger" role="alert" *ngIf="userExisted === true">
