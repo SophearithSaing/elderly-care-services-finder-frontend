@@ -113,7 +113,9 @@ export class CaregiverServicesComponent implements OnInit {
         this.email = paramMap.get('email');
         this.caregiverEmail = this.email;
         this.searchservice.getCaregiver(this.email).subscribe(data => {
+          console.log(data);
           this.experiences = data.experience;
+          this.certificate.setValue(data.certificate);
           this.dailyPrice = data.dailyPrice;
           this.monthlyPrice = data.monthlyPrice;
           this.checkedDailyCare = data.services.dailyCare;
@@ -196,6 +198,9 @@ export class CaregiverServicesComponent implements OnInit {
   }
 
   add() {
+    if (this.experiences === null) {
+      this.experiences = [];
+    }
     this.experiences.unshift({
       workplace: '',
       startMonth: '',
@@ -256,15 +261,21 @@ export class CaregiverServicesComponent implements OnInit {
 
     const Data = new FormData();
     Data.append('email', this.email);
-    Data.append('certificates', file);
-    if (this.mode === 'add') {
-      this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
-      console.log('post file ran for ' + this.email);
-    } else {
-      this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
-      // this.http.patch(BACKEND_URL + 'certificates/' + this.email, Data).subscribe((res) => {});
-      console.log('update file ran for ' + this.email);
-    }
+    Data.append('certificate', file);
+
+    // if (this.mode === 'add') {
+    //   this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
+    //   console.log('post file ran for ' + this.email);
+    // } else {
+    //   this.http.post(BACKEND_URL + 'certificates', Data).subscribe((res) => {});
+    //   // this.http.patch(BACKEND_URL + 'certificates/' + this.email, Data).subscribe((res) => {});
+    //   console.log('update file ran for ' + this.email);
+    // }
+
+    console.log(Data);
+
+    this.http.patch(BACKEND_URL + 'certificates/' + this.email, Data).subscribe((res) => {});
+    console.log('update file ran for ' + this.email);
 
     const reader = new FileReader();
     reader.onload = () => {

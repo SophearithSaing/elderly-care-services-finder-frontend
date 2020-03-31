@@ -62,6 +62,8 @@ export class ResultComponent implements OnInit {
 
   isLoading: boolean;
 
+  certificateValue: string;
+
 
   constructor(
     public searchService: SearchService,
@@ -352,6 +354,10 @@ export class ResultComponent implements OnInit {
     console.log(this.results[this.index]);
   }
 
+  setCertificate(index) {
+    console.log(this.results[index]);
+    this.certificateValue = this.results[index].certificate;
+  }
 
   home() {
     this.router.navigate(['/elder-home']);

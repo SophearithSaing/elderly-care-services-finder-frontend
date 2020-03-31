@@ -156,3 +156,8 @@ mat-spinner {
   stroke: rgb(5, 190, 61);
 }
 
+.modal-backdrop {
+  /* bug fix - no overlay */
+  display: none;
+}
+
