@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class ElderLoginComponent {
 
   isLoading = false;
+  validUser = null;
 
   constructor(public authService: AuthService, private router: Router) {}
 
@@ -21,7 +22,8 @@ export class ElderLoginComponent {
       return;
     }
     this.isLoading = true;
-    this.authService.login(form.value.email, form.value.password);
+    this.validUser = this.authService.login(form.value.email, form.value.password);
+    console.log('valid user value is ' + this.validUser);
     setTimeout(() => {
       this.router.navigate(['/elder-home']);
     }, 2000);

@@ -50,16 +50,27 @@
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile>
-      <div>
-        <mat-form-field appearance="outline" class="w100">
-          <mat-label>Daily Price</mat-label>
-          <input matInput placeholder="Daily Price" [(ngModel)]="dailyPrice">
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="w100">
-          <mat-label>Monthly Price</mat-label>
-          <input matInput placeholder="Monthly Price" [(ngModel)]="monthlyPrice">
-        </mat-form-field>
-      </div>
+      <!-- <div> -->
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Prices</mat-card-title>
+            <mat-card-subtitle>Working hours: 9am to 5pm</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+
+            <mat-form-field appearance="outline" class="w100">
+              <mat-label>Daily Price</mat-label>
+              <input matInput placeholder="Daily Price" [(ngModel)]="dailyPrice">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w100">
+              <mat-label>Monthly Price</mat-label>
+              <input matInput placeholder="Monthly Price" [(ngModel)]="monthlyPrice">
+            </mat-form-field>
+
+          </mat-card-content>
+        </mat-card>
+
+      <!-- </div> -->
     </mat-grid-tile>
   </mat-grid-list>
   <div id="center">
@@ -97,6 +108,7 @@
             <mat-label>Work Place</mat-label>
             <input matInput *ngIf="item.editing === true" [(ngModel)]="item.workplace">
             <input matInput [(ngModel)]="item.workplace" readonly *ngIf="item.editing !== true" (click)="setValue(i)">
+            <mat-error *ngIf="invalidStopYear === true">Stop Year cannot be lower than start year.</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-2">
@@ -121,7 +133,7 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline" class="mr-5 w100" *ngIf="item.editing !== true" (click)="setValue(i)">
-            <mat-label>Start Month</mat-label>
+            <mat-label>Start Year</mat-label>
             <mat-select [(value)]="item.startYear">
               <mat-option value="{{item.startYear}}"> {{item.startYear}} </mat-option>
             </mat-select>
@@ -142,11 +154,14 @@
           </mat-form-field>
         </div>
         <div class="col-md-2">
-          <mat-form-field appearance="outline" class="w100" *ngIf="item.editing === true">
-            <mat-label>Stop Year</mat-label>
+          <mat-form-field appearance="outline" class="w100" *ngIf="item.editing === true" style="border-color: red;">
+            <mat-label *ngIf="invalidStopYear !== true">Stop Year</mat-label>
+            <mat-label *ngIf="invalidStopYear === true" style="color: red;">Stop Year</mat-label>
             <mat-select [(value)]="item.stopYear">
               <mat-option *ngFor="let item of years" value="{{item}}"> {{item}} </mat-option>
             </mat-select>
+            <!-- <mat-error ></mat-error> -->
+            <mat-hint *ngIf="invalidStopYear === true" style="color: red;">Stop Year cannot be lower than start year.</mat-hint>
           </mat-form-field>
           <mat-form-field appearance="outline" class="w100" *ngIf="item.editing !== true" (click)="setValue(i)">
             <mat-label>Stop Year</mat-label>
@@ -155,11 +170,12 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-8">
           <!-- <button class="btn btn-warning mb-3" data-toggle="modal" data-target="#edit" (click)="setValue(i)">Edit</button> -->
           <!-- <button class="btn btn-warning mb-3" (click)="setValue(i)" *ngIf="item.editing === undefined || item.editing === null || item.editing === false">Edit</button> -->
-          <button class="btn btn-success mb-3" (click)="saveValue()" *ngIf="item.editing === true">Save</button>
-          <button class="btn mb-3" id="cancel" (click)="cancelEdit(i)" *ngIf="item.editing === true">Cancel</button>
+          <button class="btn btn-success mb-3 col-md-2" (click)="saveValue()" *ngIf="item.editing === true">Save</button>
+          <button class="btn mb-3 ml-3 col-md-2" id="cancel" (click)="cancelEdit(i)" *ngIf="item.editing === true">Cancel</button>
+          <button class="btn mb-3 ml-3 col-md-2" id="delete" (click)="deleteExperience(i)" *ngIf="item.editing === true">Delete</button>
         </div>
       </div>
     </mat-card-content>

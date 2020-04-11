@@ -95,6 +95,9 @@ export class CaregiverServicesComponent implements OnInit {
   ];
 
   years = [];
+  stopYears = [];
+  currentStartYear;
+  invalidStopYear: boolean;
 
   isLoading: boolean;
 
@@ -144,6 +147,12 @@ export class CaregiverServicesComponent implements OnInit {
     });
   }
 
+  getStopYears() {
+    const startYear = this.experiences[this.editIndex].startYear;
+    for (let year = startYear; year <= 2020; year++) {
+      this.stopYears.unshift(year);
+    }
+  }
 
   getCheckboxes() {
     console.log(this.dailyCare.filter(x => x.checked === true).map(x => x.name));
@@ -230,15 +239,23 @@ export class CaregiverServicesComponent implements OnInit {
     console.log(this.experiences);
     console.log(this.editIndex);
     console.log(this.experiences[this.editIndex]);
-    this.experiences[this.editIndex] = this.experiences[this.editIndex]
+    // this.experiences[this.editIndex] = this.experiences[this.editIndex];
     // this.experiences[this.editIndex].workplace = this.workplace;
     // this.experiences[this.editIndex].startMonth = this.startMonth;
     // this.experiences[this.editIndex].startYear = this.startYear;
     // this.experiences[this.editIndex].stopMonth = this.stopMonth;
     // this.experiences[this.editIndex].stopYear = this.stopYear;
-    console.log(this.experiences);
-    this.experiences[this.editIndex].editing = false;
-    this.saveExperience();
+    const item = this.experiences[this.editIndex];
+    if (item.startYear > item.stopYear) {
+      console.log(item.startYear, item.stopYear);
+      this.invalidStopYear = true;
+      console.log(this.invalidStopYear, this.invalidStopYear === true);
+    } else {
+      console.log(this.experiences);
+      this.invalidStopYear = false;
+      this.experiences[this.editIndex].editing = false;
+      this.saveExperience();
+    }
   }
 
   saveExperience() {
@@ -248,6 +265,11 @@ export class CaregiverServicesComponent implements OnInit {
     };
     console.log(experiences);
     this.http.patch(BACKEND_URL + "experiences", experiences).subscribe(response => { });
+  }
+
+  deleteExperience(index) {
+    this.experiences.splice(index, 1);
+    this.saveExperience();
   }
 
   onCertificatePicked(event) {

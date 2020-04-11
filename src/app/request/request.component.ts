@@ -64,6 +64,12 @@ export class RequestComponent implements OnInit {
       console.log(this.requests);
       this.requests.forEach(element => {
         this.requestNumber = this.requestNumber + 1;
+
+        const startDate = new Date(element.startDate);
+        const stopDate = new Date(element.stopDate);
+
+        element.startDate = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
+        element.stopDate = `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`;
       });
       this.isLoading = false;
     });

@@ -41,6 +41,14 @@ export class AdminService {
     this.http.post(BACKEND_URL + 'rejections', rejection).subscribe(Response => {});
   }
 
+  UpdateReason(caregiverEmail: string, reason: string) {
+    const rejection = {
+      caregiverEmail,
+      reason
+    };
+    this.http.patch(BACKEND_URL + 'rejections', rejection).subscribe(Response => {});
+  }
+
   // initService() {
   //   const dailyCare = [
   //     'Bathroom Assistance', 'Dressing Assitance', 'Meals', 'Joyful Companionship'

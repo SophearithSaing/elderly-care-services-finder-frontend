@@ -52,7 +52,11 @@ export class AdminServicesComponent implements OnInit {
   dailyCareItem: string;
   specialCareItem: string;
 
-  undo = false;
+  undoDC = false;
+  undoSC = false;
+
+  removedDC = [];
+  removedSC = [];
 
   constructor(private admin: AdminService) { }
 
@@ -115,11 +119,14 @@ export class AdminServicesComponent implements OnInit {
     this.newDailyCare.forEach(element => {
       const index = this.dc.indexOf(element);
       console.log(index);
+      const item = this.dailyCare[index];
+      // item.checked = false;
+      this.removedDC.unshift(item);
       this.dailyCare.splice(index, 1);
     });
     console.log(this.dailyCare);
 
-    this.undo = true;
+    this.undoDC = true;
   }
 
   removeSCItem() {
@@ -129,24 +136,35 @@ export class AdminServicesComponent implements OnInit {
     });
     console.log(this.specialCare);
 
-    this.undo = true;
+    this.undoSC = true;
   }
 
   undoDCItem() {
-    this.undo = false;
+    // this.undoDC = false;
     console.log(this.newDailyCare);
-    this.newDailyCare.forEach(element => {
-      const item = {
-        name: element,
-        checked: false
-      };
-      this.dailyCare.push(item);
-    });
-    console.log(this.specialCare);
+    // this.newDailyCare.forEach(element => {
+    //   const item = {
+    //     name: element,
+    //     checked: false
+    //   };
+    //   this.dailyCare.push(item);
+    // });
+    // const item = {
+    //   name: this.removedDC[0],
+    //   checked: false
+    // };
+    const item = this.removedDC[0];
+
+    this.removedDC.splice(0, 1);
+    this.dailyCare.push(item);
+
+    if (this.removedDC.length === 0) {
+      this.undoDC = false;
+    }
   }
 
   undoSCItem() {
-    this.undo = false;
+    this.undoSC = false;
     console.log(this.newSpecialCare);
     this.newSpecialCare.forEach(element => {
       const item = {

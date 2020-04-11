@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-password-recovery',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasswordRecoveryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private search: SearchService, private http: HttpClient) { }
 
   ngOnInit() {
   }

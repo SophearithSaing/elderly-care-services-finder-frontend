@@ -1,3 +1,18 @@
+/* .mat-success {
+  background-color:rgb(2, 216, 66);
+  color: #fff;
+} */
+
+.mat-button:hover {
+  background-color: rgb(2, 216, 66);
+  color: white;
+}
+
+.mat-raised-button {
+  background-color: rgb(2, 216, 66);
+  color: #fff;
+}
+
 .sidenav-container {
   height: 100%;
 }

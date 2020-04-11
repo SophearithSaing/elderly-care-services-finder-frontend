@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../services/admin.service';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -20,7 +21,9 @@ export class AdminHomeComponent implements OnInit {
   name: string;
   show = false;
 
-  constructor(private admin: AdminService) { }
+  certificateValue: string;
+
+  constructor(private admin: AdminService, private search: SearchService) { }
 
   ngOnInit() {
     this.admin.GetCaregivers().subscribe((data) => {
@@ -44,6 +47,15 @@ export class AdminHomeComponent implements OnInit {
         const cgAge = thisYear - cgYear;
         element.age = cgAge;
         console.log(thisYear, cgYear, cgAge);
+
+        this.search.getCGRejection(element.email).subscribe(data => {
+          if (data.reason !== null) {
+            element.reason = data.reason;
+          } else {
+            element.reason = null;
+          }
+        });
+
       });
     });
   }
@@ -67,7 +79,13 @@ export class AdminHomeComponent implements OnInit {
       this.reason = '';
     }
     this.admin.UpdateCGStatus(this.id, email, false);
-    this.admin.AddReason(email, this.reason);
+    this.search.getCGRejection(email).subscribe(data => {
+      if (data.reason === null) {
+        this.admin.AddReason(email, this.reason);
+      } else {
+        this.admin.UpdateReason(email, this.reason);
+      }
+    });
     console.log(this.reason);
   }
 
@@ -75,6 +93,11 @@ export class AdminHomeComponent implements OnInit {
     this.id = id;
     this.name = name;
     this.email = email;
+  }
+
+  setCertificate(index) {
+    console.log(this.unapproved[index]);
+    this.certificateValue = this.unapproved[index].certificate;
   }
 
   reload() {

@@ -27,6 +27,8 @@ export class SearchService {
   private caregivers: Caregiver[] = [];
   private caregiverUpdated = new Subject<Caregiver[]>();
 
+  messages = [];
+
   private elders: Elder[] = [];
   private elder: Elder;
   private elderUpdated = new Subject<Elder[]>();
@@ -160,6 +162,28 @@ export class SearchService {
       BACKEND_URL + "elders/" + email
     );
   }
+
+  createChat(elder, caregiver) {
+    const message = {
+      elder,
+      caregiver
+    };
+    this.http.post(BACKEND_URL + 'messages', message).subscribe(res => {});
+  }
+
+  sendMessage(message) {
+    // const elder = message.elder;
+    // const caregiver = message.caregiver;
+    this.http.patch(BACKEND_URL + 'messages/', message).subscribe(res => {});
+  }
+
+  getMessages(elder, caregiver) {
+    console.log('this ran')
+    return this.http.get<{_id: string, elder: string, caregiver: string, messages: Array<any>}>(
+      BACKEND_URL + 'messages/' + elder + '&' + caregiver
+      );
+  }
+
 
   getCGRejection(email: string) {
     return this.http.get<{email: string, reason: string}>(BACKEND_URL + 'rejections/' + email);
@@ -409,7 +433,13 @@ export class SearchService {
     console.log(schedule);
   }
 
-
+  // get all users
+  getAllUsers() {
+    return this.http
+      .get<{ users: any }>(
+        BACKEND_URL + 'authusers'
+      );
+  }
 
   // get one caregiver
   getCaregiver(email: string) {

@@ -3,6 +3,7 @@ import { Caregiver } from '../models/caregiver.model';
 import { AuthService } from '../auth/auth.service';
 import { SearchService } from '../services/search.service';
 import { Router } from '@angular/router';
+import { AdminService } from '../services/admin.service';
 
 @Component({
   selector: 'app-caregiver-home',
@@ -21,12 +22,14 @@ export class CaregiverHomeComponent implements OnInit {
   requests: any;
   requestNumber = 0;
 
-  constructor(public search: SearchService , public authService: AuthService, public router: Router) { }
+  constructor(public search: SearchService , public authService: AuthService, public router: Router, public admin: AdminService) { }
 
   ngOnInit() {
     this.email = this.authService.getUserId();
 
     this.search.getCaregiver(this.email).subscribe(data => {
+      this.id = data._id;
+      this.email = data.email;
       this.name = data.name;
       this.approval = data.approval;
 
@@ -45,6 +48,12 @@ export class CaregiverHomeComponent implements OnInit {
       });
     });
   }
+
+  resubmitRequest() {
+    this.admin.UpdateCGStatus(this.id, this.email, null);
+    this.approval = null;
+  }
+
   // editCalendar() {
   //   this.id = this.authService.getUserId();
   //   console.log('id is ' + this.id);

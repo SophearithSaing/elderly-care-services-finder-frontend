@@ -48,8 +48,9 @@
           <h1 *ngIf="approval === null">Your Request is Pending</h1>
           <div *ngIf="approval === false">
             <h1>Your Request is Rejected</h1>
-            <h3>Admin's comment: {{rejectionReason}}</h3>
-            <button class="btn btn-primary">Resubmit Request</button>
+            <h3>Admin's comment:</h3>
+            <h4 class="pb-3">"{{rejectionReason}}"</h4>
+            <button class="btn btn-primary" (click)="resubmitRequest()">Resubmit Request to Join</button>
           </div>
 
           <div class="pt-5">

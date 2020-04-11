@@ -26,13 +26,14 @@
   <div class="list-group" *ngFor="let item of requests, let i = index">
     <div href="#" class="list-group-item list-group-item-action mt-3 mb-3">
       <div class="d-flex w-100 justify-content-between">
-        <h3 class="mb-1">{{item.caregiverName}}</h3>
+        <h3 class="mb-1">Name: {{item.caregiverName}}</h3>
         <small *ngIf="item.daysAgo < 30">{{item.daysAgo}} days ago</small>
         <small *ngIf="item.daysAgo >= 30">{{item.monthsAgo}} ago</small>
       </div>
-      <h4 class="mb-1">{{item.caregiverEmail}}</h4>
+      <h4 class="mb-3">Email: {{item.caregiverEmail}}</h4>
 
       <p class="mb-3">From: {{item.startDate}} To: {{item.stopDate}}</p>
+      <p class="mb-3">Require Interview: {{item.requireInterview ? 'Yes' : 'No'}}</p>
       <p class="mb-3">Daily Care: {{item.selectedServices.dailyCare}}</p>
       <p class="mb-3">Special Care: {{item.selectedServices.specialCare}}</p>
       <p class="mb-3">Price: {{item.selectedDP}} daily or {{item.selectedMP}} monthly</p>

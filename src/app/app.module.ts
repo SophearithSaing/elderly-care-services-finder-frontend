@@ -69,6 +69,9 @@ import { MatListModule } from '@angular/material/list';
 import { ElderNavComponent } from './elder-nav/elder-nav.component';
 import { PasswordRecoveryComponent } from './password-recovery/password-recovery.component';
 import { CaregiverExperienceComponent } from './caregiver-experience/caregiver-experience.component';
+import { MessagesComponent } from './messages/messages.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { CaregiverNavComponent } from './caregiver-nav/caregiver-nav.component';
 
 
 const appRoutes: Routes = [
@@ -108,7 +111,9 @@ const appRoutes: Routes = [
   { path: 'calendar/:email', component: CalendarComponent},
   { path: 'services/:email', component: CaregiverServicesComponent },
   { path: 'caregiver-experience', component: CaregiverExperienceComponent },
-  { path: 'chat-app', component: ChatAppComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: PasswordRecoveryComponent },
+  { path: 'messages', component: MessagesComponent },
   { path: '',
     redirectTo: '/home',
     pathMatch: 'full'
@@ -153,7 +158,10 @@ const appRoutes: Routes = [
     MainNavComponent,
     ElderNavComponent,
     PasswordRecoveryComponent,
-    CaregiverExperienceComponent
+    CaregiverExperienceComponent,
+    MessagesComponent,
+    ForgotPasswordComponent,
+    CaregiverNavComponent
   ],
   imports: [
     BrowserModule,
