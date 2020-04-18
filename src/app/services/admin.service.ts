@@ -33,17 +33,19 @@ export class AdminService {
     );
   }
 
-  AddReason(caregiverEmail: string, reason: string) {
+  AddReason(caregiverEmail: string, caregiverName: string, reason: string) {
     const rejection = {
       caregiverEmail,
+      caregiverName,
       reason
     };
     this.http.post(BACKEND_URL + 'rejections', rejection).subscribe(Response => {});
   }
 
-  UpdateReason(caregiverEmail: string, reason: string) {
+  UpdateReason(caregiverEmail: string, caregiverName: string, reason: string) {
     const rejection = {
       caregiverEmail,
+      caregiverName,
       reason
     };
     this.http.patch(BACKEND_URL + 'rejections', rejection).subscribe(Response => {});

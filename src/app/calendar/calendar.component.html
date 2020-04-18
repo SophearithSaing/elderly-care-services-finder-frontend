@@ -1,4 +1,4 @@
-<nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
+<!-- <nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
   <div _ngcontent-vuo-c3="" class="collapse navbar-collapse" id="navbarNavDropdown">
       <div class="header-logo">
           <img src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.0-9/79731930_137989890973179_6631381564599042048_n.png?_nc_cat=104&_nc_ohc=KPi8-ipnoqsAQnH6PyVV_Tdfqn0EIo9Thh2OSloW_ETyslvY78sLBCk_A&_nc_ht=scontent.fbkk12-2.fna&oh=96636c40577e051798bef5ac5c7d4404&oe=5E68D64D">
@@ -13,7 +13,8 @@
           <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/home">Logout</a></li>
       </ul>
   </div>
-</nav>
+</nav> -->
+<app-caregiver-nav>
 <div class="container text-center pt-5">
   <h1>Select Avaible Date Range</h1>
   <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="3" [dayTemplate]="t" outsideDays="hidden">
@@ -64,4 +65,5 @@
     <button type="button" class="btn small-button" (click)="modal.close()">OKAY</button>
   </div>
 </ng-template>
+</app-caregiver-nav>
 

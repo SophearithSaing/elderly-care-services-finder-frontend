@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {NgForm} from '@angular/forms';
+import { NgForm } from '@angular/forms';
 
 import { AuthService } from "../auth.service";
 import { Router } from '@angular/router';
@@ -13,21 +13,31 @@ import { Router } from '@angular/router';
 export class ElderLoginComponent {
 
   isLoading = false;
-  validUser = null;
+  validUser = false;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  showErrorMessage: boolean;
+
+  constructor(public authService: AuthService, private router: Router) { }
 
   onLogin(form: NgForm) {
     if (form.invalid) {
       return;
     }
     this.isLoading = true;
-    this.validUser = this.authService.login(form.value.email, form.value.password);
-    console.log('valid user value is ' + this.validUser);
+    // this.authService.login(form.value.email, form.value.password);
     setTimeout(() => {
-      this.router.navigate(['/elder-home']);
+      this.validUser = this.authService.getIsAuth();
+      console.log('valid user value is ' + this.validUser);
+      if (this.validUser === true) {
+        this.router.navigate(['/elder-home']);
+      } else {
+        this.showErrorMessage = true;
+      }
     }, 2000);
+  }
 
+  hideErrorMessage() {
+    this.showErrorMessage = false;
   }
 
 }

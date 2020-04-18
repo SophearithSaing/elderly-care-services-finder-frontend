@@ -81,9 +81,9 @@ export class AdminHomeComponent implements OnInit {
     this.admin.UpdateCGStatus(this.id, email, false);
     this.search.getCGRejection(email).subscribe(data => {
       if (data.reason === null) {
-        this.admin.AddReason(email, this.reason);
+        this.admin.AddReason(email, this.name, this.reason);
       } else {
-        this.admin.UpdateReason(email, this.reason);
+        this.admin.UpdateReason(email, this.name, this.reason);
       }
     });
     console.log(this.reason);

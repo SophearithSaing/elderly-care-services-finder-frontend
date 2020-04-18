@@ -69,42 +69,44 @@ export class CalendarComponent implements OnInit {
     this.startDate = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day);
     this.stopDate = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day);
 
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has("email")) {
-        this.email = paramMap.get("email");
-        this.searchService.getSchedule(this.email).subscribe((data) => {
-          if (data === null) {
-            this.mode = 'add';
-            console.log(this.mode);
-          } else {
-            this.mode = 'update';
-            console.log(this.mode);
-            this.schedule = {
-              _id: data._id,
-              caregiverEmail: data.caregiverEmail,
-              availability: data.availability
-            };
-            this.id = this.schedule._id;
-            this.email = this.schedule.caregiverEmail;
-            this.availability = data.availability;
-            console.log('data before push');
-            console.log(this.availability);
-            this.availability.forEach(element => {
-              const startDate = new Date(element.startDate);
-              const stopDate = new Date(element.stopDate);
-              const newElement = {
-                startDate: `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`,
-                stopDate: `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`
-              };
-              this.availabilityString.push(newElement);
-            });
-            console.log(this.availability);
-            console.log(this.availabilityString);
-          }
+    // this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    //   if (paramMap.has("email")) {
+    //   }
+    //   this.isLoading = false;
+    // });
+
+    this.email = this.auth.getUserId();
+    this.searchService.getSchedule(this.email).subscribe((data) => {
+      if (data === null) {
+        this.mode = 'add';
+        console.log(this.mode);
+      } else {
+        this.mode = 'update';
+        console.log(this.mode);
+        this.schedule = {
+          _id: data._id,
+          caregiverEmail: data.caregiverEmail,
+          availability: data.availability
+        };
+        this.id = this.schedule._id;
+        this.email = this.schedule.caregiverEmail;
+        this.availability = data.availability;
+        console.log('data before push');
+        console.log(this.availability);
+        this.availability.forEach(element => {
+          const startDate = new Date(element.startDate);
+          const stopDate = new Date(element.stopDate);
+          const newElement = {
+            startDate: `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`,
+            stopDate: `${stopDate.getDate()}/${stopDate.getMonth() + 1}/${stopDate.getFullYear()}`
+          };
+          this.availabilityString.push(newElement);
         });
+        console.log(this.availability);
+        console.log(this.availabilityString);
       }
-      this.isLoading = false;
     });
+    this.isLoading = false;
   }
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {

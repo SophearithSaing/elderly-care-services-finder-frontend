@@ -71,10 +71,6 @@ export class AuthService {
           this.saveAuthData(token, expirationDate, this.userId);
           // this.router.navigate(["/"]);
           console.log('login success');
-
-          return true;
-        } else {
-          return false;
         }
       });
   }

@@ -2,6 +2,9 @@
   background-color:rgb(2, 216, 66);
   color: #fff;
 } */
+.nav {
+  margin-left: 10px;
+}
 
 .mat-button:hover {
   background-color: rgb(2, 216, 66);

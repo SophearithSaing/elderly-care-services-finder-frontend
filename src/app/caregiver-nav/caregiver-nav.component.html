@@ -1,1 +1,65 @@
-<p>caregiver-nav works!</p>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [ngClass]="{hidden:  (isHandset$ | async) === false}"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-nav-list>
+      <mat-list-item class="mt-3 mb-3">
+        <img src="{{image}}" alt="" style="margin-left: 10px; width: 56px; height: 56px; border-radius: 50%;"
+          [matMenuTriggerFor]="menu">
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/caregiver-home" routerLinkActive="mat-raised-button">Home</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/caregiver-profile" routerLinkActive="mat-raised-button">Profile</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/requests" routerLinkActive="mat-raised-button">Requests</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/services" routerLinkActive="mat-raised-button">Services</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/calendar" routerLinkActive="mat-raised-button">Schedule</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/caregiver-history" routerLinkActive="mat-raised-button">History</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/home" routerLinkActive="mat-raised-button">Logout</button>
+      </mat-list-item>
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar style="background: white; color: black; padding-left: 0;">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <img
+        src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t1.0-9/90196562_533873644198217_3743365608247394304_n.jpg?_nc_cat=111&_nc_sid=8024bb&_nc_ohc=lASQGptOc-4AX93fscP&_nc_ht=scontent.fbkk5-3.fna&oh=c40a8d0aface15e251219dd43885325d&oe=5E9AC1EA"
+        style="height: 100%;">
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      <button mat-button routerLink="/caregiver-home" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Home</button>
+      <button mat-button routerLink="/requests" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Requests</button>
+      <button mat-button routerLink="/services" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Services</button>
+      <button mat-button routerLink="/calendar" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Schedule</button>
+      <button mat-button routerLink="/caregiver-history" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">History</button>
+      <img src="{{image}}" alt="" style="margin-left: 10px; width: 50px; height: 50px; border-radius: 50%;"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" [matMenuTriggerFor]="menu">
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/caregiver-profile">Profile</button>
+        <button mat-menu-item routerLink="/home">Logout</button>
+      </mat-menu>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

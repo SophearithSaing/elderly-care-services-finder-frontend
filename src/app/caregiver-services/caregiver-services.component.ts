@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { environment } from 'src/environments/environment';
 import { FormControl } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -101,7 +102,12 @@ export class CaregiverServicesComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor(public searchservice: SearchService, public http: HttpClient, private router: Router, public route: ActivatedRoute) {
+  constructor(
+    public searchservice: SearchService,
+    public http: HttpClient,
+    private router: Router,
+    public route: ActivatedRoute,
+    private auth: AuthService) {
     for (let year = 1960; year <= 2020; year++) {
       this.years.unshift(year);
     }
@@ -111,39 +117,41 @@ export class CaregiverServicesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('email')) {
-        this.email = paramMap.get('email');
-        this.caregiverEmail = this.email;
-        this.searchservice.getCaregiver(this.email).subscribe(data => {
-          console.log(data);
-          this.experiences = data.experience;
-          this.certificate.setValue(data.certificate);
-          this.dailyPrice = data.dailyPrice;
-          this.monthlyPrice = data.monthlyPrice;
-          this.checkedDailyCare = data.services.dailyCare;
-          this.checkedSpecialCare = data.services.specialCare;
-          console.log(this.checkedDailyCare);
-          console.log(this.checkedSpecialCare);
-          this.checkedDailyCare.forEach(element => {
-            console.log(element);
-            this.dailyCare.forEach(item => {
-              if (item.name === element) {
-                console.log(item.name + ' = ' + element);
-                item.checked = true;
-              }
-            });
-          });
-          this.checkedSpecialCare.forEach(element => {
-            this.specialCare.forEach(item => {
-              if (item.name === element) {
-                console.log(item.name + ' = ' + element);
-                item.checked = true;
-              }
-            });
-          });
+    // this.route.paramMap.subscribe((paramMap: ParamMap) => {
+    //   if (paramMap.has('email')) {
+
+    //   }
+    // });
+
+    this.email = this.auth.getUserId();
+    this.caregiverEmail = this.email;
+    this.searchservice.getCaregiver(this.email).subscribe(data => {
+      console.log(data);
+      this.experiences = data.experience;
+      this.certificate.setValue(data.certificate);
+      this.dailyPrice = data.dailyPrice;
+      this.monthlyPrice = data.monthlyPrice;
+      this.checkedDailyCare = data.services.dailyCare;
+      this.checkedSpecialCare = data.services.specialCare;
+      console.log(this.checkedDailyCare);
+      console.log(this.checkedSpecialCare);
+      this.checkedDailyCare.forEach(element => {
+        console.log(element);
+        this.dailyCare.forEach(item => {
+          if (item.name === element) {
+            console.log(item.name + ' = ' + element);
+            item.checked = true;
+          }
         });
-      }
+      });
+      this.checkedSpecialCare.forEach(element => {
+        this.specialCare.forEach(item => {
+          if (item.name === element) {
+            console.log(item.name + ' = ' + element);
+            item.checked = true;
+          }
+        });
+      });
     });
   }
 
