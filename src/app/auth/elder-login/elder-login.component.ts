@@ -24,20 +24,21 @@ export class ElderLoginComponent {
       return;
     }
     this.isLoading = true;
-    // this.authService.login(form.value.email, form.value.password);
+    this.authService.login(form.value.email, form.value.password);
     setTimeout(() => {
       this.validUser = this.authService.getIsAuth();
       console.log('valid user value is ' + this.validUser);
       if (this.validUser === true) {
         this.router.navigate(['/elder-home']);
       } else {
+        this.isLoading = false;
         this.showErrorMessage = true;
       }
     }, 2000);
   }
 
   hideErrorMessage() {
-    this.showErrorMessage = false;
+    // this.showErrorMessage = false;
   }
 
 }

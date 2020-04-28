@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { SearchService } from '../services/search.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-caregiver-nav',
@@ -16,6 +17,7 @@ export class CaregiverNavComponent implements OnInit {
   name: string;
   // image = 'http://localhost:3000/images/excited-elder-man-cheering-up.jpg-1582173897314.jpg';
   image: string;
+  role: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -23,7 +25,11 @@ export class CaregiverNavComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService, private searchService: SearchService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
+    private searchService: SearchService,
+    private router: Router) {
 
   }
 
@@ -32,11 +38,20 @@ export class CaregiverNavComponent implements OnInit {
     this.searchService.getCaregiver(this.email).subscribe(res => {
       this.name = res.name;
       this.image = res.imagePath;
+      this.role = 'Caregiver';
+
+      if (this.role !== 'Caregiver') {
+        this.router.navigate(['/home']);
+      }
     });
   }
 
   getImage() {
     return `url('${this.image}')`;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

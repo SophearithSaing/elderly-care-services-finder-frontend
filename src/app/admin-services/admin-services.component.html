@@ -2,7 +2,7 @@
   <mat-toolbar-row>
     <span>Admin</span>
     <span class="space"></span>
-    <button mat-button [routerLink]="['/admin']">Home</button>
+    <button mat-button [routerLink]="['/admin-home']">Home</button>
     <button mat-flat-button [routerLink]="['/admin-services']">Services</button>
     <button mat-button [routerLink]="['/admin-allusers']">All Users</button>
     <button mat-button [routerLink]="['/admin-allactivities']">All Activities</button>
@@ -20,6 +20,12 @@
           <mat-card-title>Daily Care</mat-card-title>
         </mat-card-header>
         <mat-card-content>
+
+          <!-- <mat-radio-group>
+            <mat-radio-button *ngFor="let item of dc">
+              {{item}}
+            </mat-radio-button>
+          </mat-radio-group> -->
 
           <div *ngFor="let item of dailyCare">
             <mat-checkbox [(ngModel)]="item.checked" (change)="getCheckboxes()">{{item.name}}</mat-checkbox>

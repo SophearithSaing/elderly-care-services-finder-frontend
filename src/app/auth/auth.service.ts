@@ -49,6 +49,7 @@ export class AuthService {
 
   login(email: string, password: string) {
     const authData: AuthData = { email: email, password: password };
+    console.log(this.isAuthenticated);
     this.http
       .post<{ token: string; expiresIn: number, userId: string }>(
         BACKEND_URL + 'authusers/login',
@@ -57,6 +58,7 @@ export class AuthService {
       .subscribe(response => {
         const token = response.token;
         this.token = token;
+        console.log(token, this.token);
         if (token) {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
@@ -104,12 +106,15 @@ export class AuthService {
   forgotPassword(email) {
     const body = {
       email: email
-    }
+    };
     this.http.post(BACKEND_URL + 'authusers/forgotPassword', body).subscribe(res => {});
   }
 
   resetPassword(token, password) {
-    this.http.patch(BACKEND_URL + 'authusers/resetPassword/' + token, password).subscribe(res => {});
+    const body = {
+      password
+    };
+    this.http.patch(BACKEND_URL + 'authusers/resetPassword/' + token, body).subscribe(res => {});
   }
 
   private setAuthTimer(duration: number) {

@@ -1,21 +1,22 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
-  selector: 'app-caregiver-login',
-  templateUrl: './caregiver-login.component.html',
-  styleUrls: ['./caregiver-login.component.css']
+  selector: 'app-admin-login',
+  templateUrl: './admin-login.component.html',
+  styleUrls: ['./admin-login.component.css']
 })
-export class CaregiverLoginComponent {
+export class AdminLoginComponent {
 
   isLoading = false;
   validUser = false;
 
   showErrorMessage: boolean;
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) { }
 
   onLogin(form: NgForm) {
     if (form.invalid) {
@@ -27,7 +28,7 @@ export class CaregiverLoginComponent {
       this.validUser = this.authService.getIsAuth();
       console.log('valid user value is ' + this.validUser);
       if (this.validUser === true) {
-        this.router.navigate(['/caregiver-home']);
+        this.router.navigate(['/admin-home']);
       } else {
         this.isLoading = false;
         this.showErrorMessage = true;

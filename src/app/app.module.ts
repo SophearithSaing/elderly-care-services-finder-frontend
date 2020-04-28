@@ -52,6 +52,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CaregiverServicesComponent } from './caregiver-services/caregiver-services.component';
 import { MatButtonModule } from '@angular/material/button';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { RequestStatusComponent } from './request-status/request-status.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
@@ -72,24 +73,27 @@ import { CaregiverExperienceComponent } from './caregiver-experience/caregiver-e
 import { MessagesComponent } from './messages/messages.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { CaregiverNavComponent } from './caregiver-nav/caregiver-nav.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminNavComponent } from './admin-nav/admin-nav.component';
 
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminHomeComponent },
-  { path: 'admin-allusers', component: AdminAllusersComponent },
-  { path: 'admin-allactivities', component: AdminAllactivitiesComponent },
-  { path: 'admin-approval', component: AdminApprovalComponent },
+  { path: 'admin-login', component: AdminLoginComponent},
+  { path: 'admin-home', component: AdminHomeComponent, canActivate: [AuthGuard] },
+  { path: 'admin-allusers', component: AdminAllusersComponent, canActivate: [AuthGuard] },
+  { path: 'admin-allactivities', component: AdminAllactivitiesComponent, canActivate: [AuthGuard] },
+  { path: 'admin-approval', component: AdminApprovalComponent, canActivate: [AuthGuard] },
   { path: 'admin-services', component: AdminServicesComponent },
-  { path: 'caregiver-home', component: CaregiverHomeComponent },
-  { path: 'elder-home', component: ElderHomeComponent },
+  { path: 'caregiver-home', component: CaregiverHomeComponent, canActivate: [AuthGuard] },
+  { path: 'elder-home', component: ElderHomeComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'caregiver-login', component: CaregiverLoginComponent },
   { path: 'elder-login', component: ElderLoginComponent },
   { path: 'elder-register', component: ElderRegisterComponent },
   { path: 'caregiver-register', component: CaregiverRegisterComponent },
-  { path: 'elder-register/:elderEmail', component: EldersSignupComponent },
-  { path: 'caregiver-register/:caregiverEmail', component: CaregiversSignupComponent },
+  { path: 'elder-register/:elderEmail', component: EldersSignupComponent, canActivate: [AuthGuard]},
+  { path: 'caregiver-register/:caregiverEmail', component: CaregiversSignupComponent, canActivate: [AuthGuard]},
   { path: 'edit/:userId', component: SignupComponent, canActivate: [AuthGuard] },
   { path: 'auth-signup', component: AuthSignUpComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
@@ -101,19 +105,19 @@ const appRoutes: Routes = [
   { path: 'eldersEdit/:eldersId', component: EldersSignupComponent, canActivate: [AuthGuard] },
   { path: 'search', component: SearchComponent, canActivate: [AuthGuard]},
   // { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
-  { path: 'history', component: HistoryComponent },
-  { path: 'caregiver-history', component: CaregiverHistoryComponent },
+  { path: 'history', component: HistoryComponent, canActivate: [AuthGuard]},
+  { path: 'caregiver-history', component: CaregiverHistoryComponent, canActivate: [AuthGuard]},
   // { path: 'result', component: ResultComponent, canActivate: [AuthGuard] },
-  { path: 'result', component: ResultComponent},
+  { path: 'result', component: ResultComponent, canActivate: [AuthGuard]},
   { path: 'requests', component: RequestComponent, canActivate: [AuthGuard]},
   { path: 'requests-status', component: RequestStatusComponent, canActivate: [AuthGuard]},
   // { path: 'calendar/:email', component: CalendarComponent, canActivate: [AuthGuard]},
-  { path: 'calendar', component: CalendarComponent},
-  { path: 'services', component: CaregiverServicesComponent },
-  { path: 'caregiver-experience', component: CaregiverExperienceComponent },
+  { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard]},
+  { path: 'services', component: CaregiverServicesComponent, canActivate: [AuthGuard]},
+  { path: 'caregiver-experience', component: CaregiverExperienceComponent, canActivate: [AuthGuard]},
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: PasswordRecoveryComponent },
-  { path: 'messages', component: MessagesComponent },
+  { path: 'reset-password/:token', component: PasswordRecoveryComponent },
+  { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard]},
   { path: '',
     redirectTo: '/home',
     pathMatch: 'full'
@@ -161,7 +165,9 @@ const appRoutes: Routes = [
     CaregiverExperienceComponent,
     MessagesComponent,
     ForgotPasswordComponent,
-    CaregiverNavComponent
+    CaregiverNavComponent,
+    AdminLoginComponent,
+    AdminNavComponent
   ],
   imports: [
     BrowserModule,
@@ -184,6 +190,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatCardModule,
     MatCheckboxModule,
+    MatRadioModule,
     MatIconModule,
     MatDialogModule,
     MatToolbarModule,

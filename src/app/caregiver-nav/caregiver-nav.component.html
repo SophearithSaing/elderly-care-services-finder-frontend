@@ -26,7 +26,7 @@
         <button mat-button routerLink="/caregiver-history" routerLinkActive="mat-raised-button">History</button>
       </mat-list-item>
       <mat-list-item>
-        <button mat-button routerLink="/home" routerLinkActive="mat-raised-button">Logout</button>
+        <button mat-button routerLink="/home" routerLinkActive="mat-raised-button" (click)="logout()">Logout</button>
       </mat-list-item>
     </mat-nav-list>
 
@@ -56,7 +56,7 @@
         [ngClass]="{hidden:  (isHandset$ | async) === true}" [matMenuTriggerFor]="menu">
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/caregiver-profile">Profile</button>
-        <button mat-menu-item routerLink="/home">Logout</button>
+        <button mat-menu-item routerLink="/home" (click)="logout()">Logout</button>
       </mat-menu>
     </mat-toolbar>
     <!-- Add Content Here -->

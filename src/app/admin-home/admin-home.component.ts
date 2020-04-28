@@ -69,7 +69,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   acceptRequest(email: string) {
-    this.admin.UpdateCGStatus(this.id, email, true);
+    this.admin.UpdateCGStatus(this.id, email, this.name, true);
     this.accept = true;
   }
 
@@ -78,7 +78,7 @@ export class AdminHomeComponent implements OnInit {
     if (this.reason === null) {
       this.reason = '';
     }
-    this.admin.UpdateCGStatus(this.id, email, false);
+    this.admin.UpdateCGStatus(this.id, email, this.name, false);
     this.search.getCGRejection(email).subscribe(data => {
       if (data.reason === null) {
         this.admin.AddReason(email, this.name, this.reason);

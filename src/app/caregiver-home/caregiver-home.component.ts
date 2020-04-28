@@ -50,7 +50,7 @@ export class CaregiverHomeComponent implements OnInit {
   }
 
   resubmitRequest() {
-    this.admin.UpdateCGStatus(this.id, this.email, null);
+    this.admin.UpdateCGStatus(this.id, this.name, this.email, null);
     this.approval = null;
   }
 

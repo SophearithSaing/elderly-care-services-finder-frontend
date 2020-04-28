@@ -14,11 +14,17 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  UpdateCGStatus(id: string, email: string, approval: boolean) {
+  UpdateCGStatus(id: string, email: string, name: string, approval: boolean) {
+    let newCg = null;
+    if (approval === true) {
+      newCg = true;
+    }
     const caregiver = {
       _id: id,
       email,
-      approval
+      name,
+      approval,
+      newCg
     };
     this.http
     .patch(BACKEND_URL + 'caregivers/' + email, caregiver)
@@ -75,7 +81,7 @@ export class AdminService {
       specialCare
     };
     this.http
-    .patch(BACKEND_URL + 'services/', services)
+    .patch(BACKEND_URL + 'services/' + this.serviceId, services)
     .subscribe(response => { });
   }
 }

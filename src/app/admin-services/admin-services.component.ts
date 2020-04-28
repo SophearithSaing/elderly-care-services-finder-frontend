@@ -71,14 +71,14 @@ export class AdminServicesComponent implements OnInit {
           name: element,
           checked: false
         };
-        this.dailyCare.push(item);
+        this.dailyCare.push(element);
       });
       this.sc.forEach(element => {
         const item = {
           name: element,
           checked: false
         };
-        this.specialCare.push(item);
+        this.specialCare.push(element);
       });
     });
     console.log(this.dailyCare);
@@ -116,15 +116,23 @@ export class AdminServicesComponent implements OnInit {
   }
 
   removeDCItem() {
+    console.log(this.newDailyCare);
     this.newDailyCare.forEach(element => {
-      const index = this.dc.indexOf(element);
-      console.log(index);
-      const item = this.dailyCare[index];
-      // item.checked = false;
-      this.removedDC.unshift(item);
-      this.dailyCare.splice(index, 1);
+      for (let index = 0; index < this.dailyCare.length; index++) {
+        const itemName = this.dailyCare[index].name;
+        if (element === itemName) {
+          console.log(element, itemName);
+          this.dailyCare.splice(index, 1);
+          const item = {
+            name: itemName,
+            checked: false
+          };
+          this.removedDC.unshift(item);
+        }
+      }
     });
     console.log(this.dailyCare);
+    console.log(this.removedDC);
 
     this.undoDC = true;
   }

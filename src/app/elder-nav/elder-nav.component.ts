@@ -39,4 +39,7 @@ export class ElderNavComponent implements OnInit {
     return `url('${this.image}')`;
   }
 
+  logout() {
+    this.authService.logout();
+  }
 }

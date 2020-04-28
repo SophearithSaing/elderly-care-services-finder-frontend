@@ -94,19 +94,19 @@ export class AdminApprovalComponent implements OnInit {
     this.cgName = name;
   }
 
-  acceptRequest() {
-    this.admin.UpdateCGStatus(this.id, this.email, true);
-  }
+  // acceptRequest() {
+  //   this.admin.UpdateCGStatus(this.id, this.email, true);
+  // }
 
-  rejectRequest(item) {
-    this.accept = false;
-    if (this.reason === null) {
-      this.reason = '';
-    }
-    console.log(this.reason);
-    this.admin.UpdateCGStatus(this.id, this.email, true);
-    this.admin.AddReason(this.email, this.reason);
-    console.log(item);
-  }
+  // rejectRequest(item) {
+  //   this.accept = false;
+  //   if (this.reason === null) {
+  //     this.reason = '';
+  //   }
+  //   console.log(this.reason);
+  //   this.admin.UpdateCGStatus(this.id, this.email, true);
+  //   this.admin.AddReason(this.email, this.reason);
+  //   console.log(item);
+  // }
 
 }
