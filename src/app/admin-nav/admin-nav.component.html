@@ -1,1 +1,53 @@
-<p>admin-nav works!</p>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [ngClass]="{hidden:  (isHandset$ | async) === false}"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-nav-list>
+      <mat-list-item class="mt-3 mb-3">
+        <img src="{{image}}" alt="" style="margin-left: 10px; width: 56px; height: 56px; border-radius: 50%;"
+          [matMenuTriggerFor]="menu">
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/admin-home" routerLinkActive="mat-raised-button">Home</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/admin-services" routerLinkActive="mat-raised-button">Services</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/admin-allusers" routerLinkActive="mat-raised-button">Approved Users</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/admin-allactivities" routerLinkActive="mat-raised-button">All Activities</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button mat-button routerLink="/home" routerLinkActive="mat-raised-button" (click)="logout()">Logout</button>
+      </mat-list-item>
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <img
+        src="https://scontent.fbkk5-3.fna.fbcdn.net/v/t1.0-9/90196562_533873644198217_3743365608247394304_n.jpg?_nc_cat=111&_nc_sid=8024bb&_nc_ohc=lASQGptOc-4AX93fscP&_nc_ht=scontent.fbkk5-3.fna&oh=c40a8d0aface15e251219dd43885325d&oe=5E9AC1EA"
+        style="height: 100%;">
+      <span class="spacer"></span>
+      <span class="spacer"></span>
+      <button mat-button routerLink="/admin-home" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Home</button>
+      <button mat-button routerLink="/admin-services" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Services</button>
+      <button mat-button routerLink="/admin-allusers" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Approved Users</button>
+      <button mat-button routerLink="/admin-allactivities" routerLinkActive="mat-raised-button"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">All Activities</button>
+      <button mat-button (click)="logout()"
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">Logout</button>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

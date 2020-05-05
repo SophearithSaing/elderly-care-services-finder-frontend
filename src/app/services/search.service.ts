@@ -441,6 +441,18 @@ export class SearchService {
       );
   }
 
+  verifyToken(token: string) {
+    return this.http.get<{
+      _id: string,
+      name: string,
+      email: string,
+      password: string,
+      passwordResetToken: string,
+      passwordResetExpires: string}>(
+      BACKEND_URL + 'authusers/' + token
+    );
+  }
+
   // get one caregiver
   getCaregiver(email: string) {
     return this.http.get<{
@@ -536,6 +548,8 @@ export class SearchService {
     caregiverEmail: string,
     elderName: string,
     caregiverName: string,
+    elderPhoneNumber: string,
+    elderAge: number,
     startDate: Date,
     stopDate: Date,
     requireInterview: boolean,
@@ -548,19 +562,21 @@ export class SearchService {
 
     const request: Request = {
       _id: null,
-      elderEmail: elderEmail,
+      elderEmail,
       elderName,
-      caregiverEmail: caregiverEmail,
+      elderPhoneNumber,
+      elderAge,
+      caregiverEmail,
       caregiverName,
-      startDate: startDate,
-      stopDate: stopDate,
-      requireInterview: requireInterview,
+      startDate,
+      stopDate,
+      requireInterview,
       status: null,
       rejectionReason: null,
-      dateSent: dateSent,
-      selectedServices: selectedServices,
-      selectedDP: selectedDP,
-      selectedMP: selectedMP
+      dateSent,
+      selectedServices,
+      selectedDP,
+      selectedMP
     };
     console.log(request);
     this.http

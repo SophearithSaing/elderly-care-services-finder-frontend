@@ -45,19 +45,19 @@
 
   <div class="container text-center">
     <!-- <div class="row"> -->
-          <h1 class="display-4">Welcome Back {{name}}</h1>
-          <h1 *ngIf="approval === null">Your Request is Pending</h1>
+          <h1 class="display-4">Welcome back {{name}}</h1>
+          <h1 *ngIf="approval === null">Your request is pending</h1>
           <div *ngIf="approval === false">
-            <h1>Your Request is Rejected</h1>
+            <h1>Your request is rejected</h1>
             <h3>Admin's comment:</h3>
             <h4 class="pb-3">"{{rejectionReason}}"</h4>
-            <button class="btn btn-primary" (click)="resubmitRequest()">Resubmit Request to Join</button>
+            <button class="btn btn-primary" (click)="resubmitRequest()">Resubmit request to join</button>
           </div>
 
           <div class="pt-5">
             <div class="col-md-12">
-              <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1" >You Currently Have {{requestNumber}} Request</h3>
-              <h3 class="pb-3" *ngIf="requestNumber > 1">You Currently Have {{requestNumber}} Requests</h3>
+              <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1" >You currently have {{requestNumber}} request</h3>
+              <h3 class="pb-3" *ngIf="requestNumber > 1">You currently have {{requestNumber}} requests</h3>
               <div class="pb-3">
                 <button class="btn btn-primary" routerLink="/requests" routerLinkActive="active" *ngIf="requestNumber > 0">SEE REQUEST</button>
               </div>

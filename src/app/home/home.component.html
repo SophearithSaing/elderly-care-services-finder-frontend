@@ -16,7 +16,7 @@
       <div class="col-md-6" *ngIf="user === 'caregiver'">
         <h1>{{caregiverNumber}}</h1>
         <p>Currently, {{caregiverNumber}} caregivers join us!</p>
-        <button class="btn btn-primary" type="submit" routerLink="/caregiver-register" routerLinkActive="active">JOIN US</button>
+        <button class="btn btn-primary" type="submit" routerLink="/caregiver-register" routerLinkActive="active">SIGN UP</button>
         <br>
         <p class="pt-5">You already have an account?</p>
         <button class="btn btn-primary" type="submit" routerLink="/caregiver-login" routerLinkActive="active">LOGIN</button>
@@ -30,7 +30,7 @@
       <div class="col-md-6" *ngIf="user === 'elder'">
         <h1>{{elderNumber}}</h1>
         <p>{{elderNumber}} elders are getting helps from us!</p>
-        <button class="btn btn-success" type="submit" routerLink="/elder-register" routerLinkActive="active">GET STARTED</button>
+        <button class="btn btn-success" type="submit" routerLink="/elder-register" routerLinkActive="active">SIGNUP</button>
         <p class="pt-5">You already have an account?</p>
         <button class="btn btn-success" type="submit" routerLink="/elder-login" routerLinkActive="active">LOGIN</button>
       </div>

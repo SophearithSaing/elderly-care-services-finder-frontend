@@ -22,6 +22,7 @@ export class RequestStatusComponent implements OnInit {
   ngOnInit() {
     this.elderEmail = this.authService.getUserId();
     // this.elderEmail = 'elderemail@gmail.com';
+    console.log(this.elderEmail);
 
     this.isLoading = true;
 

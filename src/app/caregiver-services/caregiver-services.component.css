@@ -235,3 +235,28 @@ mat-checkbox {
   background-color: #555;
 }
 
+#btn-cancel {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  background-color: #555555;
+  line-height: 1.2;
+  text-transform: uppercase;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  min-width: 100px;
+  height: 35px;
+  border-radius: 21px;
+}
+
+#btn-cancel:hover {
+  background-color: #f00;
+}
+

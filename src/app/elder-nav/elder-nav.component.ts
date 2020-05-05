@@ -32,6 +32,9 @@ export class ElderNavComponent implements OnInit {
     this.searchService.getElder(this.email).subscribe(res => {
       this.name = res.name;
       this.image = res.imagePath;
+      if (this.image === null || this.image === '') {
+        this.image = 'https://static.thenounproject.com/png/363640-200.png';
+      }
     });
   }
 

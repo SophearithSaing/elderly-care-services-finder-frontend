@@ -1,20 +1,3 @@
-<!-- <nav _ngcontent-vuo-c3="" class="navbar navbar-expand-lg">
-  <div _ngcontent-vuo-c3="" class="collapse navbar-collapse" id="navbarNavDropdown">
-      <div class="header-logo">
-          <img src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.0-9/79731930_137989890973179_6631381564599042048_n.png?_nc_cat=104&_nc_ohc=KPi8-ipnoqsAQnH6PyVV_Tdfqn0EIo9Thh2OSloW_ETyslvY78sLBCk_A&_nc_ht=scontent.fbkk12-2.fna&oh=96636c40577e051798bef5ac5c7d4404&oe=5E68D64D">
-      </div>
-      <ul _ngcontent-vuo-c3="" class="navbar-nav">
-          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/caregiver-home">Home <span _ngcontent-vuo-c3="" class="sr-only">(current)</span></a></li>
-          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/caregiver-profile">Profile</a></li>
-          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/requests">Requests</a></li>
-          <li _ngcontent-vuo-c3="" class="nav-item active"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/services', email]"routerLinkActive="router-link-active">Services</a></li>
-          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/calendar', email]"routerLinkActive="router-link-active">Schedule</a></li>
-          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" [routerLink]="['/caregiver-history', email]"routerLinkActive="router-link-active">History</a></li>
-          <li _ngcontent-vuo-c3="" class="nav-item"><a _ngcontent-vuo-c3="" class="nav-link" routerLink="/home">Logout</a></li>
-      </ul>
-  </div>
-</nav> -->
-
 <app-caregiver-nav>
 
 <div class="container mt-5">
@@ -177,7 +160,7 @@
           <!-- <button class="btn btn-warning mb-3" (click)="setValue(i)" *ngIf="item.editing === undefined || item.editing === null || item.editing === false">Edit</button> -->
           <button class="btn btn-success mb-3 col-md-2" (click)="saveValue()" *ngIf="item.editing === true">Save</button>
           <button class="btn mb-3 ml-3 col-md-2" id="cancel" (click)="cancelEdit(i)" *ngIf="item.editing === true">Cancel</button>
-          <button class="btn mb-3 ml-3 col-md-2" id="delete" (click)="deleteExperience(i)" *ngIf="item.editing === true">Delete</button>
+          <button class="btn mb-3 ml-3 col-md-2" id="delete" (click)="setDeleteIndex(i)" data-toggle="modal" data-target="#deleteExp" *ngIf="item.editing === true">Delete</button>
         </div>
       </div>
     </mat-card-content>
@@ -238,6 +221,26 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn" id="btn-okay" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Saved</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this experience?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" id="btn-okay" data-dismiss="modal" (click)="deleteExperience()">Yes</button>
+        <button type="button" class="btn" id="btn-cancel" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

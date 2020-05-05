@@ -67,6 +67,7 @@ export class CaregiverServicesComponent implements OnInit {
   numberOfExperience = 0;
 
   editIndex: number;
+  deleteIndex: number;
 
   workplace;
   startMonth;
@@ -275,8 +276,12 @@ export class CaregiverServicesComponent implements OnInit {
     this.http.patch(BACKEND_URL + "experiences", experiences).subscribe(response => { });
   }
 
-  deleteExperience(index) {
-    this.experiences.splice(index, 1);
+  setDeleteIndex(index: number) {
+    this.deleteIndex = index;
+  };
+
+  deleteExperience() {
+    this.experiences.splice(this.deleteIndex, 1);
     this.saveExperience();
   }
 

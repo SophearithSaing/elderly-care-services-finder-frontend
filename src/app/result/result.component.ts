@@ -52,6 +52,8 @@ export class ResultComponent implements OnInit {
   reviews: Array<any> = [];
 
   elderName: string;
+  elderPhoneNumber: string;
+  elderAge: number;
 
   requireInterview = false;
 
@@ -80,6 +82,10 @@ export class ResultComponent implements OnInit {
 
     this.searchService.getElder(this.elderEmail).subscribe(data => {
       this.elderName = data.name;
+      this.elderPhoneNumber = data.phoneNumber;
+      const birthYear = new Date(data.birthDate).getFullYear();
+      const year = new Date().getFullYear();
+      this.elderAge = year - birthYear;
     });
     this.route.queryParamMap.subscribe(params => {
       this.query = { ...params.keys, ...params };
@@ -338,6 +344,8 @@ export class ResultComponent implements OnInit {
       this.caregiverEmail,
       this.elderName,
       this.caregiverName,
+      this.elderPhoneNumber,
+      this.elderAge,
       this.startDate,
       this.stopDate,
       this.requireInterview,

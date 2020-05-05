@@ -16,6 +16,11 @@ import { AuthService } from '../auth/auth.service';
 })
 export class ElderHomeComponent implements OnInit {
 
+  // verify before search
+  hasDate: boolean;
+  hasPostalCode: boolean;
+  hasServices: boolean;
+
   panelOpenState = false;
   hoveredDate: NgbDate;
 
@@ -90,6 +95,7 @@ export class ElderHomeComponent implements OnInit {
     this.searchService.getElder(this.email).subscribe(data => {
       this.name = data.name;
     });
+    console.log(this.postalCode);
   }
 
   openSearch() {
@@ -143,12 +149,29 @@ export class ElderHomeComponent implements OnInit {
     console.log(this.postalCode);
     console.log('start from ' + this.startDate + ' to ' + this.stopDate);
 
-    this.router.navigate(
-      ['/result'],
-      { queryParams: { postalCode: this.postalCode, startDate: this.startDate, stopDate: this.stopDate, dailyCare: this.newDailyCare, specialCare: this.newSpecialCare } }
-    );
+    if (this.startDate === null || this.stopDate === null) {
+      this.hasDate = false;
+    } else if (this.postalCode === null || this.postalCode === undefined) {
+      this.hasPostalCode = false;
+    } else if (this.newDailyCare === null || this.newSpecialCare) {
+      this.hasServices = false;
+    }
+    console.log(this.postalCode);
+    if (
+      this.hasDate !== false &&
+      this.hasPostalCode !== false &&
+      this.hasServices !== false) {
+      this.router.navigate(
+        ['/result'],
+        { queryParams: {
+          postalCode: this.postalCode,
+          startDate: this.startDate,
+          stopDate: this.stopDate,
+          dailyCare: this.newDailyCare,
+          specialCare: this.newSpecialCare } }
+      );
+    }
     // this.searchService.searchCaregivers(this.postalCode, this.startDate, this.stopDate, this.services);
-
   }
 
   getCheckboxes() {

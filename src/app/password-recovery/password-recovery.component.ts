@@ -18,6 +18,7 @@ export class PasswordRecoveryComponent implements OnInit {
   shortPassword: boolean;
   showHelp = false;
   token: string;
+  userExist = false;
 
   constructor(private search: SearchService, private http: HttpClient, private auth: AuthService, private route: ActivatedRoute) { }
 
@@ -26,6 +27,13 @@ export class PasswordRecoveryComponent implements OnInit {
       if (paramMap.has('token')) {
         this.token =  paramMap.get('token');
         console.log(this.token);
+        this.search.verifyToken(this.token).subscribe(data => {
+          if (data !== null) {
+            this.userExist = true;
+          } else {
+            this.userExist = false;
+          }
+        });
       }
       this.isLoading = false;
     });
