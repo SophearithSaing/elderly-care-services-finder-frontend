@@ -29,6 +29,12 @@ export class CaregiverRegisterComponent implements OnInit {
   creating: boolean;
   loggingIn: boolean;
 
+  email: string;
+  name: string;
+  password: string;
+
+  users: any;
+  userCreated = false;
 
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
@@ -82,21 +88,36 @@ export class CaregiverRegisterComponent implements OnInit {
       });
       console.log(this.userExisted);
       if (this.userExisted === false) {
-        this.authService.createUser(form.value.email, form.value.password);
+        this.name = form.value.name;
+        this.email = form.value.email;
+        this.password = form.value.password;
+        console.log(form.value.email, form.value.password);
+        console.log(this.email, this.password);
+        this.authService.createUser(this.email, this.password);
         this.creating = true;
         setTimeout(() => {
-          this.authService.login(form.value.email, form.value.password);
-          this.creating = false;
-          this.loggingIn = true;
+          // this.authService.getAllUsers().subscribe(res => {
+            // this.users = res.users;
+            // this.users.forEach(element => {
+            //   if (element.email === this.email) {
+            //     this.userCreated = true;
+            //   }
+            // });
+            this.creating = false;
+            this.loggingIn = true;
+            console.log(this.email, this.password);
+            this.authService.login(this.email, this.password);
+            setTimeout(() => {
+              this.router.navigate(
+                ['/caregiver-register', this.email],
+                { queryParams: { mode: 'add', name: this.name, email: this.email } }
+              );
+            }, 2000);
         }, 2000);
         // form.resetForm();
         // this.router.navigate(['/caregiver-login']);
-        setTimeout(() => {
-          this.router.navigate(
-            ['/caregiver-register', form.value.email],
-            { queryParams: { mode: 'add', name: form.value.name, email: form.value.email } }
-          );
-        }, 2000);
+        // console.log(form.value.email, form.value.name);
+
       }
 
     } else if (form.value.password !== form.value.passwordConfirmation) {

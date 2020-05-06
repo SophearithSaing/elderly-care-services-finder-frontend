@@ -275,7 +275,7 @@ export class EldersSignupComponent implements OnInit {
           );
 
         console.log('added');
-        this.router.navigate(['/elder-login']);
+        this.router.navigate(['/elder-home']);
       } else {
         this.tsDate = new Date(this.birthDate.value);
         console.log(this.tsDate);

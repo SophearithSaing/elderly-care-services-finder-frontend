@@ -68,7 +68,7 @@
                     </mat-card-header>
                     <mat-card-content>
                       <p>
-                        Rejection Reason: {{item.reason}}
+                        <span *ngIf="item.reason !== null">Rejection Reason: {{item.reason}}</span>
                         <br><br>
                         Age: {{item.age}}
                         <br>

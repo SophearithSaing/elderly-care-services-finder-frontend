@@ -23,6 +23,10 @@
   color: rgb(5, 190, 61)!important;
 }
 
+h1 {
+  margin: auto;
+}
+
 mat-spinner {
 margin: auto;
 }

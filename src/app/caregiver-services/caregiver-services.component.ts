@@ -126,6 +126,7 @@ export class CaregiverServicesComponent implements OnInit {
 
     this.email = this.auth.getUserId();
     this.caregiverEmail = this.email;
+    console.log(this.email);
     this.searchservice.getCaregiver(this.email).subscribe(data => {
       console.log(data);
       this.experiences = data.experience;

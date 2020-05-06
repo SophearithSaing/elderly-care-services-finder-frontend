@@ -175,3 +175,11 @@ h1 {
 #passwordHelpBlock {
   color: white;
 }
+
+.mat-spinner ::ng-deep circle {
+  stroke: rgb(5, 190, 61);
+}
+
+mat-spinner {
+  margin: auto;
+}

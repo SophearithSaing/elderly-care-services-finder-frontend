@@ -49,10 +49,10 @@ export class AdminHomeComponent implements OnInit {
         console.log(thisYear, cgYear, cgAge);
 
         this.search.getCGRejection(element.email).subscribe(data => {
-          if (data.reason !== null) {
-            element.reason = data.reason;
-          } else {
+          if (data === null) {
             element.reason = null;
+          } else {
+            element.reason = data.reason;
           }
         });
 

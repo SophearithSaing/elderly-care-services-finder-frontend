@@ -258,8 +258,9 @@ export class CaregiversSignupComponent implements OnInit {
           null,
           null
         );
-      this.router.navigate(['/services', this.email]);
-      console.log(this.router.navigate(['/services', this.email]));
+      console.log('adding');
+      this.router.navigate(['/services']);
+      // console.log(this.router.navigate(['/services', this.email]));
     } else {
       this.tsDate = new Date(this.birthDate.value);
       this.searchService.UpdateCaregiver(

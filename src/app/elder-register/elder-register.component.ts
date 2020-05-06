@@ -29,6 +29,13 @@ export class ElderRegisterComponent implements OnInit {
   secondPassword: string;
   shortPassword: boolean;
 
+  name: string;
+  email: string;
+  password: string;
+
+  creating: boolean;
+  loggingIn: boolean;
+
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
 
@@ -67,7 +74,7 @@ export class ElderRegisterComponent implements OnInit {
 
     console.log(form.value.password.length);
 
-    if (form.value.password === form.value.passwordConfirmation && form.value.password.length > 8 ) {
+    if (form.value.password === form.value.passwordConfirmation && form.value.password.length >= 8) {
       console.log(form.value.password + ' === ' + form.value.passwordConfirmation);
       this.confirmPassword = true;
       console.log(this.confirmPassword);
@@ -79,13 +86,25 @@ export class ElderRegisterComponent implements OnInit {
       });
 
       if (this.userExisted === false) {
+        this.email = form.value.email;
+        this.name = form.value.name;
+        this.password = form.value.password;
+        this.creating = true;
         // create auth user
-        this.authService.createUser(form.value.email, form.value.password);
-        // navigate to fill information
-        this.router.navigate(
-          ['/elder-register', form.value.email],
-          { queryParams: { mode: 'add', name: form.value.name } }
-        );
+        this.authService.createUser(this.email, this.password);
+        // login
+        setTimeout(() => {
+          this.creating = false;
+          this.loggingIn = true;
+          this.authService.login(this.email, this.password);
+          setTimeout(() => {
+            // navigate to fill information
+            this.router.navigate(
+              ['/elder-register', this.email],
+              { queryParams: { mode: 'add', name: this.name } }
+            );
+          }, 2000);
+        }, 2000);
       }
 
     } else if (form.value.password !== form.value.passwordConfirmation) {

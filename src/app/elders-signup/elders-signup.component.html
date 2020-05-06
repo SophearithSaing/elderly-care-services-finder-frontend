@@ -1,4 +1,10 @@
 <div class="container form-group">
+  <div class="justify-content-center mt-5">
+    <div *ngIf="isLoading" style="text-align: center;">
+      <h1>Saving Your Information</h1>
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
   <h1 class="mt-5" *ngIf="!isLoading">Profile Information</h1>
   <form (submit)="onSaveElder()" class="col-md-12" enctype="multipart/form-data" *ngIf="!isLoading">
 
@@ -114,8 +120,4 @@
       <button (click)="goBack()" id="cancel" class="btn">Cancel</button>
     </div>
   </form>
-  <div *ngIf="isLoading" class="mt-5">
-    <h1>Saving Your Information</h1>
-    <mat-spinner></mat-spinner>
-  </div>
 </div>

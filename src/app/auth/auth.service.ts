@@ -31,6 +31,10 @@ export class AuthService {
       });
   }
 
+  getAllUsers() {
+    return this.http.get<{users: any }>(BACKEND_URL + 'authusers');
+  }
+
   getToken() {
     return this.token;
   }

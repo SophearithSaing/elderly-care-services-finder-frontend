@@ -93,6 +93,7 @@ export class ElderHomeComponent implements OnInit {
   ngOnInit() {
     this.email = this.auth.getUserId();
     this.searchService.getElder(this.email).subscribe(data => {
+      // console.log(data);
       this.name = data.name;
     });
     console.log(this.postalCode);
@@ -106,8 +107,8 @@ export class ElderHomeComponent implements OnInit {
     this.searchButton = false;
   }
 
-  toggle(event){
-    console.log(event)
+  toggle(event) {
+    console.log(event);
   }
 
   onDateSelection(date: NgbDate) {

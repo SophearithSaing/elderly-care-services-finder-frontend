@@ -36,4 +36,7 @@ export class AdminLoginComponent {
     }, 2000);
   }
 
+  hideErrorMessage() {
+    // this.showErrorMessage = false;
+  }
 }
