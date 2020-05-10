@@ -179,8 +179,9 @@ export class CaregiverServicesComponent implements OnInit {
     monthlyPrice: number,
   ) {
     let id;
-    this.searchservice.getCaregiver(this.email).subscribe((data) => {
+    this.searchservice.getCaregiver(this.email).subscribe(data => {
       id = data._id;
+      const experience = data.experience;
       console.log(id);
       const caregiver = {
         _id: id,
@@ -188,6 +189,7 @@ export class CaregiverServicesComponent implements OnInit {
         services: services,
         dailyPrice: dailyPrice,
         monthlyPrice: monthlyPrice,
+        experience: experience
       };
       console.log(caregiver);
       this.http

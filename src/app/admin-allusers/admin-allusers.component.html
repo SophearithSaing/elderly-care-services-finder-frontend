@@ -15,7 +15,7 @@
     <div class="col-md-6">
       <h1 class="new-font mb-4">Caregivers</h1>
       <mat-spinner *ngIf="cgLoading"></mat-spinner>
-      <div *ngFor="let item of caregivers" class="mb-4">
+      <div *ngFor="let item of caregivers; let i = index" class="mb-4">
         <mat-accordion class="example-headers-align" *ngIf="!cgLoading">
           <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
             <mat-expansion-panel-header>
@@ -32,90 +32,89 @@
 
             <!-- start row -->
             <!-- <div class="row"> -->
-              <div class="col-md-12">
-                <mat-card class="example-card">
-                  <mat-card-header>
-                    <div mat-card-avatar class="example-header-image">
-                      <img src="{{item.imagePath}}" alt="" style="height: 100%; width: 100;">
-                    </div>
-                    <div class="new-font">
-                      <mat-card-title>{{item.name}}</mat-card-title>
-                      <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
-                    </div>
-                  </mat-card-header>
-                  <mat-card-content>
+            <div class="col-md-12">
+              <mat-card class="example-card">
+                <mat-card-header>
+                  <div mat-card-avatar class="example-header-image">
+                    <img src="{{item.imagePath}}" alt="" style="height: 100%; width: 100;">
+                  </div>
+                  <div class="new-font">
+                    <mat-card-title>{{item.name}}</mat-card-title>
+                    <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
+                  </div>
+                </mat-card-header>
+                <mat-card-content>
+                  <p>
+                    Age: {{item.age}}
+                    <br>
+                    Gender: {{item.gender}}
+                    <br>
+                    Address: {{item.houseNumber}}, {{item.street}}, {{item.subDistrict}}, {{item.district}},
+                    {{item.province}}
+                    <br><br>
+
+                    Services:
+                    <br>
+                    Daily Care: {{item.services.dailyCare}}
+                    <br>
+                    Special Care: {{item.services.specialCare}}
+                    <br><br>
+
+                    Prices:
+                    <br>
+                    Daily Price: {{item.dailyPrice}} Baht
+                    <br>
+                    Monthly Price: {{item.monthlyPrice}} Baht
+                    <br><br>
+
+                    Email: {{item.email}}
+                    <br>
+                    Phone Number: {{item.phoneNumber}}
+                    <br><br>
+                  </p>
+                  <!-- certificate -->
+                  <button mat-raised-button (click)="setCertificate(i)" data-toggle="modal"
+                    data-target="#certificate">View Certificate</button>
+                  <!-- experience -->
+                  <p class="mt-3 mb-0">Experiences:</p>
+                  <div *ngFor="let ex of item.experience">
                     <p>
-                      Age: {{item.age}}
+                      - Workplace: {{ex.workplace}}
                       <br>
-                      Gender: {{item.gender}}
-                      <br>
-                      Address: {{item.houseNumber}}, {{item.street}}, {{item.subDistrict}}, {{item.district}},
-                      {{item.province}}
-                      <br><br>
-
-                      Services:
-                      <br>
-                      Daily Care: {{item.services.dailyCare}}
-                      <br>
-                      Special Care: {{item.services.specialCare}}
-                      <br><br>
-
-                      Prices:
-                      <br>
-                      Daily Price: {{item.dailyPrice}}
-                      <br>
-                      Monthly Price: {{item.monthlyPrice}}
-                      <br><br>
-
-                      Email: {{item.email}}
-                      <br>
-                      Phone Number: {{item.phoneNumber}}
-                      <br><br>
-                      Experience: {{item.experience}}
-                      <br>
-                      <!-- Certification:  -->
-                      <br><br>
-                      <!-- Availability:
-                    <mat-card-content *ngFor="let i of item.schedule">
-                      <mat-checkbox>
-                        From {{i.startDate}}
-                        <br>
-                        To {{i.stopDate}}
-                      </mat-checkbox>
-                    </mat-card-content> -->
-                    </p>
-                  </mat-card-content>
+                      - From {{ex.startMonth}}/{{ex.startYear}} To {{ex.stopMonth}}/{{ex.stopYear}} </p>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <!-- reviews -->
+            <div class="col-md-12 mt-3">
+              <div *ngIf="item.reviews === null">
+                <mat-card class="mb-3">
+                  <div class="new-font">
+                    <mat-card-title>
+                      No Review for This Caregiver
+                    </mat-card-title>
+                  </div>
                 </mat-card>
               </div>
-              <!-- reviews -->
-              <div class="col-md-12 mt-3">
-                <div *ngIf="item.reviews === null">
+              <div *ngIf="item.reviews !== null">
+                <div *ngFor="let item of item.reviews">
                   <mat-card class="mb-3">
                     <div class="new-font">
                       <mat-card-title>
-                        No Review for This Caregiver
+                        From {{item.reviewer}}
                       </mat-card-title>
+                      <mat-card-subtitle>
+                        {{item.rating}} stars
+                      </mat-card-subtitle>
                     </div>
+                    <mat-card-content class="new-font">
+                      {{item.review}}
+                    </mat-card-content>
                   </mat-card>
                 </div>
-                <div *ngIf="item.reviews !== null">
-                  <div *ngFor="let item of item.reviews">
-                    <mat-card class="mb-3">
-                      <div class="new-font">
-                        <mat-card-title>
-                          From {{item.reviewer}}
-                        </mat-card-title>
-                        <mat-card-subtitle>
-                          {{item.rating}} stars
-                        </mat-card-subtitle>
-                      </div>
-                      <mat-card-content class="new-font">
-                        {{item.review}}
-                      </mat-card-content>
-                    </mat-card>
-                  </div>
-                </div>
               </div>
+            </div>
             <!-- </div> -->
             <!-- end row -->
           </mat-expansion-panel>
@@ -171,6 +170,27 @@
           </mat-expansion-panel>
         </mat-accordion>
         <!-- end of loop -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="certificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title new-font" id="exampleModalLongTitle">Certificate</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img src={{certificateValue}} alt="" style="width: 100%; height: 100%;">
+        <h1 *ngIf="certificateValue === null" class="new-font ml-5">This caregiver has no certificate.</h1>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="btn-okay" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

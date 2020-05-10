@@ -26,6 +26,7 @@ export class AdminAllusersComponent implements OnInit {
   halfStar: boolean;
   reviews = [];
   cgLoading: boolean;
+  certificateValue: string;
 
 
   constructor(
@@ -107,6 +108,11 @@ export class AdminAllusersComponent implements OnInit {
 
       this.eLoading = false;
     });
+  }
+
+  setCertificate(index) {
+    console.log(this.caregivers[index]);
+    this.certificateValue = this.caregivers[index].certificate;
   }
 
 }

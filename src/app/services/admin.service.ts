@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
+import { SearchService } from './search.service';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -12,24 +13,29 @@ export class AdminService {
 
   serviceId = '5e231b73a3748a35d8b6b467';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private search: SearchService) { }
 
   UpdateCGStatus(id: string, email: string, name: string, approval: boolean) {
     let newCg = null;
+    let experience =  null;
     if (approval === true) {
       newCg = true;
     }
-    const caregiver = {
-      _id: id,
-      email,
-      name,
-      approval,
-      newCg
-    };
-    this.http
-    .patch(BACKEND_URL + 'caregivers/' + email, caregiver)
-    .subscribe(response => { });
-    console.log(caregiver);
+    this.search.getCaregiver(email).subscribe(res => {
+      experience = res.experience;
+      const caregiver = {
+        _id: id,
+        email,
+        name,
+        approval,
+        newCg,
+        experience
+      };
+      this.http
+      .patch(BACKEND_URL + 'caregivers/' + email, caregiver)
+      .subscribe(response => { });
+      console.log(caregiver);
+    });
   }
 
   GetCaregivers() {
