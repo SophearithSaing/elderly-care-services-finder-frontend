@@ -93,7 +93,7 @@ export class CaregiverRegisterComponent implements OnInit {
         this.password = form.value.password;
         console.log(form.value.email, form.value.password);
         console.log(this.email, this.password);
-        this.authService.createUser(this.email, this.password);
+        this.authService.createUser(this.name, this.email, this.password);
         this.creating = true;
         setTimeout(() => {
           // this.authService.getAllUsers().subscribe(res => {

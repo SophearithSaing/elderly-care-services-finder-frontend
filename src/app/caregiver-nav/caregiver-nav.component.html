@@ -53,7 +53,7 @@
       <button mat-button routerLink="/caregiver-history" routerLinkActive="mat-raised-button"
         [ngClass]="{hidden:  (isHandset$ | async) === true}" class="nav">History</button>
       <img src="{{image}}" alt="" style="margin-left: 10px; width: 50px; height: 50px; border-radius: 50%;"
-        [ngClass]="{hidden:  (isHandset$ | async) === true}" [matMenuTriggerFor]="menu">
+        [ngClass]="{hidden:  (isHandset$ | async) === true}" [matMenuTriggerFor]="menu" onerror="this.src='https://static.thenounproject.com/png/363640-200.png';">
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="/caregiver-profile">Profile</button>
         <button mat-menu-item routerLink="/home" (click)="logout()">Logout</button>

@@ -149,8 +149,7 @@ mat-spinner {
   height: 35px;
   border-radius: 21px;
 
-  background: rgb(95,93,244);
-  background: linear-gradient(90deg, rgba(95,93,244,1) 0%, rgba(81,116,194,1) 59%, rgba(0,181,255,1) 100%);
+  background: -webkit-linear-gradient(left, #28a745, #389b64, #97f7c2);
   position: relative;
   z-index: 1;
 

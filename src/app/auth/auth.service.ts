@@ -22,8 +22,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password };
+  createUser(name: string, email: string, password: string) {
+    const authData: AuthData = { name: name, email: email, password: password };
     this.http
       .post(BACKEND_URL + 'authusers/signup', authData)
       .subscribe(response => {
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData: AuthData = { email: email, password: password };
+    const authData = { email: email, password: password };
     console.log(this.isAuthenticated);
     this.http
       .post<{ token: string; expiresIn: number, userId: string }>(

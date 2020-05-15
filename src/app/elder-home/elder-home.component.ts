@@ -27,9 +27,9 @@ export class ElderHomeComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
 
-  startDate: Date;
-  stopDate: Date;
-  postalCode: string;
+  startDate: Date = null;
+  stopDate: Date = null;
+  postalCode: string = null;
 
   form: FormControl;
 
@@ -152,9 +152,9 @@ export class ElderHomeComponent implements OnInit {
 
     if (this.startDate === null || this.stopDate === null) {
       this.hasDate = false;
-    } else if (this.postalCode === null || this.postalCode === undefined) {
+    } else if (this.postalCode === null) {
       this.hasPostalCode = false;
-    } else if (this.newDailyCare === null || this.newSpecialCare) {
+    } else if (this.newDailyCare === null || this.newSpecialCare === null) {
       this.hasServices = false;
     }
     console.log(this.postalCode);
@@ -162,6 +162,8 @@ export class ElderHomeComponent implements OnInit {
       this.hasDate !== false &&
       this.hasPostalCode !== false &&
       this.hasServices !== false) {
+      console.log('this ran');
+      console.log(this.hasDate, this.hasPostalCode, this.hasServices);
       this.router.navigate(
         ['/result'],
         { queryParams: {

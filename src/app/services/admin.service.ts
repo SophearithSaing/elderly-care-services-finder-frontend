@@ -18,18 +18,21 @@ export class AdminService {
   UpdateCGStatus(id: string, email: string, name: string, approval: boolean) {
     let newCg = null;
     let experience =  null;
+    let schedule = null;
     if (approval === true) {
       newCg = true;
     }
     this.search.getCaregiver(email).subscribe(res => {
       experience = res.experience;
+      schedule = res.schedule;
       const caregiver = {
         _id: id,
         email,
         name,
         approval,
         newCg,
-        experience
+        experience,
+        availability: schedule
       };
       this.http
       .patch(BACKEND_URL + 'caregivers/' + email, caregiver)

@@ -182,14 +182,16 @@ export class CaregiverServicesComponent implements OnInit {
     this.searchservice.getCaregiver(this.email).subscribe(data => {
       id = data._id;
       const experience = data.experience;
+      const availability = data.schedule;
       console.log(id);
       const caregiver = {
         _id: id,
-        email: email,
-        services: services,
-        dailyPrice: dailyPrice,
-        monthlyPrice: monthlyPrice,
-        experience: experience
+        email,
+        services,
+        dailyPrice,
+        monthlyPrice,
+        experience,
+        availability
       };
       console.log(caregiver);
       this.http

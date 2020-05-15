@@ -4,6 +4,8 @@ import { SearchService } from '../services/search.service';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 const BACKEND_URL = environment.apiUrl;
 
@@ -28,13 +30,22 @@ export class AdminAllusersComponent implements OnInit {
   cgLoading: boolean;
   certificateValue: string;
 
+  adminEmail: string;
+
 
   constructor(
     private admin: AdminService,
     private search: SearchService,
-    private http: HttpClient) { }
+    private authService: AuthService,
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.adminEmail = this.authService.getUserId();
+    if (this.adminEmail !== 'admin@mail.com') {
+      this.router.navigate(['./']);
+    }
     this.cgLoading = true;
     this.eLoading = true;
 
@@ -48,6 +59,38 @@ export class AdminAllusersComponent implements OnInit {
         const cgAge = thisYear - cgYear;
         element.age = cgAge;
         console.log(thisYear, cgYear, cgAge);
+
+        // calculate joined date
+        const today = new Date();
+        const joinedDate = new Date(element.joinedDate);
+        const days = Math.trunc((today.getTime() - joinedDate.getTime()) / (24 * 3600 * 1000));
+        if (days === 1) {
+          element.days = `${days} day`;
+        } else if (days > 1) {
+          element.days = `${days} days`;
+        }
+        if (days > 30) {
+          const months = Math.trunc(days / 30);
+          let monthsString: string;
+          const daysLeft = days % 30;
+          let daysLeftString: string;
+          if (daysLeft > 0) {
+            if (daysLeft === 1) {
+              daysLeftString = '1 day';
+            } else if (daysLeft > 1) {
+              daysLeftString = `${daysLeft} days`;
+            }
+          }
+          if (daysLeft === 0) {
+            daysLeftString = '';
+          }
+          if (months === 1) {
+            monthsString = '1 month';
+          } else if (months > 1) {
+            monthsString = `${months} months`;
+          }
+          element.days = monthsString + ' ' + daysLeftString;
+        }
 
 
         element.reviews = null;
@@ -104,15 +147,52 @@ export class AdminAllusersComponent implements OnInit {
         const cgAge = thisYear - cgYear;
         element.age = cgAge;
         console.log(thisYear, cgYear, cgAge);
+
+        // calculate joined date
+        const today = new Date();
+        const joinedDate = new Date(element.joinedDate);
+        const days = Math.trunc((today.getTime() - joinedDate.getTime()) / (24 * 3600 * 1000));
+        if (days === 1) {
+          element.days = `${days} day`;
+        } else if (days > 1) {
+          element.days = `${days} days`;
+        }
+        if (days > 30) {
+          const months = Math.trunc(days / 30);
+          let monthsString: string;
+          const daysLeft = days % 30;
+          let daysLeftString: string;
+          if (daysLeft > 0) {
+            if (daysLeft === 1) {
+              daysLeftString = '1 day';
+            } else if (daysLeft > 1) {
+              daysLeftString = `${daysLeft} days`;
+            }
+          }
+          if (daysLeft === 0) {
+            daysLeftString = '';
+          }
+          if (months === 1) {
+            monthsString = '1 month';
+          } else if (months > 1) {
+            monthsString = `${months} months`;
+          }
+          element.days = monthsString + ' ' + daysLeftString;
+        }
+        console.log(element.days);
       });
 
       this.eLoading = false;
     });
   }
 
-  setCertificate(index) {
+  setCertificate(index: number) {
     console.log(this.caregivers[index]);
     this.certificateValue = this.caregivers[index].certificate;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

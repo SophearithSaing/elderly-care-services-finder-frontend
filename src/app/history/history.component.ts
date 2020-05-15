@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { AuthService } from '../auth/auth.service';
 import { SearchService } from '../services/search.service';
@@ -57,33 +57,65 @@ export class HistoryComponent implements OnInit {
             dailyCare: 'none',
             specialCare: 'none'
           };
-        };
+        }
 
-        const date = new Date();
-        const msAgo = date.getTime() - stopDate.getTime();
-        // const daysAgo = (msAgo / 86400000).toFixed(0);
-        const daysAgo = Math.trunc(msAgo / 86400000);
-        // daysAgo = daysAgo.toFixed(0);
-        // Math.trunc(daysAgo);
-        element.daysAgo = daysAgo;
-        if (daysAgo > 30) {
-          const monthsAgo = Math.trunc(daysAgo / 30);
-          if (monthsAgo === 1) {
-            element.monthsAgo = `${monthsAgo} month`;
-          } else if (monthsAgo > 1) {
-            element.monthsAgo = `${monthsAgo} months`;
-          }
-          let newDaysAgo;
-          if (daysAgo % 30 > 0) {
-              newDaysAgo = daysAgo % 30;
-              let stringNewDaysAgo;
-              if (newDaysAgo === 1) {
-                stringNewDaysAgo = `${newDaysAgo} day`;
-              } else if (newDaysAgo > 1) {
-                stringNewDaysAgo = `${newDaysAgo} days`;
-              }
-              element.monthsAgo = element.monthsAgo + ' and ' + stringNewDaysAgo;
+        // const date = new Date();
+        // const msAgo = date.getTime() - stopDate.getTime();
+        // // const daysAgo = (msAgo / 86400000).toFixed(0);
+        // const daysAgo = Math.trunc(msAgo / 86400000);
+        // // daysAgo = daysAgo.toFixed(0);
+        // // Math.trunc(daysAgo);
+        // element.daysAgo = daysAgo;
+        // if (daysAgo > 30) {
+        //   const monthsAgo = Math.trunc(daysAgo / 30);
+        //   if (monthsAgo === 1) {
+        //     element.monthsAgo = `${monthsAgo} month`;
+        //   } else if (monthsAgo > 1) {
+        //     element.monthsAgo = `${monthsAgo} months`;
+        //   }
+        //   let newDaysAgo;
+        //   if (daysAgo % 30 > 0) {
+        //     newDaysAgo = daysAgo % 30;
+        //     let stringNewDaysAgo;
+        //     if (newDaysAgo === 1) {
+        //       stringNewDaysAgo = `${newDaysAgo} day`;
+        //     } else if (newDaysAgo > 1) {
+        //       stringNewDaysAgo = `${newDaysAgo} days`;
+        //     }
+        //     element.monthsAgo = element.monthsAgo + ' and ' + stringNewDaysAgo;
+        //   }
+        // }
+        // calculate days ago
+        const today = new Date();
+        // const joinedDate = new Date(element.joinedDate);
+        const days = Math.trunc((today.getTime() - stopDate.getTime()) / (24 * 3600 * 1000));
+        element.daysAgo = days;
+        if (days === 1) {
+          element.days = `${days} day`;
+        } else if (days > 1) {
+          element.days = `${days} days`;
+        }
+        if (days > 30) {
+          const months = Math.trunc(days / 30);
+          let monthsString: string;
+          const daysLeft = days % 30;
+          let daysLeftString: string;
+          if (daysLeft > 0) {
+            if (daysLeft === 1) {
+              daysLeftString = '1 day';
+            } else if (daysLeft > 1) {
+              daysLeftString = `${daysLeft} days`;
             }
+          }
+          if (daysLeft === 0) {
+            daysLeftString = '';
+          }
+          if (months === 1) {
+            monthsString = '1 month';
+          } else if (months > 1) {
+            monthsString = `${months} months`;
+          }
+          element.monthsAgo = monthsString + ' ' + daysLeftString;
         }
       });
       console.log(this.history);

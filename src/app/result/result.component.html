@@ -178,7 +178,7 @@
                 </mat-card-actions>
                 <mat-card-actions>
                   <button class="btn btn-success" type="button" data-toggle="modal" data-target="#exampleModal"
-                    (click)="setValue(item.email, item.name, i)" *ngIf="item.showButton === true">REQUEST</button>
+                    (click)="setValue(item.email, item.name, item.phoneNumber, item.age, i)" *ngIf="item.showButton === true">REQUEST</button>
                   <h5 class="new-font" *ngIf="item.showButton === false">Request Sent</h5>
                 </mat-card-actions>
               </mat-card>

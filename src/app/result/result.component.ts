@@ -28,6 +28,8 @@ export class ResultComponent implements OnInit {
   elderEmail: string;
   caregiverEmail: string;
   caregiverName: string;
+  caregiverPhoneNumber: string;
+  caregiverAge: number;
   caregiver: Caregiver;
   availableCaregivers: Array<any> = [];
   caregiversSub: Subscription;
@@ -328,9 +330,11 @@ export class ResultComponent implements OnInit {
     this.requireInterview = item;
   }
 
-  setValue(email: string, name: string, index: number) {
+  setValue(email: string, name: string, phoneNumber: string, age: number, index: number) {
     this.caregiverEmail = email;
     this.caregiverName = name;
+    this.caregiverPhoneNumber = phoneNumber;
+    this.caregiverAge = age;
     this.index = index;
     this.selectedServices = this.results[index].services;
     this.selectedDP = this.results[index].dailyPrice;
@@ -338,12 +342,14 @@ export class ResultComponent implements OnInit {
   }
 
   request() {
-    const currentDate = new Date()
+    const currentDate = new Date();
     this.searchService.sendRequest(
-      this.elderEmail,
       this.caregiverEmail,
-      this.elderName,
       this.caregiverName,
+      this.caregiverPhoneNumber,
+      this.caregiverAge,
+      this.elderEmail,
+      this.elderName,
       this.elderPhoneNumber,
       this.elderAge,
       this.startDate,

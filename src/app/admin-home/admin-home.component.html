@@ -6,125 +6,127 @@
     <button mat-button [routerLink]="['/admin-services']">Services</button>
     <button mat-button [routerLink]="['/admin-allusers']">Approved Users</button>
     <button mat-button [routerLink]="['/admin-allactivities']">All Activities</button>
+    <button mat-button routerLink="/home" routerLinkActive="mat-raised-button" (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
-<div id="home"
-  style="background-image: url('https://lh3.googleusercontent.com/_UVQAI_HnMl6_j6cLFrkJuqafUcbjxlDdzVK6UdOC_ee4XafOevh64bIEsVRiptHME563O2olxOBhoRNApq_FggludCbqMcGmo2klybdOOBrByM0akX13wdlPsRSqK_BRw-yRspOIvXtoGYnfpOx2LhrnEUJqeFlXXaSVgdtfH5YAVG_ZCNO9ERV4HcVycrP-5VgkRjKtMHiPaRbsfBRI8LNfrbIhKSJClUF5j1AtdfP97jShAY4NLW47u81NTxJVU4cPY8mxiXj_oQveL7w8B7c8y0n7GO2OhocaVAtYtoYYI79yttQajVgX_No32nCuQgJFh1xjz6NncTmbgZqF5a46f9z8QEgtoTzupnHk8_WTqY9nWbjMbdDwhwB_R0gQIl-G-R1U8wXmXCi6xDnavcEkQYmOEpAJRN0XaiJzNvttkKs9BT-XsSmnEDcGWGKg26hNU-Le_AfRnbbKLPYWtsDvca21S2tdUwNNs2EIshU97L4f-LXR49QUuvT6_yLfjxukfGptVwkxW1vK_zdOaxo1qDYSAvc7RlkwhiO5mSdtH77lVMiB_hSl1tYMAZ4Yap5jXhXtZG2cwxTUHUA_H-3MDAc4qwhmBePR7TIfpLQe7URUlvLW4AQA6u5iWCMFWmHe9XudQlcilfuGatdVoxvKDTVZWuB7YhD0NnREQu02-u2J8tv71IdSbOUWw=w1508-h943-no?authuser=0');">
+<!-- <app-admin-nav> -->
+  <div id="home"
+    style="background-image: url('https://lh3.googleusercontent.com/_UVQAI_HnMl6_j6cLFrkJuqafUcbjxlDdzVK6UdOC_ee4XafOevh64bIEsVRiptHME563O2olxOBhoRNApq_FggludCbqMcGmo2klybdOOBrByM0akX13wdlPsRSqK_BRw-yRspOIvXtoGYnfpOx2LhrnEUJqeFlXXaSVgdtfH5YAVG_ZCNO9ERV4HcVycrP-5VgkRjKtMHiPaRbsfBRI8LNfrbIhKSJClUF5j1AtdfP97jShAY4NLW47u81NTxJVU4cPY8mxiXj_oQveL7w8B7c8y0n7GO2OhocaVAtYtoYYI79yttQajVgX_No32nCuQgJFh1xjz6NncTmbgZqF5a46f9z8QEgtoTzupnHk8_WTqY9nWbjMbdDwhwB_R0gQIl-G-R1U8wXmXCi6xDnavcEkQYmOEpAJRN0XaiJzNvttkKs9BT-XsSmnEDcGWGKg26hNU-Le_AfRnbbKLPYWtsDvca21S2tdUwNNs2EIshU97L4f-LXR49QUuvT6_yLfjxukfGptVwkxW1vK_zdOaxo1qDYSAvc7RlkwhiO5mSdtH77lVMiB_hSl1tYMAZ4Yap5jXhXtZG2cwxTUHUA_H-3MDAc4qwhmBePR7TIfpLQe7URUlvLW4AQA6u5iWCMFWmHe9XudQlcilfuGatdVoxvKDTVZWuB7YhD0NnREQu02-u2J8tv71IdSbOUWw=w1508-h943-no?authuser=0');">
 
-  <div class="container text-center">
-    <h1 class="display-4">Welcome Back Admin</h1>
-    <div class="pt-5">
-      <div class="col-md-12">
-        <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1">You Currently Have {{requestNumber}} Request
-        </h3>
-        <h3 class="pb-3" *ngIf="requestNumber > 1">You Currently Have {{requestNumber}} Requests</h3>
-        <!-- <div class="pb-3">
+    <div class="container text-center">
+      <h1 class="display-4">Welcome Back Admin</h1>
+      <div class="pt-5">
+        <div class="col-md-12">
+          <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1">You Currently Have {{requestNumber}} Request
+          </h3>
+          <h3 class="pb-3" *ngIf="requestNumber > 1">You Currently Have {{requestNumber}} Requests</h3>
+          <!-- <div class="pb-3">
           <button class="btn btn-primary" routerLink="/caregiver-register" routerLinkActive="active">SEE CAREGIVER
             REQUEST</button>
         </div> -->
-        <div class="pb-3">
-          <button mat-raised-button color="primary" *ngIf="seeRequest === false && requestNumber > 0"
-            (click)="openRequest()">SEE CAREGIVER
-            REQUESTS</button>
-        </div>
-        <div class="pb-3">
-          <button mat-raised-button color="primary" *ngIf="seeRequest === true && requestNumber > 0"
-            (click)="closeRequest()">CLOSE
-            REQUESTS</button>
-        </div>
-
-
-        <div class="mt-5" *ngIf="seeRequest === true">
-          <div class="container mb-3" *ngFor="let item of unapproved; let i = index">
-            <mat-accordion class="example-headers-align">
-              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    <div class="new-font">
-                      From: {{item.name}}
-                    </div>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    <div class="new-font" *ngIf="item.reason === null">
-                      Type: New User
-                    </div>
-                    <div class="new-font" *ngIf="item.reason !== null">
-                      Type: Reapply
-                    </div>
-                  </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="align-center">
-                  <mat-card class="example-card">
-                    <mat-card-header>
-                      <div mat-card-avatar class="example-header-image">
-                        <img src={{item.imagePath}} alt="" style="width: 100%; height: 100%;">
-                      </div>
-                      <div class="new-font">
-                        <mat-card-title>{{item.name}}</mat-card-title>
-                        <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
-                      </div>
-
-                    </mat-card-header>
-                    <mat-card-content>
-                      <p>
-                        <span *ngIf="item.reason !== null">Rejection Reason: {{item.reason}}</span>
-                        <br><br>
-                        Age: {{item.age}}
-                        <br>
-                        Gender: {{item.gender}}
-                        <br>
-                        Address: {{item.houseNumber}}, {{item.street}}, {{item.subDistrict}}, {{item.district}},
-                        {{item.province}}, {{item.postalCode}}
-                        <br><br>
-                        Services:
-                        <br>
-                        Daily Care: {{item.services.dailyCare}} Baht
-                        <br>
-                        Special Care: {{item.services.specialCare}} Baht
-                        <br><br>
-
-                        Prices:
-                        <br>
-                        Daily Price: {{item.dailyPrice}}
-                        <br>
-                        Monthly Price: {{item.monthlyPrice}}
-                        <br><br>
-
-                        Email: {{item.email}}
-                        <br>
-                        Phone Number: {{item.phoneNumber}}
-                        <!-- <br><br> -->
-                      </p>
-                      <!-- certificate -->
-                      <button mat-raised-button (click)="setCertificate(i)" data-toggle="modal"
-                        data-target="#certificate">View Certificate</button>
-                      <!-- experience -->
-                      <p class="mt-3 mb-0">Experiences:</p>
-                      <div *ngFor="let ex of item.experience">
-                        <p>
-                          - Workplace: {{ex.workplace}}
-                          <br>
-                          - From {{ex.startMonth}}/{{ex.startYear}} To {{ex.stopMonth}}/{{ex.stopYear}} </p>
-                      </div>
-                    </mat-card-content>
-                    <mat-card-actions>
-                      <button class="btn btn-success" type="button" data-toggle="modal" data-target="#accept"
-                        (click)="setValue(item._id, item.name, item.email)">Accept</button>
-                      <button class="btn btn-danger ml-5" type="button" data-toggle="modal" data-target="#reject"
-                        (click)="setValue(item._id, item.name, item.email)">Reject</button>
-                    </mat-card-actions>
-                    <mat-card-actions>
-                    </mat-card-actions>
-                  </mat-card>
-                </div>
-              </mat-expansion-panel>
-            </mat-accordion>
+          <div class="pb-3">
+            <button mat-raised-button color="primary" *ngIf="seeRequest === false && requestNumber > 0"
+              (click)="openRequest()">SEE CAREGIVER
+              REQUESTS</button>
           </div>
-        </div>
+          <div class="pb-3">
+            <button mat-raised-button color="primary" *ngIf="seeRequest === true && requestNumber > 0"
+              (click)="closeRequest()">CLOSE
+              REQUESTS</button>
+          </div>
 
 
-        <!-- <div class="pb-3">
+          <div class="mt-5" *ngIf="seeRequest === true">
+            <div class="container mb-3" *ngFor="let item of unapproved; let i = index">
+              <mat-accordion class="example-headers-align">
+                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="new-font">
+                        From: {{item.name}}
+                      </div>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      <div class="new-font" *ngIf="item.reason === null">
+                        Type: New User
+                      </div>
+                      <div class="new-font" *ngIf="item.reason !== null">
+                        Type: Reapply
+                      </div>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <div class="align-center">
+                    <mat-card class="example-card">
+                      <mat-card-header>
+                        <div mat-card-avatar class="example-header-image">
+                          <img src={{item.imagePath}} alt="" style="width: 100%; height: 100%;">
+                        </div>
+                        <div class="new-font">
+                          <mat-card-title>{{item.name}}</mat-card-title>
+                          <mat-card-subtitle>{{item.subDistrict}}, {{item.postalCode}}</mat-card-subtitle>
+                        </div>
+
+                      </mat-card-header>
+                      <mat-card-content>
+                        <p>
+                          <span *ngIf="item.reason !== null">Rejection Reason: {{item.reason}}</span>
+                          <br><br>
+                          Age: {{item.age}}
+                          <br>
+                          Gender: {{item.gender}}
+                          <br>
+                          Address: {{item.houseNumber}}, {{item.street}}, {{item.subDistrict}}, {{item.district}},
+                          {{item.province}}, {{item.postalCode}}
+                          <br><br>
+                          Services:
+                          <br>
+                          Daily Care: {{item.services.dailyCare}} Baht
+                          <br>
+                          Special Care: {{item.services.specialCare}} Baht
+                          <br><br>
+
+                          Prices:
+                          <br>
+                          Daily Price: {{item.dailyPrice}}
+                          <br>
+                          Monthly Price: {{item.monthlyPrice}}
+                          <br><br>
+
+                          Email: {{item.email}}
+                          <br>
+                          Phone Number: {{item.phoneNumber}}
+                          <!-- <br><br> -->
+                        </p>
+                        <!-- certificate -->
+                        <button mat-raised-button (click)="setCertificate(i)" data-toggle="modal"
+                          data-target="#certificate">View Certificate</button>
+                        <!-- experience -->
+                        <p class="mt-3 mb-0">Experiences:</p>
+                        <div *ngFor="let ex of item.experience">
+                          <p>
+                            - Workplace: {{ex.workplace}}
+                            <br>
+                            - From {{ex.startMonth}}/{{ex.startYear}} To {{ex.stopMonth}}/{{ex.stopYear}} </p>
+                        </div>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <button class="btn btn-success" type="button" data-toggle="modal" data-target="#accept"
+                          (click)="setValue(item._id, item.name, item.email)">Accept</button>
+                        <button class="btn btn-danger ml-5" type="button" data-toggle="modal" data-target="#reject"
+                          (click)="setValue(item._id, item.name, item.email)">Reject</button>
+                      </mat-card-actions>
+                      <mat-card-actions>
+                      </mat-card-actions>
+                    </mat-card>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
+          </div>
+
+
+          <!-- <div class="pb-3">
           <button mat-raised-button color="primary" routerLink="/admin-services">EDIT SERVICES</button>
         </div>
         <div class="pb-3">
@@ -133,10 +135,11 @@
         <div class="pb-3">
           <button mat-raised-button color="primary" routerLink="/admin-allusers">VIEW ALL USERS</button>
         </div> -->
+        </div>
       </div>
     </div>
   </div>
-</div>
+<!-- </app-admin-nav> -->
 
 <div class="modal fade" id="accept" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

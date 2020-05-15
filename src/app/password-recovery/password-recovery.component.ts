@@ -19,6 +19,7 @@ export class PasswordRecoveryComponent implements OnInit {
   showHelp = false;
   token: string;
   userExist = false;
+  done = false;
 
   constructor(private search: SearchService, private http: HttpClient, private auth: AuthService, private route: ActivatedRoute) { }
 
@@ -42,6 +43,7 @@ export class PasswordRecoveryComponent implements OnInit {
   resetPassword() {
     console.log(this.token, this.secondPassword);
     this.auth.resetPassword(this.token, this.secondPassword);
+    this.done = true;
   }
 
   editPassword() {

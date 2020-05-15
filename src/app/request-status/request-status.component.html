@@ -27,7 +27,9 @@
     <div href="#" class="list-group-item list-group-item-action mt-3 mb-3">
       <div class="d-flex w-100 justify-content-between">
         <h3 class="mb-1">Name: {{item.caregiverName}}</h3>
-        <small *ngIf="item.daysAgo < 30">{{item.daysAgo}} days ago</small>
+        <small *ngIf="item.daysAgo === 0">Today</small>
+        <small *ngIf="item.daysAgo === 1">Yesterday</small>
+        <small *ngIf="item.daysAgo < 30 && item.daysAgo > 1">{{item.daysAgo}} days ago</small>
         <small *ngIf="item.daysAgo >= 30">{{item.monthsAgo}} ago</small>
       </div>
       <h4 class="mb-3">Email: {{item.caregiverEmail}}</h4>
@@ -65,8 +67,8 @@
         Are you sure you want to cancel this request?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn" id="btn-okay" data-dismiss="modal" (click)="cancel()">Yes</button>
         <button class="btn btn-sm" id="cancel" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn" id="btn-okay" data-dismiss="modal" (click)="cancel()">Yes</button>
       </div>
     </div>
   </div>

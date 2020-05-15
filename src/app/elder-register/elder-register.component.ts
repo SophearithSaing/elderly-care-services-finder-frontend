@@ -91,7 +91,7 @@ export class ElderRegisterComponent implements OnInit {
         this.password = form.value.password;
         this.creating = true;
         // create auth user
-        this.authService.createUser(this.email, this.password);
+        this.authService.createUser(this.name, this.email, this.password);
         // login
         setTimeout(() => {
           this.creating = false;

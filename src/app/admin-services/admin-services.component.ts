@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../services/admin.service';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-services',
@@ -58,9 +60,15 @@ export class AdminServicesComponent implements OnInit {
   removedDC = [];
   removedSC = [];
 
-  constructor(private admin: AdminService) { }
+  adminEmail: string;
+
+  constructor(private admin: AdminService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    this.adminEmail = this.authService.getUserId();
+    if (this.adminEmail !== 'admin@mail.com') {
+      this.router.navigate(['./']);
+    }
     this.admin.GetServices().subscribe((data) => {
       this.dc = data.dailyCare;
       this.sc = data.specialCare;
@@ -186,6 +194,10 @@ export class AdminServicesComponent implements OnInit {
 
   saveChanges() {
     this.admin.UpdateServices(this.dailyCare, this.specialCare);
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

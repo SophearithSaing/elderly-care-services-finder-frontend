@@ -81,6 +81,3 @@ mat-spinner {
   margin: auto;
 }
 
-.mat-spinner ::ng-deep circle {
-      stroke: rgb(5, 190, 61);
-}

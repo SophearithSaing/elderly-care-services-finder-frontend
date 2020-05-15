@@ -14,6 +14,7 @@ export class ForgotPasswordComponent implements OnInit {
   allUsers: any;
   userExist: boolean;
   isLoading = false;
+  sent = false;
 
   constructor(private search: SearchService, private http: HttpClient, private auth: AuthService) { }
 
@@ -40,6 +41,7 @@ export class ForgotPasswordComponent implements OnInit {
         console.log(this.email);
       }
     });
+    this.sent = true;
 
   }
 

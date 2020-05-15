@@ -6,6 +6,7 @@
     <button mat-flat-button [routerLink]="['/admin-services']">Services</button>
     <button mat-button [routerLink]="['/admin-allusers']">All Users</button>
     <button mat-button [routerLink]="['/admin-allactivities']">All Activities</button>
+    <button mat-button routerLink="/home" routerLinkActive="mat-raised-button" (click)="logout()">Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 

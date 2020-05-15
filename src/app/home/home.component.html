@@ -8,12 +8,13 @@
 
     <div class="row pt-5">
       <!-- buttons for caregivers -->
-      <div class="col-md-6" *ngIf="user === null || user === 'elder'">
+      <!-- <div class="col-md-6" *ngIf="user === null || user === 'elder'">
         <h1>.</h1>
         <p>.</p>
         <button class="btn btn-primary" (click)='caregiver()'>CAREGIVER</button>
-      </div>
-      <div class="col-md-6" *ngIf="user === 'caregiver'">
+      </div> -->
+      <!-- <div class="col-md-6" *ngIf="user === 'caregiver'"> -->
+      <div class="col-md-6">
         <h1>{{caregiverNumber}}</h1>
         <p>Currently, {{caregiverNumber}} caregivers join us!</p>
         <button class="btn btn-primary" type="submit" routerLink="/caregiver-register" routerLinkActive="active">SIGN UP</button>
@@ -22,12 +23,13 @@
         <button class="btn btn-primary" type="submit" routerLink="/caregiver-login" routerLinkActive="active">LOGIN</button>
       </div>
       <!-- buttons for elders -->
-      <div class="col-md-6" *ngIf="user === null || user === 'caregiver'">
+      <!-- <div class="col-md-6" *ngIf="user === null || user === 'caregiver'">
         <h1>.</h1>
         <p>.</p>
         <button class="btn btn-success" (click)='elder()'>ELDER</button>
       </div>
-      <div class="col-md-6" *ngIf="user === 'elder'">
+      <div class="col-md-6" *ngIf="user === 'elder'"> -->
+      <div class="col-md-6">
         <h1>{{elderNumber}}</h1>
         <p>{{elderNumber}} elders are getting helps from us!</p>
         <button class="btn btn-success" type="submit" routerLink="/elder-register" routerLinkActive="active">SIGNUP</button>

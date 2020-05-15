@@ -544,10 +544,12 @@ export class SearchService {
   }
 
   sendRequest(
-    elderEmail: string,
     caregiverEmail: string,
-    elderName: string,
     caregiverName: string,
+    caregiverPhoneNumber: string,
+    caregiverAge: number,
+    elderEmail: string,
+    elderName: string,
     elderPhoneNumber: string,
     elderAge: number,
     startDate: Date,
@@ -562,12 +564,14 @@ export class SearchService {
 
     const request: Request = {
       _id: null,
+      caregiverEmail,
+      caregiverName,
+      caregiverPhoneNumber,
+      caregiverAge,
       elderEmail,
       elderName,
       elderPhoneNumber,
       elderAge,
-      caregiverEmail,
-      caregiverName,
       startDate,
       stopDate,
       requireInterview,

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-allactivities',
@@ -12,11 +14,17 @@ export class AdminAllactivitiesComponent implements OnInit {
   history: any;
   isLoading: boolean;
 
-  constructor(config: NgbRatingConfig, private search: SearchService) {
+  adminEmail: string;
+
+  constructor(config: NgbRatingConfig, private search: SearchService, private authService: AuthService, private router: Router) {
     config.max = 5;
    }
 
   ngOnInit() {
+    this.adminEmail = this.authService.getUserId();
+    if (this.adminEmail !== 'admin@mail.com') {
+      this.router.navigate(['./']);
+    }
     this.isLoading = true;
 
     this.search.getAllHistory().subscribe(data => {
@@ -70,6 +78,10 @@ export class AdminAllactivitiesComponent implements OnInit {
       // this.history.sort((a, b) => (a.daysAgo > b.daysAgo) ? 1 : -1);
       this.isLoading = false;
     });
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
 }

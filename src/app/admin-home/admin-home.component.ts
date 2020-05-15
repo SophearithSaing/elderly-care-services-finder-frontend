@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../services/admin.service';
 import { SearchService } from '../services/search.service';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-home',
@@ -18,14 +20,19 @@ export class AdminHomeComponent implements OnInit {
   accept = true;
   id: string;
   email: string;
+  adminEmail: string;
   name: string;
   show = false;
 
   certificateValue: string;
 
-  constructor(private admin: AdminService, private search: SearchService) { }
+  constructor(private admin: AdminService, private search: SearchService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
+    this.adminEmail = this.authService.getUserId();
+    if (this.adminEmail !== 'admin@mail.com') {
+      this.router.navigate(['./']);
+    }
     this.admin.GetCaregivers().subscribe((data) => {
       const caregivers = data.users;
       let count = 0;
@@ -104,4 +111,7 @@ export class AdminHomeComponent implements OnInit {
     location.reload();
   }
 
+  logout() {
+    this.authService.logout();
+  }
 }

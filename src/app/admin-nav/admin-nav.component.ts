@@ -35,15 +35,15 @@ export class AdminNavComponent implements OnInit {
 
   ngOnInit() {
     this.email = this.authService.getUserId();
-    this.searchService.getCaregiver(this.email).subscribe(res => {
-      this.name = res.name;
-      this.image = res.imagePath;
-      this.role = 'Caregiver';
+    // this.searchService.getCaregiver(this.email).subscribe(res => {
+    //   this.name = res.name;
+    //   this.image = res.imagePath;
+    //   this.role = 'Caregiver';
 
-      if (this.role !== 'Caregiver') {
-        this.router.navigate(['/home']);
-      }
-    });
+    //   if (this.role !== 'Caregiver') {
+    //     this.router.navigate(['/home']);
+    //   }
+    // });
   }
 
   getImage() {
