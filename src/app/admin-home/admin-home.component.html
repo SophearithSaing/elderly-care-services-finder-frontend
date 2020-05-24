@@ -12,15 +12,15 @@
 
 <!-- <app-admin-nav> -->
   <div id="home"
-    style="background-image: url('https://lh3.googleusercontent.com/_UVQAI_HnMl6_j6cLFrkJuqafUcbjxlDdzVK6UdOC_ee4XafOevh64bIEsVRiptHME563O2olxOBhoRNApq_FggludCbqMcGmo2klybdOOBrByM0akX13wdlPsRSqK_BRw-yRspOIvXtoGYnfpOx2LhrnEUJqeFlXXaSVgdtfH5YAVG_ZCNO9ERV4HcVycrP-5VgkRjKtMHiPaRbsfBRI8LNfrbIhKSJClUF5j1AtdfP97jShAY4NLW47u81NTxJVU4cPY8mxiXj_oQveL7w8B7c8y0n7GO2OhocaVAtYtoYYI79yttQajVgX_No32nCuQgJFh1xjz6NncTmbgZqF5a46f9z8QEgtoTzupnHk8_WTqY9nWbjMbdDwhwB_R0gQIl-G-R1U8wXmXCi6xDnavcEkQYmOEpAJRN0XaiJzNvttkKs9BT-XsSmnEDcGWGKg26hNU-Le_AfRnbbKLPYWtsDvca21S2tdUwNNs2EIshU97L4f-LXR49QUuvT6_yLfjxukfGptVwkxW1vK_zdOaxo1qDYSAvc7RlkwhiO5mSdtH77lVMiB_hSl1tYMAZ4Yap5jXhXtZG2cwxTUHUA_H-3MDAc4qwhmBePR7TIfpLQe7URUlvLW4AQA6u5iWCMFWmHe9XudQlcilfuGatdVoxvKDTVZWuB7YhD0NnREQu02-u2J8tv71IdSbOUWw=w1508-h943-no?authuser=0');">
+    style="background-image: url(assets/img/admin.jpg);">
 
     <div class="container text-center">
       <h1 class="display-4">Welcome Back Admin</h1>
       <div class="pt-5">
         <div class="col-md-12">
-          <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1">You Currently Have {{requestNumber}} Request
+          <h3 class="pb-3" *ngIf="requestNumber < 1 || requestNumber === 1">You currently have {{requestNumber}} request
           </h3>
-          <h3 class="pb-3" *ngIf="requestNumber > 1">You Currently Have {{requestNumber}} Requests</h3>
+          <h3 class="pb-3" *ngIf="requestNumber > 1">You currently have {{requestNumber}} requests</h3>
           <!-- <div class="pb-3">
           <button class="btn btn-primary" routerLink="/caregiver-register" routerLinkActive="active">SEE CAREGIVER
             REQUEST</button>
@@ -81,16 +81,16 @@
                           <br><br>
                           Services:
                           <br>
-                          Daily Care: {{item.services.dailyCare}} Baht
+                          Daily Care: {{item.services.dailyCare}}
                           <br>
-                          Special Care: {{item.services.specialCare}} Baht
+                          Special Care: {{item.services.specialCare}}
                           <br><br>
 
                           Prices:
                           <br>
-                          Daily Price: {{item.dailyPrice}}
+                          Daily Price: {{item.dailyPrice}} Baht
                           <br>
-                          Monthly Price: {{item.monthlyPrice}}
+                          Monthly Price: {{item.monthlyPrice}} Baht
                           <br><br>
 
                           Email: {{item.email}}

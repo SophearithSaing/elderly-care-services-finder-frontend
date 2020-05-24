@@ -40,7 +40,7 @@ export class ElderRegisterComponent implements OnInit {
 
 
   ngOnInit() {
-    this.searchService.getElders().subscribe(data => {
+    this.searchService.getAllUsers().subscribe(data => {
       this.elders = data.users;
       this.elders.forEach(element => {
         const email = element.email;

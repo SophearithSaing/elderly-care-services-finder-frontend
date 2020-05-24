@@ -30,7 +30,7 @@
               <small *ngIf="item.daysAgo < 30">{{item.daysAgo}} days ago</small>
               <small *ngIf="item.daysAgo >= 30">{{item.monthsAgo}} ago</small>
             </div>
-            <p class="mt-3">Price: {{item.selectedDP}} daily or {{item.selectedMP}} monthly</p>
+            <p class="mt-3">Price: {{item.selectedDP}} Baht daily or {{item.selectedMP}} Baht monthly</p>
             <p class="mb-3" *ngIf="item.totalDays === 1">Total Days: {{item.totalDays}} Day </p>
             <p class="mb-3" *ngIf="item.totalDays > 1">Total Days: {{item.totalDays}} Days </p>
             <p class="mb-3">Total Income: {{item.totalPrice}} Baht</p>

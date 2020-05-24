@@ -23,6 +23,7 @@ export class AdminService {
       newCg = true;
     }
     this.search.getCaregiver(email).subscribe(res => {
+      console.log(email);
       experience = res.experience;
       schedule = res.schedule;
       const caregiver = {

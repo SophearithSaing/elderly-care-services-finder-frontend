@@ -42,6 +42,7 @@ export class SearchService {
 
   results: any;
   newResult: any;
+  serviceId = '5e231b73a3748a35d8b6b467';
 
   // add elder
   addElder(
@@ -397,8 +398,7 @@ export class SearchService {
     caregiverEmail: string,
     availability: Array<any>
   ) {
-    const schedule: Schedule =
-    {
+    const schedule: Schedule = {
       _id: null,
       caregiverEmail: caregiverEmail,
       availability: availability
@@ -701,5 +701,9 @@ export class SearchService {
     this.http
       .patch<{ message: string, postId: string }>(BACKEND_URL + 'history/' + item._id, history)
       .subscribe(response => { });
+  }
+
+  getServices() {
+    return this.http.get<{dailyCare: Array<any>, specialCare: Array<any>}>(BACKEND_URL + 'services/' + this.serviceId);
   }
 }

@@ -32,8 +32,9 @@ li.nav-item:hover {
 li.nav-item:hover a {
   color: #fff;
 }
-h1 {
+h1, h5 {
   font-family: 'Ubuntu', sans-serif;
+  text-align: center;
 }
 
 .list-group {

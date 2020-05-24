@@ -119,6 +119,7 @@
 
     <h1 style="text-align: center;" *ngIf="requestNumber <= 1">You have {{requestNumber}} Request</h1>
     <h1 style="text-align: center;" *ngIf="requestNumber > 1">You have {{requestNumber}} Requests</h1>
+    <h5 style="text-align: center;">You can view and respond to your requests below</h5>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <div class="container mt-5" *ngFor="let item of requests; let i = index">
       <mat-accordion class="example-headers-align">

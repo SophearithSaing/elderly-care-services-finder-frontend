@@ -39,7 +39,7 @@ export class CaregiverRegisterComponent implements OnInit {
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
   ngOnInit() {
-    this.searchService.getCaregivers().subscribe(data => {
+    this.searchService.getAllUsers().subscribe(data => {
       this.caregivers = data.users;
       this.caregivers.forEach(element => {
         const email = element.email;

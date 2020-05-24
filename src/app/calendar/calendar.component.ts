@@ -76,6 +76,7 @@ export class CalendarComponent implements OnInit {
     // });
 
     this.email = this.auth.getUserId();
+    console.log
     this.searchService.getSchedule(this.email).subscribe((data) => {
       if (data === null) {
         this.mode = 'add';

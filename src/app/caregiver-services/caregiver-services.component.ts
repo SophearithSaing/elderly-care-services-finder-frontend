@@ -22,36 +22,36 @@ export class CaregiverServicesComponent implements OnInit {
   email;
   caregiverEmail;
 
-  dailyCare = [
-    {
-      name: 'Bathroom Assistance',
-      checked: false
-    },
-    {
-      name: 'Dressing Assitance',
-      checked: false
-    },
-    {
-      name: 'Meals',
-      checked: false
-    },
-    {
-      name: 'Joyful Companionship',
-      checked: false
-    }
-  ];
+  // dailyCare = [
+  //   {
+  //     name: 'Bathroom Assistance',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Dressing Assitance',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Meals',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Joyful Companionship',
+  //     checked: false
+  //   }
+  // ];
 
-  specialCare = [
-    {
-      name: 'Rehabilitation',
-      checked: false
-    },
-    {
-      name: 'Medicine',
-      checked: false
-    }
+  // specialCare = [
+  //   {
+  //     name: 'Rehabilitation',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Medicine',
+  //     checked: false
+  //   }
 
-  ];
+  // ];
 
   newDailyCare;
   newSpecialCare;
@@ -103,6 +103,9 @@ export class CaregiverServicesComponent implements OnInit {
 
   isLoading: boolean;
 
+  dailyCare = [];
+  specialCare = [];
+
   constructor(
     public searchservice: SearchService,
     public http: HttpClient,
@@ -123,6 +126,11 @@ export class CaregiverServicesComponent implements OnInit {
 
     //   }
     // });
+
+    this.searchservice.getServices().subscribe((data) => {
+      this.dailyCare = data.dailyCare;
+      this.specialCare = data.specialCare;
+    });
 
     this.email = this.auth.getUserId();
     this.caregiverEmail = this.email;

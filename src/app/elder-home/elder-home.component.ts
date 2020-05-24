@@ -36,35 +36,38 @@ export class ElderHomeComponent implements OnInit {
   email: string;
   name: string;
 
-  dailyCare = [
-    {
-      name: 'Bathroom Assistance',
-      checked: false
-    },
-    {
-      name: 'Dressing Assitance',
-      checked: false
-    },
-    {
-      name: 'Meals',
-      checked: false
-    },
-    {
-      name: 'Joyful Companionship',
-      checked: false
-    }
-  ];
+  // dailyCare = [
+  //   {
+  //     name: 'Bathroom Assistance',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Dressing Assitance',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Meals',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Joyful Companionship',
+  //     checked: false
+  //   }
+  // ];
 
-  specialCare = [
-    {
-      name: 'Rehabilitation',
-      checked: false
-    },
-    {
-      name: 'Medicine',
-      checked: false
-    }
-  ];
+  // specialCare = [
+  //   {
+  //     name: 'Rehabilitation',
+  //     checked: false
+  //   },
+  //   {
+  //     name: 'Medicine',
+  //     checked: false
+  //   }
+  // ];
+
+  dailyCare = [];
+  specialCare = [];
 
   newDailyCare;
   newSpecialCare;
@@ -97,6 +100,12 @@ export class ElderHomeComponent implements OnInit {
       this.name = data.name;
     });
     console.log(this.postalCode);
+
+
+    this.searchService.getServices().subscribe((data) => {
+      this.dailyCare = data.dailyCare;
+      this.specialCare = data.specialCare;
+    });
   }
 
   openSearch() {

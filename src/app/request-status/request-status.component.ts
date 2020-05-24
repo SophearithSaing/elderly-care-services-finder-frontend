@@ -50,7 +50,7 @@ export class RequestStatusComponent implements OnInit {
         const today = new Date();
         // const joinedDate = new Date(element.joinedDate);
         const days = Math.trunc((today.getTime() - sentDate.getTime()) / (24 * 3600 * 1000));
-        element.daysAgo = days + 1;
+        element.daysAgo = days;
         console.log(element);
         if (days === 1) {
           element.days = `${days} day`;

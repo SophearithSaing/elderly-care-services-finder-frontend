@@ -194,6 +194,8 @@ export class AdminServicesComponent implements OnInit {
 
   saveChanges() {
     this.admin.UpdateServices(this.dailyCare, this.specialCare);
+    this.undoDC = false;
+    this.undoSC = false;
   }
 
   logout() {

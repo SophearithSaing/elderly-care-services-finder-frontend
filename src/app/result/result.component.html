@@ -84,6 +84,7 @@
 <app-elder-nav>
   <div class="mt-5">
     <h1 class="text-center new-font">Matched Results</h1>
+    <h5 class="text-center new-font">You can see caregivers that matched your search below.</h5>
     <mat-spinner *ngIf="isLoading"></mat-spinner>
     <div class="container" *ngFor="let item of results; let i = index">
       <mat-accordion class="example-headers-align">

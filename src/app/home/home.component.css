@@ -18,6 +18,13 @@
   z-index: 1;
 }
 
+.center {
+  height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #home::before{
   content: "";
   display: block;
@@ -30,9 +37,14 @@
   background-color: rgba(0,0,0,0.65);
 }
 
-h1, h3, p {
+.main-screen {
   font-family: 'Ubuntu', sans-serif;
   color: white;
+}
+
+.details {
+  font-family: 'Ubuntu', sans-serif;
+  color: black;
 }
 
 .btn-success {
