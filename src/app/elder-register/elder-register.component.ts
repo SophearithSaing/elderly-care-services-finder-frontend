@@ -40,13 +40,13 @@ export class ElderRegisterComponent implements OnInit {
 
 
   ngOnInit() {
-    this.searchService.getAllUsers().subscribe(data => {
-      this.elders = data.users;
-      this.elders.forEach(element => {
-        const email = element.email;
-        this.elderEmails.push(email);
-      });
-    });
+    // this.searchService.getAllUsers().subscribe(data => {
+    //   this.elders = data.users;
+    //   this.elders.forEach(element => {
+    //     const email = element.email;
+    //     this.elderEmails.push(email);
+    //   });
+    // });
   }
   onRegisterElder(form: NgForm) {
     if (form.invalid) {
@@ -79,33 +79,38 @@ export class ElderRegisterComponent implements OnInit {
       this.confirmPassword = true;
       console.log(this.confirmPassword);
 
-      this.elderEmails.forEach(element => {
-        if (form.value.email === element) {
-          this.userExisted = true;
+      // this.elderEmails.forEach(element => {
+      //   if (form.value.email === element) {
+      //     this.userExisted = true;
+      //   }
+      // });
+
+      this.searchService.verifyUniqueUser(form.value.email).subscribe(res => {
+        this.userExisted = res.exist;
+        console.log(this.userExisted);
+
+        if (this.userExisted === false) {
+          this.email = form.value.email;
+          this.name = form.value.name;
+          this.password = form.value.password;
+          this.creating = true;
+          // create auth user
+          this.authService.createUser(this.name, this.email, this.password);
+          // login
+          setTimeout(() => {
+            this.creating = false;
+            this.loggingIn = true;
+            this.authService.login(this.email, this.password);
+            setTimeout(() => {
+              // navigate to fill information
+              this.router.navigate(
+                ['/elder-register', this.email],
+                { queryParams: { mode: 'add', name: this.name } }
+              );
+            }, 2000);
+          }, 2000);
         }
       });
-
-      if (this.userExisted === false) {
-        this.email = form.value.email;
-        this.name = form.value.name;
-        this.password = form.value.password;
-        this.creating = true;
-        // create auth user
-        this.authService.createUser(this.name, this.email, this.password);
-        // login
-        setTimeout(() => {
-          this.creating = false;
-          this.loggingIn = true;
-          this.authService.login(this.email, this.password);
-          setTimeout(() => {
-            // navigate to fill information
-            this.router.navigate(
-              ['/elder-register', this.email],
-              { queryParams: { mode: 'add', name: this.name } }
-            );
-          }, 2000);
-        }, 2000);
-      }
 
     } else if (form.value.password !== form.value.passwordConfirmation) {
       console.log(form.value.password + ' !== ' + form.value.passwordConfirmation);

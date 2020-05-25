@@ -441,6 +441,13 @@ export class SearchService {
       );
   }
 
+  verifyUniqueUser(email: string) {
+    return this.http
+    .get<{ exist: boolean }>(
+      BACKEND_URL + 'authusers/' + email
+    );
+  }
+
   verifyToken(token: string) {
     return this.http.get<{
       _id: string,

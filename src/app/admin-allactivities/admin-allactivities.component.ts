@@ -49,7 +49,7 @@ export class AdminAllactivitiesComponent implements OnInit {
             dailyCare: 'none',
             specialCare: 'none'
           };
-        };
+        }
 
         const date = new Date();
         const msAgo = date.getTime() - stopDate.getTime();

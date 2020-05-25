@@ -19,7 +19,7 @@ export class CaregiverRegisterComponent implements OnInit {
   private mode = "create";
 
   confirmPassword: boolean = null;
-  userExisted = false;
+  userExisted: boolean = null;
 
   firstPassword: string;
   secondPassword: string;
@@ -39,13 +39,15 @@ export class CaregiverRegisterComponent implements OnInit {
   constructor(public searchService: SearchService, private router: Router, public authService: AuthService) { }
 
   ngOnInit() {
-    this.searchService.getAllUsers().subscribe(data => {
-      this.caregivers = data.users;
-      this.caregivers.forEach(element => {
-        const email = element.email;
-        this.cgEmails.push(email);
-      });
-    });
+    // this.searchService.getAllUsers().subscribe(data => {
+    //   this.caregivers = data.users;
+    //   this.caregivers.forEach(element => {
+    //     const email = element.email;
+    //     this.cgEmails.push(email);
+    //   });
+    // });
+    console.log(this.userExisted);
+
   }
   onRegisterCaregiver(form: NgForm) {
     if (form.invalid) {
@@ -78,25 +80,28 @@ export class CaregiverRegisterComponent implements OnInit {
       this.confirmPassword = true;
       console.log(this.confirmPassword);
 
-      console.log(this.userExisted);
+      // console.log(this.userExisted);
       console.log(this.cgEmails);
-      this.cgEmails.forEach(element => {
-        if (form.value.email === element) {
-          console.log(form.value.email + ' = ' + element);
-          this.userExisted = true;
-        }
-      });
-      console.log(this.userExisted);
-      if (this.userExisted === false) {
-        this.name = form.value.name;
-        this.email = form.value.email;
-        this.password = form.value.password;
-        console.log(form.value.email, form.value.password);
-        console.log(this.email, this.password);
-        this.authService.createUser(this.name, this.email, this.password);
-        this.creating = true;
-        setTimeout(() => {
-          // this.authService.getAllUsers().subscribe(res => {
+      // this.cgEmails.forEach(element => {
+      //   if (form.value.email === element) {
+      //     console.log(form.value.email + ' = ' + element);
+      //     this.userExisted = true;
+      //   }
+      // });
+      this.searchService.verifyUniqueUser(form.value.email).subscribe(res => {
+        this.userExisted = res.exist;
+        console.log(this.userExisted);
+
+        if (this.userExisted === false) {
+          this.name = form.value.name;
+          this.email = form.value.email;
+          this.password = form.value.password;
+          console.log(form.value.email, form.value.password);
+          console.log(this.email, this.password);
+          this.authService.createUser(this.name, this.email, this.password);
+          this.creating = true;
+          setTimeout(() => {
+            // this.authService.getAllUsers().subscribe(res => {
             // this.users = res.users;
             // this.users.forEach(element => {
             //   if (element.email === this.email) {
@@ -113,13 +118,12 @@ export class CaregiverRegisterComponent implements OnInit {
                 { queryParams: { mode: 'add', name: this.name, email: this.email } }
               );
             }, 2000);
-        }, 2000);
-        // form.resetForm();
-        // this.router.navigate(['/caregiver-login']);
-        // console.log(form.value.email, form.value.name);
-
-      }
-
+          }, 2000);
+          // form.resetForm();
+          // this.router.navigate(['/caregiver-login']);
+          // console.log(form.value.email, form.value.name);
+        }
+      });
     } else if (form.value.password !== form.value.passwordConfirmation) {
       console.log(form.value.password + ' !== ' + form.value.passwordConfirmation);
       this.confirmPassword = false;
