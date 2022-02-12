@@ -27,7 +27,7 @@
     "@pusher/chatkit-client": "^1.13.4",
     "@sendgrid/mail": "^6.4.0",
     "angular-font-awesome": "^3.1.2",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.3.1",
     "date-fns": "^2.8.1",
