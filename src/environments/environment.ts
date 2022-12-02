@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'https://rith-mean-stack-app.herokuapp.com/api/',
-  apiUrl: 'http://localhost:3000/api/'
+  // apiUrl: "https://elderly-care-backend.onrender.com/api/",
+  apiUrl: "http://localhost:3000/api/",
 };
 
 /*
